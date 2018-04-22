@@ -543,7 +543,7 @@ void initialize(){
 	
 	glGenBuffers(1, &gVbo_pos);
 	glBindBuffer(GL_ARRAY_BUFFER, gVbo_pos);
-	glBufferData(GL_ARRAY_BUFFER, sizeof(verts), NULL, GL_DYNAMIC_DRAW);
+	glBufferData(GL_ARRAY_BUFFER, sizeof(verts), verts, GL_STATIC_DRAW);
 	glVertexAttribPointer(VDG_ATTRIBUTE_VERTEX, 3, GL_FLOAT, GL_FALSE, 0, NULL);
 	glEnableVertexAttribArray(VDG_ATTRIBUTE_VERTEX);
 	glBindBuffer(GL_ARRAY_BUFFER, 0);
@@ -552,7 +552,7 @@ void initialize(){
 	//color
 	glGenBuffers(1, &gVbo_col);
 	glBindBuffer(GL_ARRAY_BUFFER, gVbo_col);
-	glBufferData(GL_ARRAY_BUFFER, sizeof(colors), NULL, GL_DYNAMIC_DRAW);
+	glBufferData(GL_ARRAY_BUFFER, sizeof(colors), colors, GL_STATIC_DRAW);
 	glVertexAttribPointer(VDG_ATTRIBUTE_COLOR, 3, GL_FLOAT, GL_FALSE, 0, NULL);
 	glEnableVertexAttribArray(VDG_ATTRIBUTE_COLOR);
 	glBindBuffer(GL_ARRAY_BUFFER, 0);
@@ -560,7 +560,7 @@ void initialize(){
 	//velocity
 	glGenBuffers(1, &gVbo_velocity);
 	glBindBuffer(GL_ARRAY_BUFFER, gVbo_velocity);
-	glBufferData(GL_ARRAY_BUFFER, sizeof(velocities), NULL, GL_DYNAMIC_DRAW);
+	glBufferData(GL_ARRAY_BUFFER, sizeof(velocities), velocities, GL_STATIC_DRAW);
 	glVertexAttribPointer(VELOCITY_ARRAY, 3, GL_FLOAT, GL_FALSE, 0, NULL);
 	glEnableVertexAttribArray(VELOCITY_ARRAY);
 	glBindBuffer(GL_ARRAY_BUFFER, 0);
@@ -568,7 +568,7 @@ void initialize(){
 	//time
 	glGenBuffers(1, &gVbo_time);
 	glBindBuffer(GL_ARRAY_BUFFER, gVbo_time);
-	glBufferData(GL_ARRAY_BUFFER, sizeof(startTimes), NULL, GL_DYNAMIC_DRAW);
+	glBufferData(GL_ARRAY_BUFFER, sizeof(startTimes), startTimes, GL_STATIC_DRAW);
 	glVertexAttribPointer(START_TIME_ARRAY, 1, GL_FLOAT, GL_FALSE, 0, NULL);
 	glEnableVertexAttribArray(START_TIME_ARRAY);
 	glBindBuffer(GL_ARRAY_BUFFER, 0);
@@ -720,6 +720,18 @@ void uninitialize(){
 	{
 		glDeleteBuffers(1, &gVbo_col);
 		gVbo_col = 0;
+	}
+	
+	if(gVbo_velocity)
+	{
+		glDeleteBuffers(1, &gVbo_velocity);
+		gVbo_velocity = 0;
+	}
+	
+	if(gVbo_time)
+	{
+		glDeleteBuffers(1, &gVbo_time);
+		gVbo_time = 0;
 	}
 	
 	//destroy vbo
