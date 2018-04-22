@@ -521,7 +521,7 @@ void initialize(){
 	
 	//vertices, colors, shader attribs, vbo, vao initializations
 	//initial values for particle system
-	createPoints(2,2);
+	createPoints(1,1);
 	
 	
 	
