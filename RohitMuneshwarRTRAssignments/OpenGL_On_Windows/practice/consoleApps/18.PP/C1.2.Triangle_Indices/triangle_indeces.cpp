@@ -47,6 +47,8 @@ GLuint gShaderProgramObject;
 
 GLuint gVao;
 GLuint gVbo;
+GLuint gVbo_pos;
+GLuint gVbo_col;
 GLuint gEbo;
 
 GLuint gMVPUniform;
@@ -315,10 +317,15 @@ void initialize(){
 	const GLchar *vertexShaderSourceCode =
 				"#version 440							"\
 				"\n										"\
+				
 				"in vec4 vPosition;						"\
+				"in vec4 vColor;"\
+				
 				"uniform mat4 u_mvp_matrix;				"\
+				"out vec4 out_color;"\
 				"void main(void)						"\
 				"{										"\
+				"out_color=vColor;"\
 				"gl_Position = u_mvp_matrix * vPosition;	"\
 				"}										";
 				
@@ -358,10 +365,11 @@ void initialize(){
 	const GLchar *fragmentShaderSourceCode =
 				"#version 440" \
 				"\n" \
+				"in vec4 out_color;"\
 				"out vec4 FragColor;" \
 				"void main(void)" \
 				"{" \
-				"FragColor=vec4(0.5,0.4,0.8,1.0);" \
+				"FragColor=out_color;" \
 				"}";
 				
 	glShaderSource(gFragmentShaderObject, 1, (const GLchar**)&fragmentShaderSourceCode,NULL);
@@ -403,6 +411,7 @@ void initialize(){
 	
 	//pre-link binding of shader program object with vertex shader position attribute
 	glBindAttribLocation(gShaderProgramObject, VDG_ATTRIBUTE_VERTEX,"vPosition");
+	glBindAttribLocation(gShaderProgramObject, VDG_ATTRIBUTE_COLOR,"vColor");
 	
 	//link shader
 	glLinkProgram(gShaderProgramObject);
@@ -433,18 +442,24 @@ void initialize(){
 	//four vertices
 	const GLfloat vertex_positions[]=
 	{
-		-1.0f, -1.0f, 0.0f, 1.0f,
+		/*-1.0f, -1.0f, 0.0f, 1.0f,
 		1.0f, -1.0f, 0.0f, 1.0f,
 		-1.0f, 1.0f, 0.0f, 1.0f,
-		-1.0f, -1.0f, 0.0f, 1.0f,
+		-1.0f, -1.0f, 0.0f, 1.0f,*/
+		0.0f, 1.0f, 0.0f,
+		-1.0f, -1.0f, 0.0f,
+		1.0f, -1.0f, 0.0f
 	};
 	
 	const GLfloat vertex_colors[]=
 	{
-		1.0f, 1.0f, 1.0f, 1.0f,
+		/*1.0f, 1.0f, 1.0f, 1.0f,
 		1.0f, 1.0f, 0.0f, 1.0f,
 		1.0f, 0.0f, 1.0f, 1.0f,
-		0.0f, 1.0f, 1.0f, 1.0f
+		0.0f, 1.0f, 1.0f, 1.0f*/
+		1.0f, 0.0f, 0.0f,
+		0.0f, 1.0f, 0.0f,
+		0.0f, 0.0f, 1.0f
 	};
 	
 	const GLushort vertex_indices[]=
@@ -452,26 +467,40 @@ void initialize(){
 		0, 1, 2
 	};
 	
-	//set up the element array buffer
-	glGenBuffers(1, &gEbo);
-	glBindBuffer(GL_ELEMENT_ARRAY_BUFFER, gEbo);
-	glBufferData(GL_ELEMENT_ARRAY_BUFFER, sizeof(vertex_indices), vertex_indices, GL_STATIC_DRAW);
+	
 	
 	//set up vertex attributes
-	glGenVertexArrays(1, &gVao);
+	/*glGenVertexArrays(1, &gVao);
 	glBindVertexArray(gVao);
 	
 	glGenBuffers(1, &gVbo);
 	glBindBuffer(GL_ARRAY_BUFFER, gVbo);
 	glBufferData(GL_ARRAY_BUFFER, sizeof(vertex_positions)+sizeof(vertex_colors), NULL, GL_STATIC_DRAW);
 	glBufferSubData(GL_ARRAY_BUFFER, 0, sizeof(vertex_positions), vertex_positions);
-	glBufferSubData(GL_ARRAY_BUFFER, sizeof(vertex_positions), sizeof(vertex_colors), vertex_colors);
+	glBufferSubData(GL_ARRAY_BUFFER, sizeof(vertex_positions), sizeof(vertex_colors), vertex_colors);*/
 	
-	//glVertexAttribPointer(VDG_ATTRIBUTE_VERTEX, 2, GL_FLOAT, GL_FALSE, 0, NULL);
+	//set up the element array buffer
+	glGenBuffers(1, &gEbo);
+	glBindBuffer(GL_ELEMENT_ARRAY_BUFFER, gEbo);
+	glBufferData(GL_ELEMENT_ARRAY_BUFFER, sizeof(vertex_indices), vertex_indices, GL_STATIC_DRAW);
 	
-	//glEnableVertexAttribArray(VDG_ATTRIBUTE_VERTEX);
 	
+	glGenBuffers(1, &gVbo_pos);
+	glBindBuffer(GL_ARRAY_BUFFER, gVbo_pos);
+	glBufferData(GL_ARRAY_BUFFER, sizeof(vertex_positions), vertex_positions, GL_STATIC_DRAW);
+	glVertexAttribPointer(VDG_ATTRIBUTE_VERTEX, 3, GL_FLOAT, GL_FALSE, 0, NULL);
+	glEnableVertexAttribArray(VDG_ATTRIBUTE_VERTEX);
 	glBindBuffer(GL_ARRAY_BUFFER, 0);
+	
+	
+	//color
+	glGenBuffers(1, &gVbo_col);
+	glBindBuffer(GL_ARRAY_BUFFER, gVbo_col);
+	glBufferData(GL_ARRAY_BUFFER, sizeof(vertex_colors), vertex_colors, GL_STATIC_DRAW);
+	glVertexAttribPointer(VDG_ATTRIBUTE_COLOR, 3, GL_FLOAT, GL_FALSE, 0, NULL);
+	glEnableVertexAttribArray(VDG_ATTRIBUTE_COLOR);
+	glBindBuffer(GL_ARRAY_BUFFER, 0);
+	
 	glBindVertexArray(0);
 	
 	glShadeModel(GL_SMOOTH);
@@ -491,7 +520,7 @@ void initialize(){
 	//we will always cull back faces for better performance
 	glEnable(GL_CULL_FACE);
 	
-	glClearColor(0.0f,0.0f,0.0f,0.0f);
+	glClearColor(0.250f,0.250f,0.250f,0.0f);
 	
 	//set orthographicMatrix to identify matrix
 	gPerspectiveProjectionMatrix = mat4::identity();
@@ -520,7 +549,7 @@ void display(){
 	
 	//pass the above modelViewProjectionMatrix to the vertex shader in 'u_mvp_matrix' shader variable
 	//whose position value we already calculated in initWithFrame() by using glGetUniformLocation()
-	glUniformMatrix4fv(gMVPUniform, 4, GL_FALSE, modelViewProjectionMatrix);
+	glUniformMatrix4fv(gMVPUniform, 1, GL_FALSE, modelViewProjectionMatrix);
 	
 	//bind vao
 	glBindVertexArray(gVao);
@@ -546,7 +575,7 @@ void display(){
 	
 	//pass the above modelViewProjectionMatrix to the vertex shader in 'u_mvp_matrix' shader variable
 	//whose position value we already calculated in initWithFrame() by using glGetUniformLocation()
-	glUniformMatrix4fv(gMVPUniform, 4, GL_FALSE, modelViewProjectionMatrix);
+	glUniformMatrix4fv(gMVPUniform, 1, GL_FALSE, modelViewProjectionMatrix);
 	
 	//bind vao
 	glBindVertexArray(gVao);
@@ -572,13 +601,13 @@ void display(){
 	
 	//pass the above modelViewProjectionMatrix to the vertex shader in 'u_mvp_matrix' shader variable
 	//whose position value we already calculated in initWithFrame() by using glGetUniformLocation()
-	glUniformMatrix4fv(gMVPUniform, 4, GL_FALSE, modelViewProjectionMatrix);
+	glUniformMatrix4fv(gMVPUniform, 1, GL_FALSE, modelViewProjectionMatrix);
 	
 	//bind vao
 	glBindVertexArray(gVao);
 	
 	//draw, either by glDrawTriangles() or glDrawArrays() or glDrawElements()
-	glDrawElementsBaseVertex(GL_TRIANGLES, 3, GL_UNSIGNED_SHORT, NULL, 1);
+	glDrawElementsBaseVertex(GL_TRIANGLES, 3, GL_UNSIGNED_SHORT, NULL, 0);
 	
 	//unbind vao
 	glBindVertexArray(0);
@@ -598,7 +627,7 @@ void display(){
 	
 	//pass the above modelViewProjectionMatrix to the vertex shader in 'u_mvp_matrix' shader variable
 	//whose position value we already calculated in initWithFrame() by using glGetUniformLocation()
-	glUniformMatrix4fv(gMVPUniform, 4, GL_FALSE, modelViewProjectionMatrix);
+	glUniformMatrix4fv(gMVPUniform, 1, GL_FALSE, modelViewProjectionMatrix);
 	
 	//bind vao
 	glBindVertexArray(gVao);
@@ -654,6 +683,18 @@ void uninitialize(){
 	{
 		glDeleteBuffers(1, &gVbo);
 		gVbo = 0;
+	}
+	
+	if(gVbo_pos)
+	{
+		glDeleteBuffers(1, &gVbo_pos);
+		gVbo_pos = 0;
+	}
+	
+	if(gVbo_col)
+	{
+		glDeleteBuffers(1, &gVbo_col);
+		gVbo_col = 0;
 	}
 	
 	//destroy vbo
