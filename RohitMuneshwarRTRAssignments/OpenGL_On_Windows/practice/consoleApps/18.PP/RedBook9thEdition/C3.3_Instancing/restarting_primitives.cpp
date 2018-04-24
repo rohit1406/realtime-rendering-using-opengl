@@ -323,11 +323,11 @@ void initialize(){
 				"#version 440							"\
 				"\n										"\
 				
-				"layout (location=0) in vec4 vPosition;						"\
-				"layout (location=1) in vec3 vNormal;						"\
+				"in vec4 vPosition;						"\
+				"in vec3 vNormal;						"\
 				//vColor is per instance attribute
-				"layout (location=2) in vec4 vColor;"\
-				"layout (location=3) in mat4 vModelMatrix;"\
+				"in vec4 vColor;"\
+				"in mat4 vModelMatrix;"\
 				"uniform mat4 u_view_matrix;				"\
 				"uniform mat4 u_projection_matrix;"\
 				"out out_vertex"\
@@ -428,8 +428,8 @@ void initialize(){
 	glAttachShader(gShaderProgramObject,gFragmentShaderObject);
 	
 	//pre-link binding of shader program object with vertex shader position attribute
-	glBindAttribLocation(gShaderProgramObject, VDG_ATTRIBUTE_VERTEX,"vPosition");
-	glBindAttribLocation(gShaderProgramObject, VDG_ATTRIBUTE_COLOR,"vColor");
+	//glBindAttribLocation(gShaderProgramObject, VDG_ATTRIBUTE_VERTEX,"vPosition");
+	//glBindAttribLocation(gShaderProgramObject, VDG_ATTRIBUTE_COLOR,"vColor");
 	
 	//get the locations of the vertex attributes
 	int position_loc = glGetAttribLocation(gShaderProgramObject, "vPosition");
@@ -464,7 +464,34 @@ void initialize(){
 	gProjectionUniform = glGetUniformLocation(gShaderProgramObject, "u_projection_matrix");
 	
 	//vertices, colors, shader attribs, vbo, vao initializations
+	const GLfloat vertex_positions[]=
+	{
+		-1.0f, -1.0f, 0.0f, 1.0f,
+		1.0f, -1.0f, 0.0f, 1.0f,
+		-1.0f, 1.0f, 0.0f, 1.0f,
+		-1.0f, -1.0f, 0.0f, 1.0f,
+		/*-1.0f, -1.0f, 0.0f,
+		1.0f, -1.0f, 0.0f,
+		-1.0f, 1.0f, 0.0f*/
+	};
 	
+	const GLfloat vertex_colors[]=
+	{
+		1.0f, 1.0f, 1.0f, 1.0f,
+		1.0f, 1.0f, 0.0f, 1.0f,
+		1.0f, 0.0f, 1.0f, 1.0f,
+		0.0f, 1.0f, 1.0f, 1.0f
+		/*1.0f, 1.0f, 1.0f,
+		1.0f, 1.0f, 0.0f,
+		1.0f, 0.0f, 1.0f*/
+	};
+	
+	const GLfloat vertex_noramals[] =
+	{
+		-1.0f, -1.0f, 0.0f,
+		1.0f, -1.0f, 0.0f,
+		-1.0f, 1.0f, 0.0f
+	};
 	//set up vertex attributes
 	glGenVertexArrays(1, &gVao);
 	//glCreateVertexArrays(1, &gVao);
@@ -478,7 +505,7 @@ void initialize(){
 	glGenBuffers(1, &gVbo_pos);
 	//glCreateBuffers(1, &gVbo_pos);
 	glBindBuffer(GL_ARRAY_BUFFER, gVbo_pos);
-	//glBufferData(GL_ARRAY_BUFFER, sizeof(vertex_positions), vertex_positions, GL_STATIC_DRAW);
+	glBufferData(GL_ARRAY_BUFFER, sizeof(vertex_positions), vertex_positions, GL_STATIC_DRAW);
 	//glNamedBufferStorage(gVbo_pos, sizeof(vertex_positions), vertex_positions, 0);
 	
 	//associate data going into our vertex shader in variables to vao
@@ -493,7 +520,7 @@ void initialize(){
 	//normal
 	glGenBuffers(1, &gVbo_normal);
 	glBindBuffer(GL_ARRAY_BUFFER, gVbo_normal);
-	//glBufferData(GL_ARRAY_BUFFER, sizeof(vertex_colors), vertex_colors, GL_STATIC_DRAW);
+	glBufferData(GL_ARRAY_BUFFER, sizeof(vertex_noramals), vertex_noramals, GL_STATIC_DRAW);
 	glVertexAttribPointer(normal_loc, 3, GL_FLOAT, GL_FALSE, 0, NULL);
 	glEnableVertexAttribArray(normal_loc);
 	glBindBuffer(GL_ARRAY_BUFFER, 0);
@@ -501,7 +528,7 @@ void initialize(){
 	//color
 	glGenBuffers(1, &gVbo_col);
 	glBindBuffer(GL_ARRAY_BUFFER, gVbo_col);
-	//glBufferData(GL_ARRAY_BUFFER, sizeof(vertex_colors), vertex_colors, GL_STATIC_DRAW);
+	glBufferData(GL_ARRAY_BUFFER, sizeof(vertex_colors), vertex_colors, GL_STATIC_DRAW);
 	glVertexAttribPointer(color_loc, 4, GL_FLOAT, GL_FALSE, 0, NULL);
 	glEnableVertexAttribArray(color_loc);
 	glVertexAttribDivisor(color_loc, 1);
@@ -509,10 +536,11 @@ void initialize(){
 	
 	//model matrix
 	glGenBuffers(1, &gVbo_matrix);
-	glBindBuffer(GL_ARRAY_BUFFER, gVbo_matrix);
+	glBindBuffer(GL_COPY_WRITE_BUFFER, gVbo_matrix);
 	//glBufferData(GL_ARRAY_BUFFER, sizeof(vertex_colors), vertex_colors, GL_STATIC_DRAW);
-	
+	glBufferData(GL_COPY_WRITE_BUFFER, sizeof(mat4) * 4, NULL, GL_STATIC_DRAW);
 	for(int i=0;i<4;i++){
+		
 	glVertexAttribPointer(matrix_loc+i, 4, GL_FLOAT, GL_FALSE, sizeof(mat4), (void *)(sizeof(vec4) * i));
 	glEnableVertexAttribArray(matrix_loc+i);
 	glVertexAttribDivisor(matrix_loc+i, 1);
@@ -520,8 +548,9 @@ void initialize(){
 	glBindBuffer(GL_ARRAY_BUFFER, 0);
 	
 	
+	
 	//map the buffer
-	mat4 * matrices = (mat4 *) glMapBuffer(GL_ARRAY_BUFFER, GL_WRITE_ONLY);
+	mat4 * matrices = (mat4 *) glMapBuffer(GL_COPY_WRITE_BUFFER, GL_WRITE_ONLY);
 	float t = 1.0f;
 	for(int n=0;n< INSTANCE_COUNT; n++)
 	{
@@ -536,7 +565,8 @@ void initialize(){
 					
 	}
 	
-	glUnmapBuffer(GL_ARRAY_BUFFER);
+	glUnmapBuffer(GL_COPY_WRITE_BUFFER);
+	
 	
 	glBindVertexArray(0);
 	
@@ -569,8 +599,6 @@ void initialize(){
 void display(){
 	glClear(GL_COLOR_BUFFER_BIT | GL_DEPTH_BUFFER_BIT); // | GL_STENCIL_BUFFER add kelyawar output disat nhi.... why?
 	
-	
-	
 	//OpenGL drawing
 	
 	//start using OpenGL program object
@@ -594,7 +622,7 @@ void display(){
 	//bind vao
 	glBindVertexArray(gVao);
 	
-	glDrawArraysInstanced(GL_TRIANGLES, 0, sizeof(float) * 100000000, INSTANCE_COUNT);
+	glDrawArraysInstanced(GL_TRIANGLES, 0, 3, 1);
 	
 	//unbind vao
 	glBindVertexArray(0);
