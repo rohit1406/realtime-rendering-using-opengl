@@ -60,15 +60,18 @@ GLuint gMVPUniform;
 
 mat4 gPerspectiveProjectionMatrix;
 
-GLint arrayWidth, arrayHeight;
-GLfloat *verts = NULL;
-GLfloat *colors = NULL;
-GLfloat *velocities = NULL;
-GLfloat *startTimes = NULL;
+static GLint arrayWidth, arrayHeight;
+static GLfloat *verts = NULL;
+static GLfloat *colors = NULL;
+static GLfloat *velocities = NULL;
+static GLfloat *startTimes = NULL;
 
 GLuint location;
 float ParticleTime = 0.0f;
 bool DoingParticles=true;
+GLint gridX = 100;
+GLint gridY = 100;
+
 
 int WINAPI WinMain(HINSTANCE hInstance, HINSTANCE hPrevInstance, LPSTR lpszCmdLIne, int iCmdShow){
 	void initialize(void);
@@ -270,6 +273,7 @@ void ToggleFullscreen(){
 
 void createPoints(GLint w, GLint h)
 {
+	fprintf(g_fp_logfile,"inside createPoints \n");
 	GLfloat *vptr, *cptr, *velptr, *stptr;
 	GLfloat i, j;
 	
@@ -290,29 +294,40 @@ void createPoints(GLint w, GLint h)
 	
 	for(i=0.5/w - 0.5; i<0.5; i=i+1.0/w)
 	{
+		fprintf(g_fp_logfile,"outer for loop \n");
 		for(j=0.5/h - 0.5; j<0.5; j=j+1.0/h)
 		{
+			fprintf(g_fp_logfile,"inner for loop \n");
 			*vptr=i;
 			*(vptr+1)=0.0;
 			*(vptr+2)=j;
 			vptr+=3;
+			//fprintf(g_fp_logfile,"inner for loop - vertex %f %f %f\n", i, 0.0, j);
 			
 			*cptr=((float) rand() / RAND_MAX) * 0.5 + 0.5;
 			*(cptr+1)=((float) rand() / RAND_MAX) * 0.5 + 0.5;
 			*(cptr+2)=((float) rand() / RAND_MAX) * 0.5 + 0.5;
 			cptr+=3;
+			//fprintf(g_fp_logfile,"inner for loop - colors %f %f %f\n", (((float) rand() / RAND_MAX) * 0.5 + 0.5), (((float) rand() / RAND_MAX) * 0.5 + 0.5), (((float) rand() / RAND_MAX) * 0.5 + 0.5));
 			
-			*velptr=((float) rand() / RAND_MAX) + 3.0;
-			*(velptr+1)=((float) rand() / RAND_MAX) + 10.0;
-			*(velptr+2)=((float) rand() / RAND_MAX) + 3.0;
+			float vel1=((float) rand() / RAND_MAX) + 3;
+			float vel2=((float) rand() / RAND_MAX) * 10;
+			float vel3=((float) rand() / RAND_MAX) + 3;
+			*velptr=vel1;
+			*(velptr+1)=vel2;
+			*(velptr+2)=vel3;
 			velptr+=3;
+		//	fprintf(g_fp_logfile,"inner for loop - velocity %f %f %f\n", vel1, vel2, vel3);
 			
-			*stptr=((float) rand() / RAND_MAX) * 10.0;
+			*stptr=((float) rand() / RAND_MAX) + 5.0;
+		//	fprintf(g_fp_logfile,"inner for loop - start time %f\n",*stptr);
+			
 			stptr++;
 		}
 	}
 	arrayWidth=w;
 	arrayHeight=h;
+	fprintf(g_fp_logfile,"createPoints ends with arrayWidth=%d and arrayHeight=%d \n",arrayWidth, arrayHeight);
 }
 
 void initialize(){
@@ -396,21 +411,21 @@ void initialize(){
 				"float t = Time - StartTime;"\
 				"if(t >= 0.0)"\
 				"{"\
-				"vert = vPosition + vec4(Velocity * t, 0.0);"\
+				"vert = vPosition + vec4(Velocity,0.0);"\
 				"vert.y -= 4.9 * t * t;"\
 				"out_color = vColor;"\
 				"}"\
 				"else"\
 				"{"\
-				"vert = vPosition;"\
-				"out_color=Background;"\
+				"vert=vPosition;" \
+				"out_color=vec4(1.0,0.0,0.0,0.0);"\
 				"}"\
 				"gl_Position = u_mvp_matrix * vert;	"\
 				"}										";
 				
 				
 	glShaderSource(gVertexShaderObject, 1, (const GLchar**)&vertexShaderSourceCode,NULL);
-	fprintf(g_fp_logfile,"Actual shadig language version is %s\n",glGetString(GL_SHADING_LANGUAGE_VERSION));
+	fprintf(g_fp_logfile,"Actual shading language version is %s\n",glGetString(GL_SHADING_LANGUAGE_VERSION));
 	//compile shader
 	glCompileShader(gVertexShaderObject);
 	
@@ -521,7 +536,7 @@ void initialize(){
 	
 	//vertices, colors, shader attribs, vbo, vao initializations
 	//initial values for particle system
-	createPoints(1,1);
+	createPoints(gridX,gridY);
 	
 	
 	
@@ -541,9 +556,16 @@ void initialize(){
 	glBufferData(GL_ELEMENT_ARRAY_BUFFER, sizeof(vertex_indices), vertex_indices, GL_STATIC_DRAW);
 	*/
 	
+	/*
+	
+	verts = (GLfloat *) malloc(w * h * 3 * sizeof(float));
+	colors = (GLfloat *) malloc(w * h * 3 * sizeof(float));
+	velocities = (GLfloat *) malloc(w * h * 3 * sizeof(float));
+	startTimes = (GLfloat *) malloc(w * h * sizeof(float));
+	*/
 	glGenBuffers(1, &gVbo_pos);
 	glBindBuffer(GL_ARRAY_BUFFER, gVbo_pos);
-	glBufferData(GL_ARRAY_BUFFER, sizeof(verts), verts, GL_STATIC_DRAW);
+	glBufferData(GL_ARRAY_BUFFER, gridX * gridY * 3 * sizeof(float), verts, GL_STATIC_DRAW);
 	glVertexAttribPointer(VDG_ATTRIBUTE_VERTEX, 3, GL_FLOAT, GL_FALSE, 0, NULL);
 	glEnableVertexAttribArray(VDG_ATTRIBUTE_VERTEX);
 	glBindBuffer(GL_ARRAY_BUFFER, 0);
@@ -552,7 +574,7 @@ void initialize(){
 	//color
 	glGenBuffers(1, &gVbo_col);
 	glBindBuffer(GL_ARRAY_BUFFER, gVbo_col);
-	glBufferData(GL_ARRAY_BUFFER, sizeof(colors), colors, GL_STATIC_DRAW);
+	glBufferData(GL_ARRAY_BUFFER, gridX * gridY * 3 * sizeof(float), colors, GL_STATIC_DRAW);
 	glVertexAttribPointer(VDG_ATTRIBUTE_COLOR, 3, GL_FLOAT, GL_FALSE, 0, NULL);
 	glEnableVertexAttribArray(VDG_ATTRIBUTE_COLOR);
 	glBindBuffer(GL_ARRAY_BUFFER, 0);
@@ -560,7 +582,7 @@ void initialize(){
 	//velocity
 	glGenBuffers(1, &gVbo_velocity);
 	glBindBuffer(GL_ARRAY_BUFFER, gVbo_velocity);
-	glBufferData(GL_ARRAY_BUFFER, sizeof(velocities), velocities, GL_STATIC_DRAW);
+	glBufferData(GL_ARRAY_BUFFER,  3 * sizeof(float) *gridX * gridY, velocities, GL_STATIC_DRAW);
 	glVertexAttribPointer(VELOCITY_ARRAY, 3, GL_FLOAT, GL_FALSE, 0, NULL);
 	glEnableVertexAttribArray(VELOCITY_ARRAY);
 	glBindBuffer(GL_ARRAY_BUFFER, 0);
@@ -568,7 +590,7 @@ void initialize(){
 	//time
 	glGenBuffers(1, &gVbo_time);
 	glBindBuffer(GL_ARRAY_BUFFER, gVbo_time);
-	glBufferData(GL_ARRAY_BUFFER, sizeof(startTimes), startTimes, GL_STATIC_DRAW);
+	glBufferData(GL_ARRAY_BUFFER, sizeof(gridX * gridY * sizeof(float)), startTimes, GL_STATIC_DRAW);
 	glVertexAttribPointer(START_TIME_ARRAY, 1, GL_FLOAT, GL_FALSE, 0, NULL);
 	glEnableVertexAttribArray(START_TIME_ARRAY);
 	glBindBuffer(GL_ARRAY_BUFFER, 0);
@@ -590,9 +612,9 @@ void initialize(){
 	glHint(GL_PERSPECTIVE_CORRECTION_HINT, GL_NICEST);
 	
 	//we will always cull back faces for better performance
-	glEnable(GL_CULL_FACE);
+	//glEnable(GL_CULL_FACE);
 	
-	glClearColor(0.0f,0.0f,0.0f,0.0f);
+	glClearColor(0.0f,0.0f,0.0f,1.0f);
 	
 	//set orthographicMatrix to identify matrix
 	gPerspectiveProjectionMatrix = mat4::identity();
@@ -607,15 +629,15 @@ void display(){
 	
 	glClear(GL_COLOR_BUFFER_BIT | GL_DEPTH_BUFFER_BIT); // | GL_STENCIL_BUFFER add kelyawar output disat nhi.... why?
 	
-	if(DoingParticles)
-	{
-		location = glGetUniformLocation(gShaderProgramObject, "Time");
-		ParticleTime += 0.001f;
-		glUniform1f(location, ParticleTime);
-	}
+	
 	
 	//start using OpenGL program object
 	glUseProgram(gShaderProgramObject);
+	
+	location = glGetUniformLocation(gShaderProgramObject, "Time");
+	ParticleTime += 0.0005f;
+	glUniform1f(location, ParticleTime);
+	
 	
 	//OpenGL drawing
 	//DrawArrays
@@ -624,20 +646,22 @@ void display(){
 	mat4 modelViewProjectionMatrix=mat4::identity();
 	
 	//translate
-	modelViewMatrix = translate(-3.0f,0.0f,-5.0f);
+	modelViewMatrix = translate(0.0f,0.0f,-3.0f);
 	
 	//multiply the modelview and perspective matrix to get modelviewprojection matrix
 	modelViewProjectionMatrix = gPerspectiveProjectionMatrix * modelViewMatrix; //order is important
 	
 	//pass the above modelViewProjectionMatrix to the vertex shader in 'u_mvp_matrix' shader variable
-	//whose position value we already calculated in initWithFrame() by using glGetUniformLocation()
+	//whose position value we 	 already calculated in initWithFrame() by using glGetUniformLocation()
 	glUniformMatrix4fv(gMVPUniform, 1, GL_FALSE, modelViewProjectionMatrix);
 	
 	//bind vao
 	glBindVertexArray(gVao);
 	
 	//draw, either by glDrawTriangles() or glDrawArrays() or glDrawElements()
-	drawPoints();
+	//drawPoints();
+	glPointSize(5.0);
+	glDrawArrays(GL_POINTS, 0, arrayWidth * arrayHeight);
 	
 	//unbind vao
 	glBindVertexArray(0);
@@ -652,7 +676,7 @@ void display(){
 void drawPoints()
 {
 	glPointSize(2.0);
-	glVertexPointer(3, GL_FLOAT, 0, verts);
+	/*glVertexPointer(3, GL_FLOAT, 0, verts);
 	glColorPointer(3, GL_FLOAT, 0, colors);
 	glVertexAttribPointer(VELOCITY_ARRAY, 3, GL_FLOAT, GL_FALSE, 0, velocities);
 	glVertexAttribPointer(START_TIME_ARRAY, 1, GL_FLOAT, GL_FALSE, 0, startTimes);
@@ -661,13 +685,14 @@ void drawPoints()
 	glEnableClientState(VDG_ATTRIBUTE_COLOR);
 	glEnableVertexAttribArray(VELOCITY_ARRAY);
 	glEnableVertexAttribArray(START_TIME_ARRAY);
-	
+	*/
 	glDrawArrays(GL_POINTS, 0, arrayWidth * arrayHeight);
-	
+	/*
 	glDisableClientState(VDG_ATTRIBUTE_VERTEX);
 	glDisableClientState(VDG_ATTRIBUTE_COLOR);
 	glDisableVertexAttribArray(VELOCITY_ARRAY);
 	glDisableVertexAttribArray(START_TIME_ARRAY);
+	*/
 }
 
 void resize(int width,int height){
