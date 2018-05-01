@@ -2,8 +2,8 @@
 Log file is opened successfully...
 Actual shadig language version is 4.40 - Build 21.20.16.4565
 Initialized with : F key 0 and V key 1
-F Pressed : F key 1 and V key 0
-F Pressed : F key 0 and V key 1
-F Pressed : F key 1 and V key 0
+V Pressed : F key 1 and V key 0
+V Pressed : F key 0 and V key 1
+V Pressed : F key 1 and V key 0
 
 Log file is closed successfully...

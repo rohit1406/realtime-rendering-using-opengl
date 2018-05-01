@@ -50,21 +50,21 @@ var gbLight=false;
 
 
 	//light0
-var light0_ambient=[0.0,0.0,0.0,0.0];
-var light0_defused=[1.0,0.0,0.0,0.0];
-var light0_specular=[1.0,0.0,0.0,0.0];
+var light0_ambient=[0.0,0.0,0.0];
+var light0_defused=[1.0,0.0,0.0];
+var light0_specular=[1.0,0.0,0.0];
 var light0_position=[2.0,1.0,1.0,0.0];
 
 
 //light1
-var light1_ambient=[0.0,0.0,0.0,0.0];
-var light1_defused=[0.0,0.0,1.0,0.0];
-var light1_specular=[0.0,0.0,1.0,0.0];
+var light1_ambient=[0.0,0.0,0.0];
+var light1_defused=[0.0,0.0,1.0];
+var light1_specular=[0.0,0.0,1.0];
 var light1_position=[-2.0,1.0,1.0,0.0];
 
-var materialAmbient=[0.0,0.0,0.0,1.0];
-var materialDifuse=[1.0,1.0,1.0,1.0];
-var materialSpecular=[1.0,1.0,1.0,1.0];
+var materialAmbient=[0.0,0.0,0.0];
+var materialDifuse=[1.0,1.0,1.0];
+var materialSpecular=[1.0,1.0,1.0];
 var materialShininess = 50.0;
 
 //onload function

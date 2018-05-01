@@ -38,6 +38,9 @@ var gVao_StraightBoard;
 var gVbo_StraightBoard_Position;
 var gVbo_StraightBoard_Texture;
 
+var gVao_TiltedBoard;
+var gVbo_TiltedBoard_Position
+
 var mvpUniform;
 
 var gPerspectiveProjectionMatrix;
@@ -175,35 +178,32 @@ function init()
 	
 	//load checker board texture
 	gChecker_board_texture = gl.createTexture();
-	gSmiley_texture.image = new Image();
-	//gSmiley_texture.image.src = "smiley.png";
-	gSmiley_texture.image.onload = function()
-	{
-		gl.bindTexture(gl.TEXTURE_2D, gSmiley_texture);
-		gl.pixelStorei(gl.UNPACK_ALIGNMENT, true);
+	
+		gl.bindTexture(gl.TEXTURE_2D, gChecker_board_texture);
+    gl.pixelStorei(gl.UNPACK_FLIP_Y_WEBGL,true);
 		gl.texParameteri(gl.TEXTURE_2D, gl.TEXTURE_WRAP_S, gl.REPEAT);
 		gl.texParameteri(gl.TEXTURE_2D, gl.TEXTURE_WRAP_T, gl.REPEAT);
-		glTexParameteri(GL_TEXTURE_2D, GL_TEXTURE_MAG_FILTER, GL_NEAREST);
-		glTexParameteri(GL_TEXTURE_2D, GL_TEXTURE_MIN_FILTER, GL_NEAREST);
+		gl.texParameteri(gl.TEXTURE_2D, gl.TEXTURE_MAG_FILTER, gl.NEAREST);
+		gl.texParameteri(gl.TEXTURE_2D, gl.TEXTURE_MIN_FILTER, gl.NEAREST);
 		
 		var c = 0;
-		var checkImage[64][64][4];
-		for (var i = 0; i < 64; i++) {
-			for (var j = 0; j < 64; j++) {
-				for (var k = 0; k < 4; k++) {
-					c = ((i & 0x8) ^ (j & 0x8)) * 255;
-					if (k == 3)
-						checkImage[i][j][k] = 255;
-					else
-						checkImage[i][j][k] = c;
+		var checkImage = [];
+		for(var i =0;i<64;i++){
+			for(var j =0; j<64;j++){
+				for (var k =0 ;k< 4;k++){
+					c = ((i & 0x8) ^ (j & 0x8))*255;
+					checkImage[(i*64+j)*4]= c;
+					checkImage[(i*64+j)*4+1]= c;
+					checkImage[(i*64+j)*4+2]= c;
+					checkImage[(i*64+j)*4+3]= 0xff;
 				}
 			}
-		}
-		gl.texImage2D(GL_TEXTURE_2D,0, GL_RGBA,64,64,0, GL_RGBA,		GL_UNSIGNED_BYTE,		checkImage);
-		gl.texEnvf(gl.TEXTURE_ENV, gl.TEXTURE_ENV_MODE, gl.REPLACE);
+		} 
+    gl.texImage2D(gl.TEXTURE_2D,0,gl.RGBA,64,64,0,gl.RGBA,gl.UNSIGNED_BYTE,new Uint8Array(checkImage));
+		//gl.texEnvf(gl.TEXTURE_ENV, gl.TEXTURE_ENV_MODE, gl.REPLACE);
 		
 		gl.bindTexture(gl.TEXTURE_2D, null);
-	}
+	
 	
 	
 	//get MVP uniform location
@@ -219,7 +219,7 @@ function init()
 									]
 									);
 		
-	var checkerBoardTexcoords[] =new Float32Array(
+	var checkerBoardTexcoords =new Float32Array(
 	[
 		0.0, 0.0,
 		0.0,1.0,
@@ -227,7 +227,12 @@ function init()
 		1.0,0.0
 	]);
 
-	
+	var tiltedFacingQuadVertices = new Float32Array([
+        1.0,-1.0,0.0,
+        1.0,1.0,0.0,
+        2.41421,1.0,-1.41421,
+        2.41421,-1.0,-1.41421
+   ] );
 	
 	//triangle vao
 	gVao_StraightBoard=gl.createVertexArray();
@@ -246,22 +251,43 @@ function init()
 	//triangle color
 	gVbo_StraightBoard_Texture=gl.createBuffer();
 	gl.bindBuffer(gl.ARRAY_BUFFER, gVbo_StraightBoard_Texture);
-	gl.bufferData(gl.ARRAY_BUFFER, checkerBoardTexcoords, gl.GL_STATIC_DRAW);
+	gl.bufferData(gl.ARRAY_BUFFER, checkerBoardTexcoords, gl.STATIC_DRAW);
 	gl.vertexAttribPointer(WebGLMacros.VDG_ATTRIBUTE_TEXTURE0, 2, gl.FLOAT, false, 0, null);
 	gl.enableVertexAttribArray(WebGLMacros.VDG_ATTRIBUTE_TEXTURE0);
 	gl.bindBuffer(gl.ARRAY_BUFFER, null);
 	
 	gl.bindVertexArray(null);
 	
+	
+	 gVao_TiltedBoard = gl.createVertexArray();
+    gl.bindVertexArray(gVao_TiltedBoard);
+    //position
+    gVbo_TiltedBoard_Position = gl.createBuffer();
+    gl.bindBuffer(gl.ARRAY_BUFFER,gVbo_TiltedBoard_Position);
+    gl.bufferData(gl.ARRAY_BUFFER,tiltedFacingQuadVertices,gl.STATIC_DRAW);
+    gl.vertexAttribPointer(WebGLMacros.VDG_ATTRIBUTE_VERTEX,3,gl.FLOAT,false,0,0);
+    gl.enableVertexAttribArray(WebGLMacros.VDG_ATTRIBUTE_VERTEX);
+    gl.bindBuffer(gl.ARRAY_BUFFER,null);
+   //vbo texture
+    gVbo_Texture = gl.createBuffer();
+    gl.bindBuffer(gl.ARRAY_BUFFER,gVbo_Texture)
+    gl.bufferData(gl.ARRAY_BUFFER,checkerBoardTexcoords,gl.STATIC_DRAW);
+    gl.vertexAttribPointer(WebGLMacros.VDG_ATTRIBUTE_TEXTURE0,2,gl.FLOAT,false,0,0); // 2 for S and T in tex cord
+    gl.enableVertexAttribArray(WebGLMacros.VDG_ATTRIBUTE_TEXTURE0);
+    gl.bindBuffer(gl.ARRAY_BUFFER,null)
+    
+    //gl.vertexAttrib3f(WebGLMacros.SAM_ATTRIBUTE_COLOR,0.5,0.5,1.0);
+    gl.bindVertexArray(null);
+	
 	//set clear color
     //gl.shadeModel(gl.SMOOTH);
     gl.clearDepth(1.0);
     gl.enable(gl.DEPTH_TEST);
-    gl.enable(gl.CULL_FACE);
+   // gl.enable(gl.CULL_FACE);
     gl.depthFunc(gl.LEQUAL);
 	
 	gl.enable(gl.TEXTURE_2D);
-	gl.clearColor(0.0 , 0.0 , 0.0 , 1.0);
+	gl.clearColor(0.2 , 0.3 , 0.3 , 1.0);
 	
 	//initialize projection matrix
 	gPerspectiveProjectionMatrix=mat4.create();
@@ -294,7 +320,7 @@ function draw()
 	
 	gl.useProgram(shaderProgramObject);
 	
-	//pyramid draw
+	//straight draw
 	var modelViewMatrix=mat4.create();
 	var modelViewProjectionMatrix=mat4.create();
 	
@@ -306,6 +332,29 @@ function draw()
 	
 						
 	gl.bindVertexArray(gVao_StraightBoard);
+	
+	gl.bindTexture(gl.TEXTURE_2D, gChecker_board_texture);
+	gl.uniform1i(gTexture_sampler_uniform, 0);
+	
+	
+	
+	gl.drawArrays(gl.TRIANGLE_FAN, 0, 4);
+	
+	gl.bindVertexArray(null);
+	
+	
+	
+	modelViewMatrix=mat4.create();
+	modelViewProjectionMatrix=mat4.create();
+	
+	mat4.translate(modelViewMatrix, modelViewMatrix, [0.5, 0.0, -5.0]);
+	mat4.multiply(modelViewProjectionMatrix, gPerspectiveProjectionMatrix, modelViewMatrix);
+	
+	gl.uniformMatrix4fv(mvpUniform, false, modelViewProjectionMatrix);
+	
+	
+						
+	gl.bindVertexArray(gVao_TiltedBoard);
 	
 	gl.bindTexture(gl.TEXTURE_2D, gChecker_board_texture);
 	gl.uniform1i(gTexture_sampler_uniform, 0);

@@ -33,10 +33,6 @@ var vertexShaderObject;
 var fragmentShaderObject;
 var shaderProgramObject;
 
-var gVao_sphere;
-var gVbo_sphere_position;
-var gVbo_sphere_normal;
-
 
 	var gModelMatrixUniform, gViewMatrixUniform, gProjectionMatrixUniform;
 
@@ -58,132 +54,132 @@ var angleTriangle=0.0;
 var gbLight=false;
 
 var sphere =null;
-var light_ambient=[0.5,0.5,0.5,1.0];
-var light_defused=[1.0,1.0,1.0,1.0];
-var light_specular=[1.0,1.0,1.0,1.0];
+var light_ambient=[0.5,0.5,0.5];
+var light_defused=[1.0,1.0,1.0];
+var light_specular=[1.0,1.0,1.0];
 var light_position=[0.0,0.0,1.0,0.0];
 
-var s1_material_ambient=[0.0215,0.1745,0.0215,1.0];
-var s1_material_diffuse=[0.07568,0.61424,0.07568,1.0];
-var s1_material_specular=[0.633,0.727811,0.633,1.0];
+var s1_material_ambient=[0.0215,0.1745,0.0215];
+var s1_material_diffuse=[0.07568,0.61424,0.07568];
+var s1_material_specular=[0.633,0.727811,0.633];
 var s1_material_shininess=0.6 * 128;
 
-var s2_material_ambient=[0.135,0.2225,0.1575,1.0];
-var s2_material_diffuse=[0.54,0.89,0.63,1.0];
-var s2_material_specular=[0.316228,0.316228,0.316228,1.0];
+var s2_material_ambient=[0.135,0.2225,0.1575];
+var s2_material_diffuse=[0.54,0.89,0.63];
+var s2_material_specular=[0.316228,0.316228,0.316228];
 var s2_material_shininess=0.1 * 128;
 
-var s3_material_ambient=[0.05375,0.05,0.06625,1.0];
-var s3_material_diffuse=[0.18275,0.17,0.22525,1.0];
-var s3_material_specular=[0.332741,0.328634,0.346435,1.0];
+var s3_material_ambient=[0.05375,0.05,0.06625];
+var s3_material_diffuse=[0.18275,0.17,0.22525];
+var s3_material_specular=[0.332741,0.328634,0.346435];
 var s3_material_shininess=0.3 * 128;
 
-var s4_material_ambient=[0.25,0.20725,0.20725,1.0];
-var s4_material_diffuse=[1.0,0.829,0.829,1.0];
-var s4_material_specular=[0.296648,0.296648,0.296648,1.0];
+var s4_material_ambient=[0.25,0.20725,0.20725];
+var s4_material_diffuse=[1.0,0.829,0.829];
+var s4_material_specular=[0.296648,0.296648,0.296648];
 var s4_material_shininess=0.088 * 128;
 
-var s5_material_ambient=[0.1745,0.01175,0.01175,1.0];
-var s5_material_diffuse=[0.61424,0.04136,0.04136,1.0];
-var s5_material_specular=[0.727811,0.626959,0.626959,1.0];
+var s5_material_ambient=[0.1745,0.01175,0.01175];
+var s5_material_diffuse=[0.61424,0.04136,0.04136];
+var s5_material_specular=[0.727811,0.626959,0.626959];
 var s5_material_shininess=0.6 * 128;
 
-var s6_material_ambient=[0.1,0.18725,0.1745,1.0];
-var s6_material_diffuse=[0.396,0.74151,0.69102,1.0];
-var s6_material_specular=[0.297254,0.30829,0.306678,1.0];
+var s6_material_ambient=[0.1,0.18725,0.1745];
+var s6_material_diffuse=[0.396,0.74151,0.69102];
+var s6_material_specular=[0.297254,0.30829,0.306678];
 var s6_material_shininess=0.1 * 128;
 
-var s7_material_ambient=[0.329412,0.223529,0.027451,1.0];
-var s7_material_diffuse=[0.780392,0.568627,0.113725,1.0];
-var s7_material_specular=[0.992157,0.941176,0.807843,1.0];
+var s7_material_ambient=[0.329412,0.223529,0.027451];
+var s7_material_diffuse=[0.780392,0.568627,0.113725];
+var s7_material_specular=[0.992157,0.941176,0.807843];
 var s7_material_shininess=0.21794872 * 128;
 
-var s8_material_ambient=[0.2125,0.1275,0.054,1.0];
-var s8_material_diffuse=[0.714,0.4284,0.18144,1.0];
-var s8_material_specular=[0.393548,0.271906,0.166721,1.0];
+var s8_material_ambient=[0.2125,0.1275,0.054];
+var s8_material_diffuse=[0.714,0.4284,0.18144];
+var s8_material_specular=[0.393548,0.271906,0.166721];
 var s8_material_shininess=0.2 * 128;
 
-var s9_material_ambient=[0.25,0.25,0.25,1.0];
-var s9_material_diffuse=[0.4,0.4,0.4,1.0];
-var s9_material_specular=[0.774597,0.774597,0.774597,1.0];
+var s9_material_ambient=[0.25,0.25,0.25];
+var s9_material_diffuse=[0.4,0.4,0.4];
+var s9_material_specular=[0.774597,0.774597,0.774597];
 var s9_material_shininess=0.6 * 128;
 
-var s10_material_ambient=[0.19125,0.0735,0.0225,1.0];
-var s10_material_diffuse=[0.7038,0.27048,0.0828,1.0];
-var s10_material_specular=[0.256777,0.137622,0.086014,1.0];
+var s10_material_ambient=[0.19125,0.0735,0.0225];
+var s10_material_diffuse=[0.7038,0.27048,0.0828];
+var s10_material_specular=[0.256777,0.137622,0.086014];
 var s10_material_shininess=0.1 * 128;
 
-var s11_material_ambient=[0.24725,0.1995,0.0745,1.0];
-var s11_material_diffuse=[0.75164,0.60648,0.22648,1.0];
-var s11_material_specular=[0.628281,0.555802,0.366065,1.0];
+var s11_material_ambient=[0.24725,0.1995,0.0745];
+var s11_material_diffuse=[0.75164,0.60648,0.22648];
+var s11_material_specular=[0.628281,0.555802,0.366065];
 var s11_material_shininess=0.4 * 128;
 
-var s12_material_ambient=[0.19225,0.19225,0.19225,1.0];
-var s12_material_diffuse=[0.50754,0.50754,0.50754,1.0];
-var s12_material_specular=[0.508273,0.508273,0.508273,1.0];
+var s12_material_ambient=[0.19225,0.19225,0.19225];
+var s12_material_diffuse=[0.50754,0.50754,0.50754];
+var s12_material_specular=[0.508273,0.508273,0.508273];
 var s12_material_shininess=0.4 * 128;
 
-var s13_material_ambient=[0.0,0.0,0.0,1.0];
-var s13_material_diffuse=[0.01,0.01,0.01,1.0];
-var s13_material_specular=[0.50,0.50,0.50,1.0];
+var s13_material_ambient=[0.0,0.0,0.0];
+var s13_material_diffuse=[0.01,0.01,0.01];
+var s13_material_specular=[0.50,0.50,0.50];
 var s13_material_shininess=0.25 * 128;
 
-var s14_material_ambient=[0.0,0.1,0.06,1.0];
-var s14_material_diffuse=[0.0,0.50980392,0.50980392,1.0];
-var s14_material_specular=[0.50196078,0.50196078,0.50196078,1.0];
+var s14_material_ambient=[0.0,0.1,0.06];
+var s14_material_diffuse=[0.0,0.50980392,0.50980392];
+var s14_material_specular=[0.50196078,0.50196078,0.50196078];
 var s14_material_shininess=0.25 * 128;
 
-var s15_material_ambient=[0.0,0.0,0.0,1.0];
-var s15_material_diffuse=[0.1,0.35,0.1,1.0];
-var s15_material_specular=[0.45,0.55,0.45,1.0];
+var s15_material_ambient=[0.0,0.0,0.0];
+var s15_material_diffuse=[0.1,0.35,0.1];
+var s15_material_specular=[0.45,0.55,0.45];
 var s15_material_shininess=0.25 * 128;
 
-var s16_material_ambient=[0.0,0.0,0.0,1.0];
-var s16_material_diffuse=[0.5,0.0,0.0,1.0];
-var s16_material_specular=[0.7,0.6,0.6,1.0];
+var s16_material_ambient=[0.0,0.0,0.0];
+var s16_material_diffuse=[0.5,0.0,0.0];
+var s16_material_specular=[0.7,0.6,0.6];
 var s16_material_shininess=0.25 * 128;
 
-var s17_material_ambient=[0.0,0.0,0.0,1.0];
-var s17_material_diffuse=[0.55,0.55,0.55,1.0];
-var s17_material_specular=[0.70,0.70,0.70,1.0];
+var s17_material_ambient=[0.0,0.0,0.0];
+var s17_material_diffuse=[0.55,0.55,0.55];
+var s17_material_specular=[0.70,0.70,0.70];
 var s17_material_shininess=0.25 * 128;
 
-var s18_material_ambient=[0.0,0.0,0.0,1.0];
-var s18_material_diffuse=[0.5,0.5,0.0,1.0];
-var s18_material_specular=[0.60,0.60,0.50,1.0];
+var s18_material_ambient=[0.0,0.0,0.0];
+var s18_material_diffuse=[0.5,0.5,0.0];
+var s18_material_specular=[0.60,0.60,0.50];
 var s18_material_shininess=0.25 * 128;
 
-var s19_material_ambient=[0.02,0.02,0.02,1.0];
-var s19_material_diffuse=[0.01,0.01,0.01,1.0];
-var s19_material_specular=[0.4,0.4,0.4,1.0];
+var s19_material_ambient=[0.02,0.02,0.02];
+var s19_material_diffuse=[0.01,0.01,0.01];
+var s19_material_specular=[0.4,0.4,0.4];
 var s19_material_shininess=0.078125 * 128;
 
-var s20_material_ambient=[0.0,0.05,0.05,1.0];
-var s20_material_diffuse=[0.4,0.5,0.5,1.0];
-var s20_material_specular=[0.04,0.7,0.7,1.0];
+var s20_material_ambient=[0.0,0.05,0.05];
+var s20_material_diffuse=[0.4,0.5,0.5];
+var s20_material_specular=[0.04,0.7,0.7];
 var s20_material_shininess=0.078125 * 128;
 
-var s21_material_ambient=[0.0,0.05,0.0,1.0];
-var s21_material_diffuse=[0.4,0.5,0.4,1.0];
-var s21_material_specular=[0.04,0.7,0.04,1.0];
+var s21_material_ambient=[0.0,0.05,0.0];
+var s21_material_diffuse=[0.4,0.5,0.4];
+var s21_material_specular=[0.04,0.7,0.04];
 var s21_material_shininess=0.078125 * 128;
 
-var s22_material_ambient=[0.05,0.0,0.0,1.0];
-var s22_material_diffuse=[0.5,0.4,0.4,1.0];
-var s22_material_specular=[0.7,0.04,0.04,1.0];
+var s22_material_ambient=[0.05,0.0,0.0];
+var s22_material_diffuse=[0.5,0.4,0.4];
+var s22_material_specular=[0.7,0.04,0.04];
 var s22_material_shininess=0.078125 * 128;
 
-var s23_material_ambient=[0.05,0.05,0.05,1.0];
-var s23_material_diffuse=[0.5,0.5,0.5,1.0];
-var s23_material_specular=[0.7,0.7,0.7,1.0];
+var s23_material_ambient=[0.05,0.05,0.05];
+var s23_material_diffuse=[0.5,0.5,0.5];
+var s23_material_specular=[0.7,0.7,0.7];
 var s23_material_shininess=0.078125 * 128;
 
-var s24_material_ambient=[0.05,0.05,0.0,1.0];
-var s24_material_diffuse=[0.5,0.5,0.4,1.0];
-var s24_material_specular=[0.7,0.7,0.04,1.0];
+var s24_material_ambient=[0.05,0.05,0.0];
+var s24_material_diffuse=[0.5,0.5,0.4];
+var s24_material_specular=[0.7,0.7,0.04];
 var s24_material_shininess=0.078125 * 128;
 
-var zAxis = -15.0;
+var zAxis = -30.0;
 var gRotateRedAngle = 0.0;
 var gbXPressed=false;
 var gbYPressed=false;
@@ -222,7 +218,7 @@ function main()
 }
 
 function updateAngle(){
-	gRotateRedAngle = gRotateRedAngle + 0.1;
+	gRotateRedAngle = gRotateRedAngle + 0.5;
         if (gRotateRedAngle >= 360) {
             gRotateRedAngle = 0.0;
         }
@@ -401,8 +397,8 @@ function init()
 	gKShininessUniform = gl.getUniformLocation(shaderProgramObject, "u_KShininess");
 	
 	// *** vertices, colors, shader attribs, vbo, vao initializations ***
-    //sphere=new Mesh();
-    //makeSphere(sphere,2.0,30,30);
+    sphere=new Mesh();
+    makeSphere(sphere,2.0,30,30);
 	//set clear color
     //gl.shadeModel(gl.SMOOTH);
     gl.clearDepth(1.0);
@@ -448,38 +444,36 @@ function draw()
 		gl.uniform3fv(gLaUniform, light_ambient);
 		gl.uniform3fv(gLdUniform, light_defused);
 		gl.uniform3fv(gLsUniform, light_specular);
-		gl.uniform3fv(gLpUniform, light_position);
+		gl.uniform4fv(gLpUniform, light_position);
 	}else
 	{
 		gl.uniform1i(gLKeyPressedUniform,0);
 	}
 		
-	//triangle draw
-	var modelMatrix=mat4.create();
-    var viewMatrix=mat4.create();
+	
 	//OpenGL drawing
 	//set modelview & modelviewprojection matrices to identity
 	var modelMatrix = mat4.create();
 	var viewMatrix = mat4.create();
 	
 	//1st row
+	//1st
 	gl.uniform3fv(gKaUniform, s1_material_ambient);
 	gl.uniform3fv(gKdUniform, s1_material_diffuse);
 	gl.uniform3fv(gKsUniform, s1_material_specular);
 	gl.uniform1f(gKShininessUniform, s1_material_shininess);
 	//translate
-	
-	mat4.translate(modelMatrix, modelMatrix, [-3.75, 3.0, zAxis]);
+	modelMatrix = mat4.create();
+	mat4.translate(modelMatrix, modelMatrix, [-8.0, 6.0, zAxis]);
 	//pass the above modelViewProjectionMatrix to the vertex shader in 'u_mvp_matrix' shader variable
 	//whose position value we already calculated in initWithFrame() by using glGetUniformLocation()
 	gl.uniformMatrix4fv(gModelMatrixUniform, false, modelMatrix);
 	gl.uniformMatrix4fv(gViewMatrixUniform, false, viewMatrix);
 	gl.uniformMatrix4fv(gProjectionMatrixUniform, false, gPerspectiveProjectionMatrix);
 	
-	sphere=new Mesh();
-    makeSphere(sphere,2.0,30,30);
+	sphere.draw();
 	
-	
+	//2nd
 	gl.uniform3fv(gKaUniform, s2_material_ambient);
 	gl.uniform3fv(gKdUniform, s2_material_diffuse);
 	gl.uniform3fv(gKsUniform, s2_material_specular);
@@ -487,52 +481,49 @@ function draw()
 	//translate
 	modelMatrix = mat4.create();
 	//modelMatrix = translate(-1.25, 3.0, zAxis);
-	mat4.translate(modelMatrix, modelMatrix, [-1.25, 3.0, zAxis]);
+	mat4.translate(modelMatrix, modelMatrix, [-4.0, 6.0, zAxis]);
 	//pass the above modelViewProjectionMatrix to the vertex shader in 'u_mvp_matrix' shader variable
 	//whose position value we already calculated in initWithFrame() by using glGetUniformLocation()
 	gl.uniformMatrix4fv(gModelMatrixUniform, false, modelMatrix);
 	gl.uniformMatrix4fv(gViewMatrixUniform, false, viewMatrix);
 	gl.uniformMatrix4fv(gProjectionMatrixUniform, false, gPerspectiveProjectionMatrix);
 	
-	sphere=new Mesh();
-    makeSphere(sphere,2.0,30,30);
+	sphere.draw();
 	
-	
-	gl.uniform3fv(gKaUniform, s24_material_ambient);
-	gl.uniform3fv(gKdUniform, s24_material_diffuse);
-	gl.uniform3fv(gKsUniform, s24_material_specular);
-	gl.uniform1f(gKShininessUniform, s2_material_shininess);
-	//translate
-	modelMatrix = mat4.create();
-	//modelMatrix = translate(1.25, 3.0, zAxis);
-	mat4.translate(modelMatrix, modelMatrix, [1.25, 3.0, zAxis]);
-	//pass the above modelViewProjectionMatrix to the vertex shader in 'u_mvp_matrix' shader variable
-	//whose position value we already calculated in initWithFrame() by using glGetUniformLocation()
-	gl.uniformMatrix4fv(gModelMatrixUniform, false, modelMatrix);
-	gl.uniformMatrix4fv(gViewMatrixUniform, false, viewMatrix);
-	gl.uniformMatrix4fv(gProjectionMatrixUniform, false, gPerspectiveProjectionMatrix);
-	
-	sphere=new Mesh();
-    makeSphere(sphere,2.0,30,30);
-	
-	
-	
+	//3rd
 	gl.uniform3fv(gKaUniform, s3_material_ambient);
 	gl.uniform3fv(gKdUniform, s3_material_diffuse);
 	gl.uniform3fv(gKsUniform, s3_material_specular);
 	gl.uniform1f(gKShininessUniform, s3_material_shininess);
 	//translate
 	modelMatrix = mat4.create();
-	//modelMatrix = translate(3.75, 3.0, zAxis);
-	mat4.translate(modelMatrix, modelMatrix, [3.75, 3.0, zAxis]);
+	//modelMatrix = translate(1.25, 3.0, zAxis);
+	mat4.translate(modelMatrix, modelMatrix, [0.0, 6.0, zAxis]);
 	//pass the above modelViewProjectionMatrix to the vertex shader in 'u_mvp_matrix' shader variable
 	//whose position value we already calculated in initWithFrame() by using glGetUniformLocation()
 	gl.uniformMatrix4fv(gModelMatrixUniform, false, modelMatrix);
 	gl.uniformMatrix4fv(gViewMatrixUniform, false, viewMatrix);
 	gl.uniformMatrix4fv(gProjectionMatrixUniform, false, gPerspectiveProjectionMatrix);
 	
-	sphere=new Mesh();
-    makeSphere(sphere,2.0,30,30);
+	sphere.draw();
+	
+	
+	//4th
+	gl.uniform3fv(gKaUniform, s4_material_ambient);
+	gl.uniform3fv(gKdUniform, s4_material_diffuse);
+	gl.uniform3fv(gKsUniform, s4_material_specular);
+	gl.uniform1f(gKShininessUniform, s4_material_shininess);
+	//translate
+	modelMatrix = mat4.create();
+	//modelMatrix = translate(3.75, 3.0, zAxis);
+	mat4.translate(modelMatrix, modelMatrix, [4.0, 6.0, zAxis]);
+	//pass the above modelViewProjectionMatrix to the vertex shader in 'u_mvp_matrix' shader variable
+	//whose position value we already calculated in initWithFrame() by using glGetUniformLocation()
+	gl.uniformMatrix4fv(gModelMatrixUniform, false, modelMatrix);
+	gl.uniformMatrix4fv(gViewMatrixUniform, false, viewMatrix);
+	gl.uniformMatrix4fv(gProjectionMatrixUniform, false, gPerspectiveProjectionMatrix);
+	
+	sphere.draw();
 	
 	
 	
@@ -540,42 +531,43 @@ function draw()
 	
 	
 	//2nd row
+	//1st
 	//translate
-	gl.uniform3fv(gKaUniform, s4_material_ambient);
-	gl.uniform3fv(gKdUniform, s4_material_diffuse);
-	gl.uniform3fv(gKsUniform, s4_material_specular);
-	gl.uniform1f(gKShininessUniform, s4_material_shininess);
-	//modelMatrix = translate(-3.75, 2.0, zAxis);
-	mat4.translate(modelMatrix, modelMatrix, [-3.75, 2.0, zAxis]);
-	//pass the above modelViewProjectionMatrix to the vertex shader in 'u_mvp_matrix' shader variable
-	//whose position value we already calculated in initWithFrame() by using glGetUniformLocation()
-	gl.uniformMatrix4fv(gModelMatrixUniform, false, modelMatrix);
-	gl.uniformMatrix4fv(gViewMatrixUniform, false, viewMatrix);
-	gl.uniformMatrix4fv(gProjectionMatrixUniform, false, gPerspectiveProjectionMatrix);
-	
-	sphere=new Mesh();
-    makeSphere(sphere,2.0,30,30);
-	
-	
-	
 	gl.uniform3fv(gKaUniform, s5_material_ambient);
 	gl.uniform3fv(gKdUniform, s5_material_diffuse);
 	gl.uniform3fv(gKsUniform, s5_material_specular);
 	gl.uniform1f(gKShininessUniform, s5_material_shininess);
-	//translate
 	modelMatrix = mat4.create();
-	//modelMatrix = translate(-1.25, 2.0, zAxis);
-	mat4.translate(modelMatrix, modelMatrix, [-1.25, 2.0, zAxis]);
+	//modelMatrix = translate(-8.0, 2.0, zAxis);
+	mat4.translate(modelMatrix, modelMatrix, [-8.0, 2.0, zAxis]);
 	//pass the above modelViewProjectionMatrix to the vertex shader in 'u_mvp_matrix' shader variable
 	//whose position value we already calculated in initWithFrame() by using glGetUniformLocation()
 	gl.uniformMatrix4fv(gModelMatrixUniform, false, modelMatrix);
 	gl.uniformMatrix4fv(gViewMatrixUniform, false, viewMatrix);
 	gl.uniformMatrix4fv(gProjectionMatrixUniform, false, gPerspectiveProjectionMatrix);
 	
-	sphere=new Mesh();
-    makeSphere(sphere,2.0,30,30);
+	sphere.draw();
 	
 	
+	//2nd
+	gl.uniform3fv(gKaUniform, s6_material_ambient);
+	gl.uniform3fv(gKdUniform, s6_material_diffuse);
+	gl.uniform3fv(gKsUniform, s6_material_specular);
+	gl.uniform1f(gKShininessUniform, s6_material_shininess);
+	//translate
+	modelMatrix = mat4.create();
+	//modelMatrix = translate(-1.25, 2.0, zAxis);
+	mat4.translate(modelMatrix, modelMatrix, [-4.0, 2.0, zAxis]);
+	//pass the above modelViewProjectionMatrix to the vertex shader in 'u_mvp_matrix' shader variable
+	//whose position value we already calculated in initWithFrame() by using glGetUniformLocation()
+	gl.uniformMatrix4fv(gModelMatrixUniform, false, modelMatrix);
+	gl.uniformMatrix4fv(gViewMatrixUniform, false, viewMatrix);
+	gl.uniformMatrix4fv(gProjectionMatrixUniform, false, gPerspectiveProjectionMatrix);
+	
+	sphere.draw();
+	
+	
+	//3rd
 	gl.uniform3fv(gKaUniform, s6_material_ambient);
 	gl.uniform3fv(gKdUniform, s6_material_diffuse);
 	gl.uniform3fv(gKsUniform, s6_material_specular);
@@ -583,17 +575,16 @@ function draw()
 	//translate
 	modelMatrix = mat4.create();
 	//modelMatrix = translate(1.25, 2.0, zAxis);
-	mat4.translate(modelMatrix, modelMatrix, [1.25, 2.0, zAxis]);
+	mat4.translate(modelMatrix, modelMatrix, [0.0, 2.0, zAxis]);
 	//pass the above modelViewProjectionMatrix to the vertex shader in 'u_mvp_matrix' shader variable
 	//whose position value we already calculated in initWithFrame() by using glGetUniformLocation()
 	gl.uniformMatrix4fv(gModelMatrixUniform, false, modelMatrix);
 	gl.uniformMatrix4fv(gViewMatrixUniform, false, viewMatrix);
 	gl.uniformMatrix4fv(gProjectionMatrixUniform, false, gPerspectiveProjectionMatrix);
 	
-	sphere=new Mesh();
-    makeSphere(sphere,2.0,30,30);
+	sphere.draw();
 	
-	
+	//4th
 	//translate
 	gl.uniform3fv(gKaUniform, s7_material_ambient);
 	gl.uniform3fv(gKdUniform, s7_material_diffuse);
@@ -601,36 +592,37 @@ function draw()
 	gl.uniform1f(gKShininessUniform, s7_material_shininess);
 	modelMatrix = mat4.create();
 	//modelMatrix = translate(3.75, 2.0, zAxis);
-	mat4.translate(modelMatrix, modelMatrix, [3.75, 2.0, zAxis]);
+	mat4.translate(modelMatrix, modelMatrix, [4.0, 2.0, zAxis]);
 	//pass the above modelViewProjectionMatrix to the vertex shader in 'u_mvp_matrix' shader variable
 	//whose position value we already calculated in initWithFrame() by using glGetUniformLocation()
 	gl.uniformMatrix4fv(gModelMatrixUniform, false, modelMatrix);
 	gl.uniformMatrix4fv(gViewMatrixUniform, false, viewMatrix);
 	gl.uniformMatrix4fv(gProjectionMatrixUniform, false, gPerspectiveProjectionMatrix);
 	
-	sphere=new Mesh();
-    makeSphere(sphere,2.0,30,30);
+	sphere.draw();
 	
 	
 	
 	
 	//3rd row
+	//1st
 	gl.uniform3fv(gKaUniform, s8_material_ambient);
 	gl.uniform3fv(gKdUniform, s8_material_diffuse);
 	gl.uniform3fv(gKsUniform, s8_material_specular);
 	gl.uniform1f(gKShininessUniform, s8_material_shininess);
 	//translate
-	//modelMatrix = translate(-3.75, 1.0, zAxis);
-	mat4.translate(modelMatrix, modelMatrix, [-3.75, 1.0, zAxis]);
+	modelMatrix = mat4.create();
+	//modelMatrix = translate(-8.0, 1.0, zAxis);
+	mat4.translate(modelMatrix, modelMatrix, [-8.0, -2.0, zAxis]);
 	//pass the above modelViewProjectionMatrix to the vertex shader in 'u_mvp_matrix' shader variable
 	//whose position value we already calculated in initWithFrame() by using glGetUniformLocation()
 	gl.uniformMatrix4fv(gModelMatrixUniform, false, modelMatrix);
 	gl.uniformMatrix4fv(gViewMatrixUniform, false, viewMatrix);
 	gl.uniformMatrix4fv(gProjectionMatrixUniform, false, gPerspectiveProjectionMatrix);
 	
-	sphere=new Mesh();
-    makeSphere(sphere,2.0,30,30);
+	sphere.draw();
 	
+	//2nd
 	//translate
 	gl.uniform3fv(gKaUniform, s9_material_ambient);
 	gl.uniform3fv(gKdUniform, s9_material_diffuse);
@@ -638,17 +630,16 @@ function draw()
 	gl.uniform1f(gKShininessUniform, s9_material_shininess);
 	modelMatrix = mat4.create();
 	//modelMatrix = translate(-1.25, 1.0, zAxis);
-	mat4.translate(modelMatrix, modelMatrix, [-1.25, 1.0, zAxis]);
+	mat4.translate(modelMatrix, modelMatrix, [-4.0, -2.0, zAxis]);
 	//pass the above modelViewProjectionMatrix to the vertex shader in 'u_mvp_matrix' shader variable
 	//whose position value we already calculated in initWithFrame() by using glGetUniformLocation()
 	gl.uniformMatrix4fv(gModelMatrixUniform, false, modelMatrix);
 	gl.uniformMatrix4fv(gViewMatrixUniform, false, viewMatrix);
 	gl.uniformMatrix4fv(gProjectionMatrixUniform, false, gPerspectiveProjectionMatrix);
 	
-	sphere=new Mesh();
-    makeSphere(sphere,2.0,30,30);
+	sphere.draw();
 	
-	
+	//3rd
 	gl.uniform3fv(gKaUniform, s10_material_ambient);
 	gl.uniform3fv(gKdUniform, s10_material_diffuse);
 	gl.uniform3fv(gKsUniform, s10_material_specular);
@@ -656,17 +647,16 @@ function draw()
 	//translate
 	modelMatrix = mat4.create();
 	//modelMatrix = translate(1.25, 1.0, zAxis);
-	mat4.translate(modelMatrix, modelMatrix, [1.25, 1.0, zAxis]);
+	mat4.translate(modelMatrix, modelMatrix, [0.0, -2.0, zAxis]);
 	//pass the above modelViewProjectionMatrix to the vertex shader in 'u_mvp_matrix' shader variable
 	//whose position value we already calculated in initWithFrame() by using glGetUniformLocation()
 	gl.uniformMatrix4fv(gModelMatrixUniform, false, modelMatrix);
 	gl.uniformMatrix4fv(gViewMatrixUniform, false, viewMatrix);
 	gl.uniformMatrix4fv(gProjectionMatrixUniform, false, gPerspectiveProjectionMatrix);
 	
-	sphere=new Mesh();
-    makeSphere(sphere,2.0,30,30);
+	sphere.draw();
 	
-	
+	//4th
 	gl.uniform3fv(gKaUniform, s11_material_ambient);
 	gl.uniform3fv(gKdUniform, s11_material_diffuse);
 	gl.uniform3fv(gKsUniform, s11_material_specular);
@@ -674,36 +664,39 @@ function draw()
 	//translate
 	modelMatrix = mat4.create();
 	//modelMatrix = translate(3.75, 1.0, zAxis);
-	mat4.translate(modelMatrix, modelMatrix, [-3.75, 1.0, zAxis]);
+	mat4.translate(modelMatrix, modelMatrix, [4.0, -2.0, zAxis]);
 	//pass the above modelViewProjectionMatrix to the vertex shader in 'u_mvp_matrix' shader variable
 	//whose position value we already calculated in initWithFrame() by using glGetUniformLocation()
 	gl.uniformMatrix4fv(gModelMatrixUniform, false, modelMatrix);
 	gl.uniformMatrix4fv(gViewMatrixUniform, false, viewMatrix);
 	gl.uniformMatrix4fv(gProjectionMatrixUniform, false, gPerspectiveProjectionMatrix);
 	
-	sphere=new Mesh();
-    makeSphere(sphere,2.0,30,30);
+	sphere.draw();
 	
 	
-	
+	//4rd row
 	gl.uniform3fv(gKaUniform, s12_material_ambient);
 	gl.uniform3fv(gKdUniform, s12_material_diffuse);
 	gl.uniform3fv(gKsUniform, s12_material_specular);
 	gl.uniform1f(gKShininessUniform, s12_material_shininess);
+	
+	
+	
 	//4th row
+	//1st
 	//translate
-	//modelMatrix = translate(-3.75, 0.0, zAxis);
-	mat4.translate(modelMatrix, modelMatrix, [-3.75, 0.0, zAxis]);
+	//modelMatrix = translate(-8.0, 0.0, zAxis);
+	modelMatrix = mat4.create();
+	mat4.translate(modelMatrix, modelMatrix, [-8.0, -6.0, zAxis]);
 	//pass the above modelViewProjectionMatrix to the vertex shader in 'u_mvp_matrix' shader variable
 	//whose position value we already calculated in initWithFrame() by using glGetUniformLocation()
 	gl.uniformMatrix4fv(gModelMatrixUniform, false, modelMatrix);
 	gl.uniformMatrix4fv(gViewMatrixUniform, false, viewMatrix);
 	gl.uniformMatrix4fv(gProjectionMatrixUniform, false, gPerspectiveProjectionMatrix);
 	
-	sphere=new Mesh();
-    makeSphere(sphere,2.0,30,30);
+	sphere.draw();
 	
-	
+	//2nd
 	gl.uniform3fv(gKaUniform, s13_material_ambient);
 	gl.uniform3fv(gKdUniform, s13_material_diffuse);
 	gl.uniform3fv(gKsUniform, s13_material_specular);
@@ -711,16 +704,17 @@ function draw()
 	//translate
 	modelMatrix = mat4.create();
 	//modelMatrix = translate(-1.25, 0.0, zAxis);
-	mat4.translate(modelMatrix, modelMatrix, [-1.25, 0.0, zAxis]);
+	mat4.translate(modelMatrix, modelMatrix, [-4.0, -6.0, zAxis]);
 	//pass the above modelViewProjectionMatrix to the vertex shader in 'u_mvp_matrix' shader variable
 	//whose position value we already calculated in initWithFrame() by using glGetUniformLocation()
 	gl.uniformMatrix4fv(gModelMatrixUniform, false, modelMatrix);
 	gl.uniformMatrix4fv(gViewMatrixUniform, false, viewMatrix);
 	gl.uniformMatrix4fv(gProjectionMatrixUniform, false, gPerspectiveProjectionMatrix);
 	
-	sphere=new Mesh();
-    makeSphere(sphere,2.0,30,30);
+	sphere.draw();
 	
+	
+	//3rd
 	gl.uniform3fv(gKaUniform, s14_material_ambient);
 	gl.uniform3fv(gKdUniform, s14_material_diffuse);
 	gl.uniform3fv(gKsUniform, s14_material_specular);
@@ -728,16 +722,16 @@ function draw()
 	//translate
 	modelMatrix = mat4.create();
 	//modelMatrix = translate(1.25, 0.0, zAxis);
-	mat4.translate(modelMatrix, modelMatrix, [1.25, 0.0, zAxis]);
+	mat4.translate(modelMatrix, modelMatrix, [0.0, -6.0, zAxis]);
 	//pass the above modelViewProjectionMatrix to the vertex shader in 'u_mvp_matrix' shader variable
 	//whose position value we already calculated in initWithFrame() by using glGetUniformLocation()
 	gl.uniformMatrix4fv(gModelMatrixUniform, false, modelMatrix);
 	gl.uniformMatrix4fv(gViewMatrixUniform, false, viewMatrix);
 	gl.uniformMatrix4fv(gProjectionMatrixUniform, false, gPerspectiveProjectionMatrix);
 	
-	sphere=new Mesh();
-    makeSphere(sphere,2.0,30,30);
+	sphere.draw();
 	
+	//4th
 	gl.uniform3fv(gKaUniform, s15_material_ambient);
 	gl.uniform3fv(gKdUniform, s15_material_diffuse);
 	gl.uniform3fv(gKsUniform, s15_material_specular);
@@ -745,37 +739,36 @@ function draw()
 	//translate
 	modelMatrix = mat4.create();
 	//modelMatrix = translate(3.75, 0.0, zAxis);
-	mat4.translate(modelMatrix, modelMatrix, [3.75, 0.0, zAxis]);
+	mat4.translate(modelMatrix, modelMatrix, [4.0, -6.0, zAxis]);
 	//pass the above modelViewProjectionMatrix to the vertex shader in 'u_mvp_matrix' shader variable
 	//whose position value we already calculated in initWithFrame() by using glGetUniformLocation()
 	gl.uniformMatrix4fv(gModelMatrixUniform, false, modelMatrix);
 	gl.uniformMatrix4fv(gViewMatrixUniform, false, viewMatrix);
 	gl.uniformMatrix4fv(gProjectionMatrixUniform, false, gPerspectiveProjectionMatrix);
 	
-	sphere=new Mesh();
-    makeSphere(sphere,2.0,30,30);
+	sphere.draw();
 	
 	
 	
-	
+	//5th row
+	//1st
 	gl.uniform3fv(gKaUniform, s16_material_ambient);
 	gl.uniform3fv(gKdUniform, s16_material_diffuse);
 	gl.uniform3fv(gKsUniform, s16_material_specular);
 	gl.uniform1f(gKShininessUniform, s16_material_shininess);
-	//5th row
 	//translate
-	//modelMatrix = translate(-3.75, -1.0, zAxis);
-	mat4.translate(modelMatrix, modelMatrix, [-3.75, -1.0, zAxis]);
+	modelMatrix = mat4.create();
+	//modelMatrix = translate(-8.0, -1.0, zAxis);
+	mat4.translate(modelMatrix, modelMatrix, [-8.0, -10.0, zAxis]);
 	//pass the above modelViewProjectionMatrix to the vertex shader in 'u_mvp_matrix' shader variable
 	//whose position value we already calculated in initWithFrame() by using glGetUniformLocation()
 	gl.uniformMatrix4fv(gModelMatrixUniform, false, modelMatrix);
 	gl.uniformMatrix4fv(gViewMatrixUniform, false, viewMatrix);
 	gl.uniformMatrix4fv(gProjectionMatrixUniform, false, gPerspectiveProjectionMatrix);
 	
-	sphere=new Mesh();
-    makeSphere(sphere,2.0,30,30);
+	sphere.draw();
 	
-	
+	//2nd
 	gl.uniform3fv(gKaUniform, s17_material_ambient);
 	gl.uniform3fv(gKdUniform, s17_material_diffuse);
 	gl.uniform3fv(gKsUniform, s17_material_specular);
@@ -783,17 +776,16 @@ function draw()
 	//translate
 	modelMatrix = mat4.create();
 	//modelMatrix = translate(-1.25, -1.0, zAxis);
-	mat4.translate(modelMatrix, modelMatrix, [-1.25, -1.0, zAxis]);
+	mat4.translate(modelMatrix, modelMatrix, [-4.0, -10.0, zAxis]);
 	//pass the above modelViewProjectionMatrix to the vertex shader in 'u_mvp_matrix' shader variable
 	//whose position value we already calculated in initWithFrame() by using glGetUniformLocation()
 	gl.uniformMatrix4fv(gModelMatrixUniform, false, modelMatrix);
 	gl.uniformMatrix4fv(gViewMatrixUniform, false, viewMatrix);
 	gl.uniformMatrix4fv(gProjectionMatrixUniform, false, gPerspectiveProjectionMatrix);
 	
-	sphere=new Mesh();
-    makeSphere(sphere,2.0,30,30);
+	sphere.draw();
 	
-	
+	//3rd
 	gl.uniform3fv(gKaUniform, s18_material_ambient);
 	gl.uniform3fv(gKdUniform, s18_material_diffuse);
 	gl.uniform3fv(gKsUniform, s18_material_specular);
@@ -801,15 +793,16 @@ function draw()
 	//translate
 	modelMatrix = mat4.create();
 	//modelMatrix = translate(1.25, -1.0, zAxis);
-	mat4.translate(modelMatrix, modelMatrix, [1.25, -1.0, zAxis]);
+	mat4.translate(modelMatrix, modelMatrix, [0.0, -10.0, zAxis]);
 	//pass the above modelViewProjectionMatrix to the vertex shader in 'u_mvp_matrix' shader variable
 	//whose position value we already calculated in initWithFrame() by using glGetUniformLocation()
 	gl.uniformMatrix4fv(gModelMatrixUniform, false, modelMatrix);
 	gl.uniformMatrix4fv(gViewMatrixUniform, false, viewMatrix);
 	gl.uniformMatrix4fv(gProjectionMatrixUniform, false, gPerspectiveProjectionMatrix);
 	
-	sphere=new Mesh();
-    makeSphere(sphere,2.0,30,30);
+	sphere.draw();
+	
+	//4th
 	gl.uniform3fv(gKaUniform, s19_material_ambient);
 	gl.uniform3fv(gKdUniform, s19_material_diffuse);
 	gl.uniform3fv(gKsUniform, s19_material_specular);
@@ -817,35 +810,35 @@ function draw()
 	//translate
 	modelMatrix = mat4.create();
 	//modelMatrix = translate(3.75, -1.0, zAxis);
-	mat4.translate(modelMatrix, modelMatrix, [3.75, -1.0, zAxis]);
+	mat4.translate(modelMatrix, modelMatrix, [4.0, -10.0, zAxis]);
 	//pass the above modelViewProjectionMatrix to the vertex shader in 'u_mvp_matrix' shader variable
 	//whose position value we already calculated in initWithFrame() by using glGetUniformLocation()
 	gl.uniformMatrix4fv(gModelMatrixUniform, false, modelMatrix);
 	gl.uniformMatrix4fv(gViewMatrixUniform, false, viewMatrix);
 	gl.uniformMatrix4fv(gProjectionMatrixUniform, false, gPerspectiveProjectionMatrix);
 	
-sphere=new Mesh();
-    makeSphere(sphere,2.0,30,30);
+sphere.draw();
 	
 	
-	
+	//6th row
+	//1st
 	gl.uniform3fv(gKaUniform, s20_material_ambient);
 	gl.uniform3fv(gKdUniform, s20_material_diffuse);
 	gl.uniform3fv(gKsUniform, s20_material_specular);
 	gl.uniform1f(gKShininessUniform, s20_material_shininess);
-	//6th row
 	//translate
-	//modelMatrix = translate(-3.75, -2.0, zAxis);
-	mat4.translate(modelMatrix, modelMatrix, [-3.75, -2.0, zAxis]);
+	modelMatrix = mat4.create();
+	//modelMatrix = translate(-8.0, -2.0, zAxis);
+	mat4.translate(modelMatrix, modelMatrix, [-8.0, -14.0, zAxis]);
 	//pass the above modelViewProjectionMatrix to the vertex shader in 'u_mvp_matrix' shader variable
 	//whose position value we already calculated in initWithFrame() by using glGetUniformLocation()
 	gl.uniformMatrix4fv(gModelMatrixUniform, false, modelMatrix);
 	gl.uniformMatrix4fv(gViewMatrixUniform, false, viewMatrix);
 	gl.uniformMatrix4fv(gProjectionMatrixUniform, false, gPerspectiveProjectionMatrix);
 	
-	sphere=new Mesh();
-    makeSphere(sphere,2.0,30,30);
+	sphere.draw();
 	
+	//2nd
 	gl.uniform3fv(gKaUniform, s21_material_ambient);
 	gl.uniform3fv(gKdUniform, s21_material_diffuse);
 	gl.uniform3fv(gKsUniform, s21_material_specular);
@@ -853,16 +846,17 @@ sphere=new Mesh();
 	//translate
 	modelMatrix = mat4.create();
 	//modelMatrix = translate(-1.25, -2.0, zAxis);
-	mat4.translate(modelMatrix, modelMatrix, [-1.25, -2.0, zAxis]);
+	mat4.translate(modelMatrix, modelMatrix, [-4.0, -14.0, zAxis]);
 	//pass the above modelViewProjectionMatrix to the vertex shader in 'u_mvp_matrix' shader variable
 	//whose position value we already calculated in initWithFrame() by using glGetUniformLocation()
 	gl.uniformMatrix4fv(gModelMatrixUniform, false, modelMatrix);
 	gl.uniformMatrix4fv(gViewMatrixUniform, false, viewMatrix);
 	gl.uniformMatrix4fv(gProjectionMatrixUniform, false, gPerspectiveProjectionMatrix);
 	
-	sphere=new Mesh();
-    makeSphere(sphere,2.0,30,30);
+	sphere.draw();
 	
+	
+	//3rd
 	gl.uniform3fv(gKaUniform, s22_material_ambient);
 	gl.uniform3fv(gKdUniform, s22_material_diffuse);
 	gl.uniform3fv(gKsUniform, s22_material_specular);
@@ -870,17 +864,16 @@ sphere=new Mesh();
 	//translate
 	modelMatrix = mat4.create();
 	//modelMatrix = translate(1.25, -2.0, zAxis);
-	mat4.translate(modelMatrix, modelMatrix, [1.25, -2.0, zAxis]);
+	mat4.translate(modelMatrix, modelMatrix, [0.0, -14.0, zAxis]);
 	//pass the above modelViewProjectionMatrix to the vertex shader in 'u_mvp_matrix' shader variable
 	//whose position value we already calculated in initWithFrame() by using glGetUniformLocation()
 	gl.uniformMatrix4fv(gModelMatrixUniform, false, modelMatrix);
 	gl.uniformMatrix4fv(gViewMatrixUniform, false, viewMatrix);
 	gl.uniformMatrix4fv(gProjectionMatrixUniform, false, gPerspectiveProjectionMatrix);
 	
-sphere=new Mesh();
-    makeSphere(sphere,2.0,30,30);
+sphere.draw();
 	
-	
+	//4th
 	gl.uniform3fv(gKaUniform, s23_material_ambient);
 	gl.uniform3fv(gKdUniform, s23_material_diffuse);
 	gl.uniform3fv(gKsUniform, s23_material_specular);
@@ -888,15 +881,14 @@ sphere=new Mesh();
 	//translate
 	modelMatrix = mat4.create();
 	//modelMatrix = translate(3.75, -2.0, zAxis);
-	mat4.translate(modelMatrix, modelMatrix, [3.75, -2.0, zAxis]);
+	mat4.translate(modelMatrix, modelMatrix, [4.0, -14.0, zAxis]);
 	//pass the above modelViewProjectionMatrix to the vertex shader in 'u_mvp_matrix' shader variable
 	//whose position value we already calculated in initWithFrame() by using glGetUniformLocation()
 	gl.uniformMatrix4fv(gModelMatrixUniform, false, modelMatrix);
 	gl.uniformMatrix4fv(gViewMatrixUniform, false, viewMatrix);
 	gl.uniformMatrix4fv(gProjectionMatrixUniform, false, gPerspectiveProjectionMatrix);
 	
-	sphere=new Mesh();
-    makeSphere(sphere,2.0,30,30);
+	sphere.draw();
 	
 	gl.useProgram(null);
 	
@@ -933,6 +925,30 @@ function keyDown(event)
 			//repait
 			drawText("Hello WebGL !!!");
 			break;
+		case 87:
+		case 199:
+			gbXPressed=false;
+			gbYPressed=false;
+			gbZPressed=false;
+		break;
+		case 88:
+		case 120:
+			gbXPressed=true;
+			gbYPressed=false;
+			gbZPressed=false;
+		break;
+		case 89:
+		case 121:
+			gbXPressed=false;
+			gbYPressed=true;
+			gbZPressed=false;
+		break;
+		case 90:
+		case 122:
+			gbXPressed=false;
+			gbYPressed=false;
+			gbZPressed=true;
+		break;
 	}
 }
 

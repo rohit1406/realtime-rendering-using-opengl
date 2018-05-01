@@ -33,24 +33,24 @@ var vertexShaderObject;
 var fragmentShaderObject;
 var shaderProgramObject;
 
-var light0_ambient=[0.0,0.0,0.0,1.0];
-    var light0_defused=[1.0,0.0,0.0,1.0];
-    var light0_specular=[1.0,0.0,0.0,1.0];
+var light0_ambient=[0.0,0.0,0.0];
+    var light0_defused=[1.0,0.0,0.0];
+    var light0_specular=[1.0,0.0,0.0];
     var light0_position=[0.0,0.0,0.0,1.0];
 
-    var light1_ambient=[0.0,0.0,0.0,1.0];
-    var light1_defused=[0.0,1.0,0.0,1.0];
-    var light1_specular=[0.0,1.0,0.0,1.0];
+    var light1_ambient=[0.0,0.0,0.0];
+    var light1_defused=[0.0,1.0,0.0];
+    var light1_specular=[0.0,1.0,0.0];
     var light1_position=[0.0,0.0,0.0,1.0];
 
-    var light2_ambient=[0.0,0.0,0.0,1.0];
-    var light2_defused=[0.0,0.0,1.0,1.0];
-    var light2_specular=[0.0,0.0,1.0,1.0];
+    var light2_ambient=[0.0,0.0,0.0];
+    var light2_defused=[0.0,0.0,1.0];
+    var light2_specular=[0.0,0.0,1.0];
     var light2_position=[0.0,0.0,0.0,1.0];
 
-    var material_ambient=[0.0,0.0,0.0,0.0];
-    var material_defused=[1.0,1.0,1.0,1.0];
-    var material_specular=[1.0,1.0,1.0,1.0];
+    var material_ambient=[0.0,0.0,0.0];
+    var material_defused=[1.0,1.0,1.0];
+    var material_specular=[1.0,1.0,1.0];
     var material_shininess = 50.0;
 
 var sphere=null;
@@ -131,17 +131,17 @@ function main()
 
 function updateAngle(){
 	
-	angleRedLight = angleRedLight+0.5;
+	angleRedLight = angleRedLight+1.0;
 	if(angleRedLight>=360){
 		angleRedLight = 0.0;
 	}
 	
-	angleGreenLight = angleGreenLight+0.5;
+	angleGreenLight = angleGreenLight+1.0;
 	if(angleGreenLight>=360){
 		angleGreenLight = 0.0;
 	}
 	
-	angleBlueLight = angleBlueLight+0.5;
+	angleBlueLight = angleBlueLight+1.0;
 	if(angleBlueLight>=360){
 		angleBlueLight = 0.0;
 	}
@@ -417,19 +417,19 @@ function draw()
 		gl.uniform3fv(gL0aUniform,light0_ambient);
 		gl.uniform3fv(gL0dUniform,light0_defused);
 		gl.uniform3fv(gL0sUniform,light0_specular);
-		gl.uniform3fv(gL0pUniform,light0_position);
+		gl.uniform4fv(gL0pUniform,light0_position);
 		
 		//light1_position[0]=angleGreenLight;
 		gl.uniform3fv(gL1aUniform,light1_ambient);
 		gl.uniform3fv(gL1dUniform,light1_defused);
 		gl.uniform3fv(gL1sUniform,light1_specular);
-		gl.uniform3fv(gL1pUniform,light1_position);
+		gl.uniform4fv(gL1pUniform,light1_position);
 		
 		//light2_position[0]=angleBlueLight;
 		gl.uniform3fv(gL2aUniform,light2_ambient);
 		gl.uniform3fv(gL2dUniform,light2_defused);
 		gl.uniform3fv(gL2sUniform,light2_specular);
-		gl.uniform3fv(gL2pUniform,light2_position);
+		gl.uniform4fv(gL2pUniform,light2_position);
 		
 		gl.uniform3fv(gKaUniform,material_ambient);
 		gl.uniform3fv(gKdUniform,material_defused);
