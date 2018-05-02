@@ -10,6 +10,10 @@
 #pragma comment(lib, "user32.lib")
 #pragma comment(lib, "gdi32.lib")
 
+//for loading image into texture
+#define STB_IMAGE_IMPLEMENTATION
+#include "stb_image.h"
+
 #define WIN_WIDTH 800
 #define WIN_HEIGHT 600
 
@@ -59,7 +63,12 @@ GLuint gObjectColorUniform, gLightColorUniform, gLightPositionUniform, gViewerPo
 GLuint gLightAmbientUniform, gLightDiffuseUniform, gLightSpecularUniform;
 
 //material component uniforms
-GLuint gMaterialAmbientUniform, gMaterialDiffuseUniform, gMaterialSpecularUniform, gMaterialShininessUniform;
+GLuint gMaterialDiffuseUniform, gMaterialSpecularUniform, gMaterialShininessUniform;
+
+
+//textures
+GLuint gContainerTexture;
+
 mat4 gPerspectiveProjectionMatrix;
 GLfloat rotationAngle=0.0f;
 vec3 lightPos = vec3(1.2f, 0.5f, -3.0f);
@@ -67,7 +76,7 @@ vec3 lightPos = vec3(1.2f, 0.5f, -3.0f);
 vec3 material_ambient=vec3(1.0f, 0.5f, 0.31f);
 vec3 material_diffuse=vec3(1.0f, 0.5f, 0.31f);
 vec3 material_specular=vec3(0.5f, 0.5f, 0.5f);
-float material_shininess=32.0f;
+float material_shininess=64.0f;
 
 int WINAPI WinMain(HINSTANCE hInstance, HINSTANCE hPrevInstance, LPSTR lpszCmdLIne, int iCmdShow){
 	void initialize(void);
@@ -169,7 +178,7 @@ int WINAPI WinMain(HINSTANCE hInstance, HINSTANCE hPrevInstance, LPSTR lpszCmdLI
 
 void updateAngle()
 {
-	rotationAngle = rotationAngle+0.0002f;
+	rotationAngle = rotationAngle+0.05f;
 	if(rotationAngle>=360.0f)
 	{
 		rotationAngle=rotationAngle-360.0f;
@@ -277,8 +286,12 @@ void ToggleFullscreen(){
 }
 
 void initialize(){
+	//function prototypes
 	void resize(int,int);
 	void uninitialize(void);
+	void loadTexture(GLuint *, char* path);
+	
+	//code
 	PIXELFORMATDESCRIPTOR pfd;
 	int iPixelFormatIndex;
 	
@@ -341,13 +354,16 @@ void initialize(){
 				"\n										"\
 				"in vec3 vPosition;"\
 				"in vec3 vNormal;"\
+				"in vec2 vTexCoords;"\
 				"uniform mat4 u_model_matrix;"\
 				"uniform mat4 u_view_matrix;"\
 				"uniform mat4 u_projection_matrix;"\
 				"out vec3 out_normal;"\
+				"out vec2 out_tex_coords;"\
 				"out vec3 out_fragPos;"\
 				"void main(void)						"\
 				"{										"\
+				"out_tex_coords=vTexCoords;"\
 				"gl_Position = u_projection_matrix * u_view_matrix * u_model_matrix * vec4(vPosition, 1.0);	"\
 				"out_normal = mat3(transpose(inverse(u_model_matrix))) * vNormal;"\
 				"out_fragPos = vec3(u_model_matrix * vec4(vPosition, 1.0));"\
@@ -397,19 +413,19 @@ void initialize(){
 				"uniform vec3 u_light_specular;"\
 				"uniform vec3 u_light_position;"\
 				"uniform vec3 u_viewer_position;"\
+				"in vec2 out_tex_coords;"\
 				"out vec4 FragColor;" \
-				"uniform vec3 u_material_ambient;"\
-				"uniform vec3 u_material_diffuse;"\
+				"uniform sampler2D u_material_diffuse;"\
 				"uniform vec3 u_material_specular;"\
 				"uniform float u_material_shininess;"\
 				"void main(void)" \
 				"{" \
-				"vec3 ambient =  u_light_ambient * u_material_ambient;"\
+				"vec3 ambient =  u_light_ambient * vec3(texture(u_material_diffuse, out_tex_coords));"\
 				
 				"vec3 norm = normalize(out_normal);"\
 				"vec3 lightDir = normalize(u_light_position - out_fragPos);"\
 				"float diff = max(dot(norm, lightDir), 0.0);"\
-				"vec3 diffuse = u_light_diffuse * (diff * u_material_diffuse);"\
+				"vec3 diffuse = u_light_diffuse * diff * vec3(texture(u_material_diffuse, out_tex_coords));"\
 				
 				"vec3 viewDir = normalize(u_viewer_position - out_fragPos);"\
 				"vec3 reflectDir = reflect(-lightDir, norm);"\
@@ -460,6 +476,7 @@ void initialize(){
 	//pre-link binding of shader program object with vertex shader position attribute
 	glBindAttribLocation(gShaderProgramObject, VDG_ATTRIBUTE_VERTEX,"vPosition");
 	glBindAttribLocation(gShaderProgramObject, VDG_ATTRIBUTE_NORMAL,"vNormal");
+	glBindAttribLocation(gShaderProgramObject, VDG_ATTRIBUTE_TEXTURE0,"vTexCoords");
 	
 	//link shader
 	glLinkProgram(gShaderProgramObject);
@@ -493,11 +510,9 @@ void initialize(){
 	gLightSpecularUniform = glGetUniformLocation(gShaderProgramObject, "u_light_specular");
 	gLightPositionUniform = glGetUniformLocation(gShaderProgramObject, "u_light_position");
 	gViewerPositionUniform = glGetUniformLocation(gShaderProgramObject, "u_viewer_position");
-	gMaterialAmbientUniform = glGetUniformLocation(gShaderProgramObject, "u_material_ambient");
 	gMaterialDiffuseUniform = glGetUniformLocation(gShaderProgramObject, "u_material_diffuse");
 	gMaterialSpecularUniform = glGetUniformLocation(gShaderProgramObject, "u_material_specular");
 	gMaterialShininessUniform = glGetUniformLocation(gShaderProgramObject, "u_material_shininess");
-	
 	
 	//creates Second shader program object
 	//FRAGMENT SHADER
@@ -581,48 +596,48 @@ void initialize(){
 	//for element buffer - see the data is created in anticlock-wise direction
 	const GLfloat vertexData[]=
 	{
-	//position			  //normal
-	-0.5f, -0.5f, -0.5f,  0.0f,  0.0f, -1.0f,
-     0.5f, -0.5f, -0.5f,  0.0f,  0.0f, -1.0f, 
-     0.5f,  0.5f, -0.5f,  0.0f,  0.0f, -1.0f, 
-     0.5f,  0.5f, -0.5f,  0.0f,  0.0f, -1.0f, 
-    -0.5f,  0.5f, -0.5f,  0.0f,  0.0f, -1.0f, 
-    -0.5f, -0.5f, -0.5f,  0.0f,  0.0f, -1.0f, 
+	//position			  //normal			  //tex coords
+	-0.5f, -0.5f, -0.5f,  0.0f,  0.0f, -1.0f, 0.0f, 0.0f,
+     0.5f, -0.5f, -0.5f,  0.0f,  0.0f, -1.0f,  1.0f, 0.0f,
+     0.5f,  0.5f, -0.5f,  0.0f,  0.0f, -1.0f,   1.0f, 1.0f,
+     0.5f,  0.5f, -0.5f,  0.0f,  0.0f, -1.0f,  1.0f, 1.0f,
+    -0.5f,  0.5f, -0.5f,  0.0f,  0.0f, -1.0f,  0.0f, 1.0f,
+    -0.5f, -0.5f, -0.5f,  0.0f,  0.0f, -1.0f,  0.0f, 0.0f,
 
-    -0.5f, -0.5f,  0.5f,  0.0f,  0.0f, 1.0f,
-     0.5f, -0.5f,  0.5f,  0.0f,  0.0f, 1.0f,
-     0.5f,  0.5f,  0.5f,  0.0f,  0.0f, 1.0f,
-     0.5f,  0.5f,  0.5f,  0.0f,  0.0f, 1.0f,
-    -0.5f,  0.5f,  0.5f,  0.0f,  0.0f, 1.0f,
-    -0.5f, -0.5f,  0.5f,  0.0f,  0.0f, 1.0f,
+    -0.5f, -0.5f,  0.5f,  0.0f,  0.0f, 1.0f, 0.0f, 0.0f,
+     0.5f, -0.5f,  0.5f,  0.0f,  0.0f, 1.0f, 1.0f, 0.0f,
+     0.5f,  0.5f,  0.5f,  0.0f,  0.0f, 1.0f, 1.0f, 1.0f,
+     0.5f,  0.5f,  0.5f,  0.0f,  0.0f, 1.0f, 1.0f, 1.0f,
+    -0.5f,  0.5f,  0.5f,  0.0f,  0.0f, 1.0f,  0.0f, 1.0f,
+    -0.5f, -0.5f,  0.5f,  0.0f,  0.0f, 1.0f, 0.0f, 0.0f,
 
-    -0.5f,  0.5f,  0.5f, -1.0f,  0.0f,  0.0f,
-    -0.5f,  0.5f, -0.5f, -1.0f,  0.0f,  0.0f,
-    -0.5f, -0.5f, -0.5f, -1.0f,  0.0f,  0.0f,
-    -0.5f, -0.5f, -0.5f, -1.0f,  0.0f,  0.0f,
-    -0.5f, -0.5f,  0.5f, -1.0f,  0.0f,  0.0f,
-    -0.5f,  0.5f,  0.5f, -1.0f,  0.0f,  0.0f,
+    -0.5f,  0.5f,  0.5f, -1.0f,  0.0f,  0.0f, 1.0f, 0.0f,
+    -0.5f,  0.5f, -0.5f, -1.0f,  0.0f,  0.0f, 1.0f, 1.0f,
+    -0.5f, -0.5f, -0.5f, -1.0f,  0.0f,  0.0f, 0.0f, 1.0f,
+    -0.5f, -0.5f, -0.5f, -1.0f,  0.0f,  0.0f, 0.0f, 1.0f,
+    -0.5f, -0.5f,  0.5f, -1.0f,  0.0f,  0.0f, 0.0f, 0.0f,
+    -0.5f,  0.5f,  0.5f, -1.0f,  0.0f,  0.0f, 1.0f, 0.0f,
 
-     0.5f,  0.5f,  0.5f,  1.0f,  0.0f,  0.0f,
-     0.5f,  0.5f, -0.5f,  1.0f,  0.0f,  0.0f,
-     0.5f, -0.5f, -0.5f,  1.0f,  0.0f,  0.0f,
-     0.5f, -0.5f, -0.5f,  1.0f,  0.0f,  0.0f,
-     0.5f, -0.5f,  0.5f,  1.0f,  0.0f,  0.0f,
-     0.5f,  0.5f,  0.5f,  1.0f,  0.0f,  0.0f,
+     0.5f,  0.5f,  0.5f,  1.0f,  0.0f,  0.0f, 1.0f, 0.0f,
+     0.5f,  0.5f, -0.5f,  1.0f,  0.0f,  0.0f, 1.0f, 1.0f,
+     0.5f, -0.5f, -0.5f,  1.0f,  0.0f,  0.0f, 0.0f, 1.0f,
+     0.5f, -0.5f, -0.5f,  1.0f,  0.0f,  0.0f, 0.0f, 1.0f,
+     0.5f, -0.5f,  0.5f,  1.0f,  0.0f,  0.0f, 0.0f, 0.0f,
+     0.5f,  0.5f,  0.5f,  1.0f,  0.0f,  0.0f, 1.0f, 0.0f,
 
-    -0.5f, -0.5f, -0.5f,  0.0f, -1.0f,  0.0f,
-     0.5f, -0.5f, -0.5f,  0.0f, -1.0f,  0.0f,
-     0.5f, -0.5f,  0.5f,  0.0f, -1.0f,  0.0f,
-     0.5f, -0.5f,  0.5f,  0.0f, -1.0f,  0.0f,
-    -0.5f, -0.5f,  0.5f,  0.0f, -1.0f,  0.0f,
-    -0.5f, -0.5f, -0.5f,  0.0f, -1.0f,  0.0f,
+    -0.5f, -0.5f, -0.5f,  0.0f, -1.0f,  0.0f, 0.0f, 1.0f,
+     0.5f, -0.5f, -0.5f,  0.0f, -1.0f,  0.0f, 1.0f, 1.0f,
+     0.5f, -0.5f,  0.5f,  0.0f, -1.0f,  0.0f, 1.0f, 0.0f,
+     0.5f, -0.5f,  0.5f,  0.0f, -1.0f,  0.0f, 1.0f, 0.0f,
+    -0.5f, -0.5f,  0.5f,  0.0f, -1.0f,  0.0f, 0.0f, 0.0f,
+    -0.5f, -0.5f, -0.5f,  0.0f, -1.0f,  0.0f, 0.0f, 1.0f,
 
-    -0.5f,  0.5f, -0.5f,  0.0f,  1.0f,  0.0f,
-     0.5f,  0.5f, -0.5f,  0.0f,  1.0f,  0.0f,
-     0.5f,  0.5f,  0.5f,  0.0f,  1.0f,  0.0f,
-     0.5f,  0.5f,  0.5f,  0.0f,  1.0f,  0.0f,
-    -0.5f,  0.5f,  0.5f,  0.0f,  1.0f,  0.0f,
-    -0.5f,  0.5f, -0.5f,  0.0f,  1.0f,  0.0f
+    -0.5f,  0.5f, -0.5f,  0.0f,  1.0f,  0.0f, 0.0f, 1.0f,
+     0.5f,  0.5f, -0.5f,  0.0f,  1.0f,  0.0f, 1.0f, 1.0f,
+     0.5f,  0.5f,  0.5f,  0.0f,  1.0f,  0.0f, 1.0f, 0.0f,
+     0.5f,  0.5f,  0.5f,  0.0f,  1.0f,  0.0f, 1.0f, 0.0f,
+    -0.5f,  0.5f,  0.5f,  0.0f,  1.0f,  0.0f, 0.0f, 0.0f,
+    -0.5f,  0.5f, -0.5f,  0.0f,  1.0f,  0.0f,  0.0f, 1.0f
 	};
 	
 	//vao
@@ -649,7 +664,7 @@ void initialize(){
 						3, //size of vertex attribute
 						GL_FLOAT, //type of the data in vertex attribute
 						GL_FALSE, // if we want data to be normalized
-						6 * sizeof(float), // stride - the space between consecutive vertex attribute sets
+						8 * sizeof(float), // stride - the space between consecutive vertex attribute sets
 						(void *)0 // offset of where the position data begins in the buffer
 						);
 				
@@ -661,12 +676,25 @@ void initialize(){
 						3, //size of vertex attribute
 						GL_FLOAT, //type of the data in vertex attribute
 						GL_FALSE, // if we want data to be normalized
-						6 * sizeof(float), // stride - the space between consecutive vertex attribute sets
+						8 * sizeof(float), // stride - the space between consecutive vertex attribute sets
 						(void *)(3 * sizeof(float)) // offset of where the position data begins in the buffer
 						);
 				
 	//enable vertex attribute by giving vertex attribute location
 	glEnableVertexAttribArray(VDG_ATTRIBUTE_NORMAL);
+	
+	
+	//texture coordinates of vertex
+	glVertexAttribPointer(VDG_ATTRIBUTE_TEXTURE0, //location of vertex attribute - which vertex attribute you want to configure
+						2, //size of vertex attribute
+						GL_FLOAT, //type of the data in vertex attribute
+						GL_FALSE, // if we want data to be normalized
+						8 * sizeof(float), // stride - the space between consecutive vertex attribute sets
+						(void *)(2 * 3 * sizeof(float)) // offset of where the position data begins in the buffer
+						);
+				
+	//enable vertex attribute by giving vertex attribute location
+	glEnableVertexAttribArray(VDG_ATTRIBUTE_TEXTURE0);
 	glBindBuffer(GL_ARRAY_BUFFER, 0);
 	
 	glBindVertexArray(0);
@@ -683,7 +711,7 @@ void initialize(){
 						3, //size of vertex attribute
 						GL_FLOAT, //type of the data in vertex attribute
 						GL_FALSE, // if we want data to be normalized
-						6 * sizeof(float), // stride - the space between consecutive vertex attribute sets
+						8 * sizeof(float), // stride - the space between consecutive vertex attribute sets
 						(void *)0 // offset of where the position data begins in the buffer
 						);
 						
@@ -692,6 +720,8 @@ void initialize(){
 	
 	glBindBuffer(GL_ARRAY_BUFFER, 0);
 	glBindVertexArray(0);
+	
+	loadTexture(&gContainerTexture,"container1.jpg");//"container2.png");
 	
 	glShadeModel(GL_SMOOTH);
 	
@@ -742,7 +772,7 @@ void display(){
 	modelMatrix = translate(0.0f,0.0f,-3.0f);
 	
 	//scale light source
-	rotationMatrix = rotate(180.0f, 1.0f, 0.0f, 0.3f);
+	rotationMatrix = rotate(148.0f, 1.0f, 0.0f, 0.3f);
 	
 	modelMatrix = modelMatrix * rotationMatrix;
 	
@@ -750,7 +780,7 @@ void display(){
 	GLfloat radius = 10.0f;
 	GLfloat camX = sin(rotationAngle) * radius;
 	GLfloat camZ = cos(rotationAngle) * radius;
-	vec3 cameraPos = vec3(0.0f, 0.0f, 0.0f);//vec3(camX, 0.0f, camZ);
+	vec3 cameraPos = vec3(0.0f, 0.0f, -3.0f); //vec3(camX, 0.0f, camZ);
 	vec3 cameraFront = vec3(0.0f, 0.0f, 0.0f);
 	vec3 cameraUp = vec3(0.0f, 1.0f, 0.0);
 	/*viewMatrix = lookat( cameraPos, //position of camera
@@ -762,33 +792,28 @@ void display(){
 	//modelViewProjectionMatrix = gPerspectiveProjectionMatrix * modelMatrix; //order is important
 	
 	//change the lights position values over time
-	//uncomment this to have moving light effect
 	//lightPos[0] = 1.0f + sin(rotationAngle) * 2.0f;
 	//lightPos[1] = sin(rotationAngle/2.0f) * 1.0f;
 	
-	//tweaking the lights colors
-	vec3 lightColors;
-	lightColors[0]=sin(rotationAngle * 2.0f);
-	lightColors[1]=sin(rotationAngle * 0.7f);
-	lightColors[2]=sin(rotationAngle * 1.3f);
-	
-	vec3 diffuseColor = lightColors * vec3(0.5f);
-	vec3 ambientColor = diffuseColor * vec3(0.2f);
 	//pass the above modelViewProjectionMatrix to the vertex shader in 'u_mvp_matrix' shader variable
 	//whose position value we already calculated in initWithFrame() by using glGetUniformLocation()
 	glUniformMatrix4fv(gModelUniform, 1, GL_FALSE, modelMatrix);
 	glUniformMatrix4fv(gViewUniform, 1, GL_FALSE, viewMatrix);
 	glUniformMatrix4fv(gProjectionUniform, 1, GL_FALSE, gPerspectiveProjectionMatrix);
 	glUniform3fv(gObjectColorUniform, 1, vec3(1.0f, 0.5f, 0.31f));
-	glUniform3fv(gLightAmbientUniform, 1, ambientColor);
-	glUniform3fv(gLightDiffuseUniform, 1, diffuseColor);
+	glUniform3fv(gLightAmbientUniform, 1, vec3(0.2f, 0.2f, 0.2f));
+	glUniform3fv(gLightDiffuseUniform, 1, vec3(0.5f, 0.5f, 0.5f));
 	glUniform3fv(gLightSpecularUniform, 1, vec3(1.0f, 1.0f, 1.0f));
 	glUniform3fv(gLightPositionUniform, 1, lightPos);
 	glUniform3fv(gViewerPositionUniform, 1, cameraPos);
-	glUniform3fv(gMaterialAmbientUniform, 1, material_ambient);
-	glUniform3fv(gMaterialDiffuseUniform, 1, material_diffuse);
+	glUniform1i(gMaterialDiffuseUniform, 0);
 	glUniform3fv(gMaterialSpecularUniform, 1, material_specular);
 	glUniform1f(gMaterialShininessUniform, material_shininess);
+	
+	//bind texture 1
+	glActiveTexture(GL_TEXTURE0);
+	glBindTexture(GL_TEXTURE_2D, gContainerTexture);
+	
 	glBindVertexArray(gVao_object);
 	
 	//draw, either by glDrawTriangles() or glDrawArrays() or glDrawElements()
@@ -887,6 +912,13 @@ void uninitialize(){
 		gVao_light = 0;
 	}
 	
+	//destroy texture
+	if (gContainerTexture)
+	{
+		glDeleteTextures(1, &gContainerTexture);
+		gContainerTexture = 0;
+	}
+	
 	//destroy vbo
 	if(gVbo)
 	{
@@ -958,4 +990,50 @@ void uninitialize(){
 	}
 	DestroyWindow(ghwnd);
 	ghwnd = NULL;
+}
+
+void loadTexture(GLuint *texture, char* path)
+{
+	//generate texture
+	glGenTextures(1, //how many textures 
+				texture //texture stored in this
+				);
+	glBindTexture(GL_TEXTURE_2D, *texture);
+	
+	//set the texture wrapping/filtering options on the currently bound texture object
+	glTexParameteri(GL_TEXTURE_2D, GL_TEXTURE_WRAP_S, GL_REPEAT);
+	glTexParameteri(GL_TEXTURE_2D, GL_TEXTURE_WRAP_T, GL_REPEAT);
+	glTexParameteri(GL_TEXTURE_2D, GL_TEXTURE_MIN_FILTER, GL_LINEAR);
+	glTexParameteri(GL_TEXTURE_2D, GL_TEXTURE_MAG_FILTER, GL_LINEAR);
+	
+	//load image data
+	int width, height, nrChannels;
+	GLubyte* data = stbi_load(path, //location of the input file
+							&width,
+							&height,
+							&nrChannels, //number of colored channels
+							0
+							);
+	if(data){				
+	//start generating texture using previously loaded image data
+	glTexImage2D(GL_TEXTURE_2D, //texture target: this operation will generate texture on currently bound texture object at the same target - it won't affect GL_TEXTURE_1D or GL_TEXTURE_3D
+				0, //mipmap level for which we want to create a texture for
+				GL_RGB, //in what kind of format we want to store the texture
+				width, //width of resulting texture
+				height, //height of resulting texture
+				0, //should always be 0 - some legacy stuff
+				GL_RGB, //format of source image
+				GL_UNSIGNED_BYTE, //datatype of source image
+				data //actual image data
+				);
+				
+	//currently bound texture object now has the base-leve of texture image attached to it
+	
+	//generate all the required mipmaps for the currently bound texture
+	glGenerateMipmap(GL_TEXTURE_2D);
+	}else{
+		printf("Failed to load the texture");
+	}
+	//free image memory
+	stbi_image_free(data);
 }
