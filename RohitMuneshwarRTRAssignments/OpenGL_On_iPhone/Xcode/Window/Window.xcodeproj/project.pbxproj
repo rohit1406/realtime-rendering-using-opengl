@@ -7,6 +7,8 @@
 	objects = {
 
 /* Begin PBXBuildFile section */
+		FF35CA2920CC5868008FE57C /* Default-568h@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = FF35CA2820CC5868008FE57C /* Default-568h@2x.png */; };
+		FF35CA2D20CC5C10008FE57C /* MyView.m in Sources */ = {isa = PBXBuildFile; fileRef = FF35CA2C20CC5C10008FE57C /* MyView.m */; };
 		FF9B897920BAF9980023A7C0 /* main.m in Sources */ = {isa = PBXBuildFile; fileRef = FF9B897820BAF9980023A7C0 /* main.m */; };
 		FF9B897C20BAF9980023A7C0 /* AppDelegate.m in Sources */ = {isa = PBXBuildFile; fileRef = FF9B897B20BAF9980023A7C0 /* AppDelegate.m */; };
 		FF9B897F20BAF9980023A7C0 /* ViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = FF9B897E20BAF9980023A7C0 /* ViewController.m */; };
@@ -16,6 +18,9 @@
 /* End PBXBuildFile section */
 
 /* Begin PBXFileReference section */
+		FF35CA2820CC5868008FE57C /* Default-568h@2x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; name = "Default-568h@2x.png"; path = "../Default-568h@2x.png"; sourceTree = "<group>"; };
+		FF35CA2B20CC5C10008FE57C /* MyView.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = MyView.h; sourceTree = "<group>"; };
+		FF35CA2C20CC5C10008FE57C /* MyView.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = MyView.m; sourceTree = "<group>"; };
 		FF9B897420BAF9980023A7C0 /* Window.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = Window.app; sourceTree = BUILT_PRODUCTS_DIR; };
 		FF9B897820BAF9980023A7C0 /* main.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = main.m; sourceTree = "<group>"; };
 		FF9B897A20BAF9980023A7C0 /* AppDelegate.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = AppDelegate.h; sourceTree = "<group>"; };
@@ -39,6 +44,14 @@
 /* End PBXFrameworksBuildPhase section */
 
 /* Begin PBXGroup section */
+		FF35CA2A20CC58A3008FE57C /* Resources */ = {
+			isa = PBXGroup;
+			children = (
+				FF35CA2820CC5868008FE57C /* Default-568h@2x.png */,
+			);
+			name = Resources;
+			sourceTree = "<group>";
+		};
 		FF9B896B20BAF9970023A7C0 = {
 			isa = PBXGroup;
 			children = (
@@ -62,10 +75,13 @@
 				FF9B897B20BAF9980023A7C0 /* AppDelegate.m */,
 				FF9B897D20BAF9980023A7C0 /* ViewController.h */,
 				FF9B897E20BAF9980023A7C0 /* ViewController.m */,
+				FF35CA2B20CC5C10008FE57C /* MyView.h */,
+				FF35CA2C20CC5C10008FE57C /* MyView.m */,
 				FF9B898020BAF9980023A7C0 /* Main.storyboard */,
 				FF9B898320BAF9980023A7C0 /* Assets.xcassets */,
 				FF9B898520BAF9980023A7C0 /* LaunchScreen.storyboard */,
 				FF9B898820BAF9980023A7C0 /* Info.plist */,
+				FF35CA2A20CC58A3008FE57C /* Resources */,
 				FF9B897720BAF9980023A7C0 /* Supporting Files */,
 			);
 			path = Window;
@@ -137,6 +153,7 @@
 			buildActionMask = 2147483647;
 			files = (
 				FF9B898720BAF9980023A7C0 /* LaunchScreen.storyboard in Resources */,
+				FF35CA2920CC5868008FE57C /* Default-568h@2x.png in Resources */,
 				FF9B898420BAF9980023A7C0 /* Assets.xcassets in Resources */,
 				FF9B898220BAF9980023A7C0 /* Main.storyboard in Resources */,
 			);
@@ -149,6 +166,7 @@
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				FF35CA2D20CC5C10008FE57C /* MyView.m in Sources */,
 				FF9B897F20BAF9980023A7C0 /* ViewController.m in Sources */,
 				FF9B897C20BAF9980023A7C0 /* AppDelegate.m in Sources */,
 				FF9B897920BAF9980023A7C0 /* main.m in Sources */,
@@ -271,10 +289,13 @@
 			isa = XCBuildConfiguration;
 			buildSettings = {
 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
+				CLANG_ENABLE_OBJC_ARC = NO;
 				INFOPLIST_FILE = Window/Info.plist;
+				IPHONEOS_DEPLOYMENT_TARGET = 10.2;
 				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks";
 				PRODUCT_BUNDLE_IDENTIFIER = astromedicomp.org.Window;
 				PRODUCT_NAME = "$(TARGET_NAME)";
+				TARGETED_DEVICE_FAMILY = 1;
 			};
 			name = Debug;
 		};
@@ -282,10 +303,13 @@
 			isa = XCBuildConfiguration;
 			buildSettings = {
 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
+				CLANG_ENABLE_OBJC_ARC = NO;
 				INFOPLIST_FILE = Window/Info.plist;
+				IPHONEOS_DEPLOYMENT_TARGET = 10.2;
 				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks";
 				PRODUCT_BUNDLE_IDENTIFIER = astromedicomp.org.Window;
 				PRODUCT_NAME = "$(TARGET_NAME)";
+				TARGETED_DEVICE_FAMILY = 1;
 			};
 			name = Release;
 		};
@@ -308,6 +332,7 @@
 				FF9B898D20BAF9980023A7C0 /* Release */,
 			);
 			defaultConfigurationIsVisible = 0;
+			defaultConfigurationName = Release;
 		};
 /* End XCConfigurationList section */
 	};
