@@ -21,7 +21,6 @@ std::vector<GLfloat> gSphereNormals;
 std::vector<GLfloat> gSphereTexcoords;
 std::vector<GLushort> gSphereElements;
 
-GLfloat fovy = 30.0;
 GLuint gAnimateToggle, gLightToggle;
 
 GLfloat lightAmbient[] = {0.0f,0.0f,0.0f,1.0f};
