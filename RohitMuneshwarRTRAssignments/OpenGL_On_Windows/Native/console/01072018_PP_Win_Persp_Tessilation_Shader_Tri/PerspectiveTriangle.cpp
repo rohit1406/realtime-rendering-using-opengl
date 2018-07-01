@@ -42,33 +42,30 @@ HGLRC ghrc = NULL;
 FILE *g_fp_logfile = NULL;
 
 GLuint gVertexShaderObject;
+GLuint gTessellationControlShaderObject;
+GLuint gTessellationEvaluationShaderObject;
 GLuint gFragmentShaderObject;
 GLuint gShaderProgramObject;
 
-GLuint gVao_cube;
-GLuint gVbo_cube_position;
-GLuint gVbo_cube_normal;
-
-GLuint gModelViewMatrixUniform, gProjectionMatrixUniform;
-GLuint gLdUniform, gKdUniform, gLightPositionUniform;
-
-GLuint gLKeyPressedUniform;
-
-GLfloat gAngle = 0.0f;
+GLuint gVao;
+GLuint gVbo;
+GLuint gMVPUniform;
+GLuint gNumberOfSegmentsUniform;
+GLuint gNumberOfStripsUniform;
+GLuint gLineColorUniform;
 
 mat4 gPerspectiveProjectionMatrix;
 
-bool gbAnimate;
-bool gbLight;
+unsigned int gNumberOfLineSegments;
 
 int WINAPI WinMain(HINSTANCE hInstance, HINSTANCE hPrevInstance, LPSTR lpszCmdLIne, int iCmdShow){
 	void initialize(void);
 	void uninitialize(void);
 	void display(void);
-	void spin(void);
+	
 	WNDCLASSEX wndclass;
 	TCHAR AppName[] = TEXT("Window Custom");
-	TCHAR WinName[] = TEXT("PP Lights - Animated Cube");
+	TCHAR WinName[] = TEXT("Perspective Triangle using Programmable Pipeline");
 	HWND hwnd;
 	MSG msg;
 	RECT rect;
@@ -150,9 +147,6 @@ int WINAPI WinMain(HINSTANCE hInstance, HINSTANCE hPrevInstance, LPSTR lpszCmdLI
 					gbDone = true;
 				}
 				
-				if (gbAnimate == true)
-					spin();
-				
 				display(); //for double buffer
 			}
 		}
@@ -167,13 +161,6 @@ LRESULT CALLBACK WndProc(HWND hwnd, UINT iMsg, WPARAM wParam, LPARAM lParam){
 	void resize(int, int);
 	//void display(void);
 	void uninitialize(void);
-	
-	
-	
-	//variable declarations
-	static bool bIsAKeyPressed = false;
-	static bool bIsLKeyPressed = false;
-	
 	switch(iMsg){
 		//case for opengl
 		case WM_ACTIVATE:
@@ -201,35 +188,26 @@ LRESULT CALLBACK WndProc(HWND hwnd, UINT iMsg, WPARAM wParam, LPARAM lParam){
 		break;*/ //removed as not needed for double buffering
 		case WM_KEYDOWN:
 			switch(wParam){
+			case VK_UP:
+				gNumberOfLineSegments++;
+				if (gNumberOfLineSegments >= 50)
+				{
+					gNumberOfLineSegments = 50; //reset
+				}
+				break;
+
+			case VK_DOWN:
+				gNumberOfLineSegments--;
+				if (gNumberOfLineSegments<=0)
+				{
+					gNumberOfLineSegments = 1;//reset
+				}
+				break;
 				case VK_ESCAPE:
 					if(gbEscapePressed==false)
 						gbEscapePressed = true;
 					break;
 				break;
-				case 0x41: // for 'A' or 'a'
-					if (bIsAKeyPressed == false)
-					{
-						gbAnimate = true;
-						bIsAKeyPressed = true;
-					}
-					else
-					{
-						gbAnimate = false;
-						bIsAKeyPressed = false;
-					}
-					break;
-				case 0x4C: // for 'L' or 'l'
-					if (bIsLKeyPressed == false)
-					{
-						gbLight = true;
-						bIsLKeyPressed = true;
-					}
-					else
-					{
-						gbLight = false;
-						bIsLKeyPressed = false;
-					}
-					break;
 				case 0x46: //F or f key
 					if(gbFullScreen==false)
 					{
@@ -355,33 +333,16 @@ void initialize(){
 	
 	//provide source code to shader
 	const GLchar *vertexShaderSourceCode =
-				"#version 440							"\
-				"\n										"\
-				"in vec4 vPosition;						"\
-				"in vec3 vNormal;"\
-				"uniform mat4 u_model_view_matrix;"\
-				"uniform mat4 u_projection_matrix;"\
-				"uniform int u_LKeyPressed;"\
-				"uniform vec3 u_Ld;"\
-				"uniform vec3 u_Kd;"\
-				"uniform vec4 u_light_position;"\
-				"out vec3 diffuse_light;"\
-				"void main(void)						"\
-				"{										"\
-				"if(u_LKeyPressed == 1)"\
-				"{"\
-				"vec4 eyeCoordinates = u_model_view_matrix * vPosition;"\
-				"vec3 tnorm = normalize(mat3(u_model_view_matrix) * vNormal);"\
-				"vec3 s = normalize(vec3(u_light_position - eyeCoordinates));"\
-				"diffuse_light = u_Ld * u_Kd * max(dot(s, tnorm), 0.0);"\
-				"}"\
-				"gl_Position = u_projection_matrix * u_model_view_matrix * vPosition;	"\
-				"}										";
-				
-				
-	glShaderSource(gVertexShaderObject, 1, (const GLchar**)&vertexShaderSourceCode,NULL);
-	fprintf(g_fp_logfile,"Actual shadig language version is %s\n",glGetString(GL_SHADING_LANGUAGE_VERSION));
-	//compile shader
+		"#version 450" \
+		"\n" \
+		"in vec2 vPosition;" \
+		"void main(void)" \
+		"{" \
+		"gl_Position = vec4(vPosition, 0.0, 1.0);" \
+		"}";
+	glShaderSource(gVertexShaderObject, 1, (const GLchar **)&vertexShaderSourceCode, NULL);
+
+	// compile shader
 	glCompileShader(gVertexShaderObject);
 	
 	GLint iInfoLogLength=0;
@@ -405,6 +366,105 @@ void initialize(){
 			}
 		}
 	}
+
+	//TESSELLATION CONTROL SHADER
+	gTessellationControlShaderObject = glCreateShader(GL_TESS_CONTROL_SHADER);
+
+	//provide source code to shader
+	const GLchar *tessellationControlShaderSourceCode =
+		"#version 450" \
+		"\n" \
+		"layout(vertices=4)out;" \
+		"uniform int numberOfSegments;" \
+		"uniform int numberOfStrips;" \
+		"void main(void)" \
+		"{" \
+		"gl_out[gl_InvocationID].gl_Position = gl_in[gl_InvocationID].gl_Position;" \
+		"gl_TessLevelOuter[0] = float(numberOfStrips);" \
+		"gl_TessLevelOuter[1] = float(numberOfSegments);" \
+		"}";
+	glShaderSource(gTessellationControlShaderObject, 1, (const GLchar **)&tessellationControlShaderSourceCode, NULL);
+
+	//compile shader
+	glCompileShader(gTessellationControlShaderObject);
+
+	// re-initialize
+	iInfoLogLength = 0;
+	GLint iShaderCompiledStatus = 0;
+	szInfoLog = NULL;
+	glGetShaderiv(gTessellationControlShaderObject, GL_COMPILE_STATUS, &iShaderCompiledStatus);
+	if (iShaderCompiledStatus == GL_FALSE)
+	{
+		glGetShaderiv(gTessellationControlShaderObject, GL_INFO_LOG_LENGTH, &iInfoLogLength);
+		if (iInfoLogLength > 0)
+		{
+			szInfoLog = (char *)malloc(iInfoLogLength);
+			if (szInfoLog != NULL)
+			{
+				GLsizei written;
+				glGetShaderInfoLog(gTessellationControlShaderObject, iInfoLogLength, &written, szInfoLog);
+				fprintf(g_fp_logfile, "Tessellation Control Shader Compilation Log : %s\n", szInfoLog);
+				free(szInfoLog);
+				uninitialize();
+				exit(0);
+			}
+		}
+	}
+
+
+	//TESSELLATION EVALUATION SHADER
+	//create shader
+	gTessellationEvaluationShaderObject = glCreateShader(GL_TESS_EVALUATION_SHADER);
+
+	//provide source code to shader
+	const GLchar *tessellationEvaluationShaderSourceCode =
+		"#version 450"\
+		"\n"\
+		"layout(isolines)in;"\
+		"uniform mat4 u_mvp_matrix;"\
+		"void main(void)"\
+		"{"\
+		"float u = gl_TessCoord.x;"\
+		"vec3 p0=gl_in[0].gl_Position.xyz;"\
+		"vec3 p1=gl_in[1].gl_Position.xyz;"\
+		"vec3 p2=gl_in[2].gl_Position.xyz;"\
+		"vec3 p3=gl_in[3].gl_Position.xyz;"\
+		"float u1 = (1.0 - u);"\
+		"float u2 = u * u;"\
+		"float b3 = u2 * u;"\
+		"float b2 = 3.0 * u2 * u1;"\
+		"float b1 = 3.0 * u * u1 * u1;"\
+		"float b0 = u1 * u1 * u1;"\
+		"vec3 p = p0 * b0 + p1 * b1 + p2 * b2 + p3 * b3;"\
+		"gl_Position = u_mvp_matrix * vec4(p, 1.0);"\
+		"}";
+
+	glShaderSource(gTessellationEvaluationShaderObject, 1, (const GLchar **)&tessellationEvaluationShaderSourceCode, NULL);
+
+	// compile shader
+	glCompileShader(gTessellationEvaluationShaderObject);
+	// re-initialize
+	iInfoLogLength = 0;
+	iShaderCompiledStatus = 0;
+	szInfoLog = NULL;
+	glGetShaderiv(gTessellationEvaluationShaderObject, GL_COMPILE_STATUS, &iShaderCompiledStatus);
+	if (iShaderCompiledStatus == GL_FALSE)
+	{
+		glGetShaderiv(gTessellationEvaluationShaderObject, GL_INFO_LOG_LENGTH, &iInfoLogLength);
+		if (iInfoLogLength > 0)
+		{
+			szInfoLog = (char *)malloc(iInfoLogLength);
+			if (szInfoLog != NULL)
+			{
+				GLsizei written;
+				glGetShaderInfoLog(gTessellationEvaluationShaderObject, iInfoLogLength, &written, szInfoLog);
+				fprintf(g_fp_logfile, "Tessellation Evaluation Shader Compilation Log : %s\n", szInfoLog);
+				free(szInfoLog);
+				uninitialize();
+				exit(0);
+			}
+		}
+	}
 	
 	//FRAGMENT SHADER
 	//create shader
@@ -412,28 +472,17 @@ void initialize(){
 	
 	//provide source code to shader
 	const GLchar *fragmentShaderSourceCode =
-				"#version 440" \
-				"\n" \
-				"in vec3 diffuse_light;"\
-				"uniform int u_LKeyPressed;"\
-				"out vec4 FragColor;" \
-				"void main(void)" \
-				"{" \
-				"vec4 color;"\
-				"if(u_LKeyPressed == 1)"\
-				"{"\
-				"color = vec4(diffuse_light, 1.0);"\
-				"}"\
-				"else"\
-				"{"\
-				"color = vec4(1.0,1.0,1.0,1.0);"\
-				"}"\
-				"FragColor=color;" \
-				"}";
-				
-	glShaderSource(gFragmentShaderObject, 1, (const GLchar**)&fragmentShaderSourceCode,NULL);
-	
-	//compile shader
+		"#version 410" \
+		"\n" \
+		"uniform vec4 lineColor;" \
+		"out vec4 FragColor;" \
+		"void main(void)" \
+		"{" \
+		"FragColor = lineColor;" \
+		"}";
+	glShaderSource(gFragmentShaderObject, 1, (const GLchar **)&fragmentShaderSourceCode, NULL);
+
+	// compile shader
 	glCompileShader(gFragmentShaderObject);
 	//reinitialize 
 	 iInfoLogLength = 0;
@@ -465,13 +514,17 @@ void initialize(){
 	//attach vertex shader to shader program
 	glAttachShader(gShaderProgramObject,gVertexShaderObject);
 
+	// attach tessellation control shader to shader program
+	glAttachShader(gShaderProgramObject, gTessellationControlShaderObject);
+
+	// attach tessellation evaluation shader to shader program
+	glAttachShader(gShaderProgramObject, gTessellationEvaluationShaderObject);
+
 	//attach fragment shader to shader program
 	glAttachShader(gShaderProgramObject,gFragmentShaderObject);
 	
 	//pre-link binding of shader program object with vertex shader position attribute
 	glBindAttribLocation(gShaderProgramObject, VDG_ATTRIBUTE_VERTEX,"vPosition");
-	
-	glBindAttribLocation(gShaderProgramObject, VDG_ATTRIBUTE_NORMAL,"vNormal");
 	
 	//link shader
 	glLinkProgram(gShaderProgramObject);
@@ -496,117 +549,32 @@ void initialize(){
 	}
 	
 	//get MVP uniform location
-	gModelViewMatrixUniform = glGetUniformLocation(gShaderProgramObject, "u_model_view_matrix");
-	gProjectionMatrixUniform = glGetUniformLocation(gShaderProgramObject, "u_projection_matrix");
+	gMVPUniform = glGetUniformLocation(gShaderProgramObject, "u_mvp_matrix");
+
+	// get number of segments uniform location
+	gNumberOfSegmentsUniform = glGetUniformLocation(gShaderProgramObject, "numberOfSegments");
+
+	// get number of strips uniform location
+	gNumberOfStripsUniform = glGetUniformLocation(gShaderProgramObject, "numberOfStrips");
+
+	// get line color uniform location
+	gLineColorUniform = glGetUniformLocation(gShaderProgramObject, "lineColor");
 	
-	gLKeyPressedUniform = glGetUniformLocation(gShaderProgramObject, "u_LKeyPressed");
-	gLdUniform = glGetUniformLocation(gShaderProgramObject, "u_Ld");
-	gKdUniform = glGetUniformLocation(gShaderProgramObject, "u_Kd");
-	gLightPositionUniform = glGetUniformLocation(gShaderProgramObject, "u_light_position");
+	//vertices, colors, shader attribs, vbo, vao initializations
+	float vertices[] = { -1.0f, -1.0f, -0.5f, 1.0f, 0.5f, -1.0f, 1.0f, 1.0f };
 	
-	// *** vertices, colors, shader attribs, vbo, vao initializations ***
-	GLfloat cubeVertices[] =
-	{
-		1.0f, 1.0f, -1.0f,
-		-1.0f, 1.0f, -1.0f,
-		-1.0f, 1.0f, 1.0f,
-		1.0f, 1.0f, 1.0f,
-
-		1.0f, -1.0f, 1.0f,
-		-1.0f, -1.0f, 1.0f,
-		-1.0f, -1.0f, -1.0f,
-		1.0f, -1.0f, -1.0f,
-
-		1.0f, 1.0f, 1.0f,
-		-1.0f, 1.0f, 1.0f,
-		-1.0f, -1.0f, 1.0f,
-		1.0f, -1.0f, 1.0f,
-
-		1.0f, -1.0f, -1.0f,
-		-1.0f, -1.0f, -1.0f,
-		-1.0f, 1.0f, -1.0f,
-		1.0f, 1.0f, -1.0f,
-
-		-1.0f, 1.0f, 1.0f,
-		-1.0f, 1.0f, -1.0f,
-		-1.0f, -1.0f, -1.0f,
-		-1.0f, -1.0f, 1.0f,
-
-		1.0f, 1.0f, -1.0f,
-		1.0f, 1.0f, 1.0f,
-		1.0f, -1.0f, 1.0f,
-		1.0f, -1.0f, -1.0f,
-	};
-
-	for (int i = 0; i<72; i++)
-	{
-		if (cubeVertices[i]<0.0f)
-			cubeVertices[i] = cubeVertices[i] + 0.25f;
-		else if (cubeVertices[i]>0.0f)
-			cubeVertices[i] = cubeVertices[i] - 0.25f;
-		else
-			cubeVertices[i] = cubeVertices[i];
-	}
-
-	const GLfloat cubeNormals[] =
-	{
-		0.0f, 1.0f, 0.0f,
-		0.0f, 1.0f, 0.0f,
-		0.0f, 1.0f, 0.0f,
-		0.0f, 1.0f, 0.0f,
-
-		0.0f, -1.0f, 0.0f,
-		0.0f, -1.0f, 0.0f,
-		0.0f, -1.0f, 0.0f,
-		0.0f, -1.0f, 0.0f,
-
-		0.0f, 0.0f, 1.0f,
-		0.0f, 0.0f, 1.0f,
-		0.0f, 0.0f, 1.0f,
-		0.0f, 0.0f, 1.0f,
-
-		0.0f, 0.0f, -1.0f,
-		0.0f, 0.0f, -1.0f,
-		0.0f, 0.0f, -1.0f,
-		0.0f, 0.0f, -1.0f,
-
-		-1.0f, 0.0f, 0.0f,
-		-1.0f, 0.0f, 0.0f,
-		-1.0f, 0.0f, 0.0f,
-		-1.0f, 0.0f, 0.0f,
-
-		1.0f, 0.0f, 0.0f,
-		1.0f, 0.0f, 0.0f,
-		1.0f, 0.0f, 0.0f,
-		1.0f, 0.0f, 0.0f
-	};
+	glGenVertexArrays(1, &gVao);
+	glBindVertexArray(gVao);
 	
-	//vao init
-	glGenVertexArrays(1, &gVao_cube);
-	glBindVertexArray(gVao_cube);
-	
-	//vbo init
-	glGenBuffers(1, &gVbo_cube_position);
-	glBindBuffer(GL_ARRAY_BUFFER, gVbo_cube_position);
-	glBufferData(GL_ARRAY_BUFFER, sizeof(cubeVertices), cubeVertices, GL_STATIC_DRAW);
-	glVertexAttribPointer(VDG_ATTRIBUTE_VERTEX, 3, GL_FLOAT, GL_FALSE, 0, NULL);
+	glGenBuffers(1, &gVbo);
+	glBindBuffer(GL_ARRAY_BUFFER, gVbo);
+	glBufferData(GL_ARRAY_BUFFER, 8 * sizeof(float), vertices, GL_STATIC_DRAW);
+	glVertexAttribPointer(VDG_ATTRIBUTE_VERTEX, 2, GL_FLOAT, GL_FALSE, 0, NULL);
 	
 	glEnableVertexAttribArray(VDG_ATTRIBUTE_VERTEX);
 	
-	glBindBuffer(GL_ARRAY_BUFFER, 0); //unbind vbo
-	
-	// normal vbo
-	glGenBuffers(1, &gVbo_cube_normal);
-	glBindBuffer(GL_ARRAY_BUFFER, gVbo_cube_normal);
-	glBufferData(GL_ARRAY_BUFFER, sizeof(cubeNormals), cubeNormals, GL_STATIC_DRAW);
-
-	glVertexAttribPointer(VDG_ATTRIBUTE_NORMAL, 3, GL_FLOAT, GL_FALSE, 0, NULL);
-
-	glEnableVertexAttribArray(VDG_ATTRIBUTE_NORMAL);
-
 	glBindBuffer(GL_ARRAY_BUFFER, 0);
-	
-	glBindVertexArray(0); //unbind vao
+	glBindVertexArray(0);
 	
 	glShadeModel(GL_SMOOTH);
 	
@@ -625,12 +593,14 @@ void initialize(){
 	//we will always cull back faces for better performance
 	glEnable(GL_CULL_FACE);
 	
+	glLineWidth(3.0f);
+
 	glClearColor(0.1f,0.2f,0.3f,0.0f);
 	
 	//set orthographicMatrix to identify matrix
 	gPerspectiveProjectionMatrix = mat4::identity();
-	gbAnimate = false;
-	gbLight = false;
+	
+	gNumberOfLineSegments = 1;
 	//resize
 	resize(WIN_WIDTH,WIN_HEIGHT);
 }
@@ -641,48 +611,34 @@ void display(){
 	//start using OpenGL program object
 	glUseProgram(gShaderProgramObject);
 	
-	if(gbLight==true)
-	{
-		glUniform1i(gLKeyPressedUniform, 1);
-		glUniform3f(gLdUniform, 1.0f,1.0f,1.0f);
-		glUniform3f(gKdUniform, 0.5f,0.5f,0.5f);
-		
-		float lightPosition[]={0.0f,0.0f,2.0f,1.0f};
-		glUniform4fv(gLightPositionUniform, 1,(GLfloat *)lightPosition);
-	}else
-	{
-		glUniform1i(gLKeyPressedUniform,0);
-	}
-	
 	//OpenGL drawing
 	//set modelview & modelviewprojection matrices to identity
-	mat4 modelMatrix = mat4::identity();
 	mat4 modelViewMatrix = mat4::identity();
-	mat4 rotationMatrix=mat4::identity();
+	mat4 modelViewProjectionMatrix=mat4::identity();
 	
 	//translate
-	modelMatrix = translate(0.0f,0.0f,-5.0f);
+	modelViewMatrix = translate(0.5f,0.5f,-2.0f);
 	
-	rotationMatrix = rotate(gAngle, gAngle, gAngle);
 	//multiply the modelview and perspective matrix to get modelviewprojection matrix
-	modelViewMatrix = modelMatrix * rotationMatrix; //order is important
+	modelViewProjectionMatrix = gPerspectiveProjectionMatrix * modelViewMatrix; //order is important
 	
 	//pass the above modelViewProjectionMatrix to the vertex shader in 'u_mvp_matrix' shader variable
 	//whose position value we already calculated in initWithFrame() by using glGetUniformLocation()
-	glUniformMatrix4fv(gModelViewMatrixUniform, 1, GL_FALSE, modelViewMatrix);
+	glUniformMatrix4fv(gMVPUniform, 1, GL_FALSE, modelViewProjectionMatrix);
 	
-	glUniformMatrix4fv(gProjectionMatrixUniform, 1, GL_FALSE, gPerspectiveProjectionMatrix);
-	
+	// send other uniforms
+	glUniform1i(gNumberOfSegmentsUniform, gNumberOfLineSegments);
+	TCHAR str[255];
+	wsprintf(str, TEXT("OpenGL Programmable Pipeline Window : [ Segments = %d ]"), gNumberOfLineSegments);
+	SetWindowText(ghwnd, str);
+	glUniform1i(gNumberOfStripsUniform, 1);
+	glUniform4fv(gLineColorUniform, 1, vmath::vec4(1.0f, 1.0f, 0.0f, 1.0f));
+
 	//bind vao
-	glBindVertexArray(gVao_cube);
+	glBindVertexArray(gVao);
 	
-	// *** draw, either by glDrawTriangles() or glDrawArrays() or glDrawElements()
-	glDrawArrays(GL_TRIANGLE_FAN, 0, 4);
-	glDrawArrays(GL_TRIANGLE_FAN, 4, 4);
-	glDrawArrays(GL_TRIANGLE_FAN, 8, 4);
-	glDrawArrays(GL_TRIANGLE_FAN, 12, 4);
-	glDrawArrays(GL_TRIANGLE_FAN, 16, 4);
-	glDrawArrays(GL_TRIANGLE_FAN, 20, 4);
+	//draw, either by glDrawTriangles() or glDrawArrays() or glDrawElements()
+	glDrawArrays(GL_PATCHES, 0, 4);
 	
 	//unbind vao
 	glBindVertexArray(0);
@@ -710,14 +666,6 @@ void resize(int width,int height){
 	gPerspectiveProjectionMatrix = perspective(45.0f, (GLfloat)width/(GLfloat)height, 0.1f,100.0f);
 }
 
-void spin(void)
-{
-	// code
-	gAngle = gAngle + 0.01f;
-	if (gAngle >= 360.0f)
-		gAngle = gAngle - 360.0f;
-}
-
 void uninitialize(){
 	if(gbFullScreen == true){
 		dwStyle = GetWindowLong(ghwnd, GWL_STYLE);
@@ -728,35 +676,37 @@ void uninitialize(){
 	}
 	
 	//destroy vao
-	if(gVao_cube)
+	if(gVao)
 	{
-		glDeleteVertexArrays(1, &gVao_cube);
-		gVao_cube = 0;
+		glDeleteVertexArrays(1, &gVao);
+		gVao = 0;
 	}
 	
 	//destroy vbo
-	if(gVbo_cube_position)
+	if(gVbo)
 	{
-		glDeleteBuffers(1, &gVbo_cube_position);
-		gVbo_cube_position = 0;
-	}
-	
-	if(gVbo_cube_normal)
-	{
-		glDeleteBuffers(1, &gVbo_cube_normal);
-		gVbo_cube_normal = 0;
+		glDeleteBuffers(1, &gVbo);
+		gVbo = 0;
 	}
 	
 	//detach vertex shader from shader program object
 	glDetachShader(gShaderProgramObject, gVertexShaderObject);
-	
+	// detach tessellation control shader from shader program object
+	glDetachShader(gShaderProgramObject, gTessellationControlShaderObject);
+	// detach tessellation evaluation shader from shader program object
+	glDetachShader(gShaderProgramObject, gTessellationEvaluationShaderObject);
 	//detach fragment shader from shader program object
 	glDetachShader(gShaderProgramObject, gFragmentShaderObject);
 	
 	//delete vertex shader object
 	glDeleteShader(gVertexShaderObject);
 	gVertexShaderObject = 0;
-	
+	// delete tessellation control shader object
+	glDeleteShader(gTessellationControlShaderObject);
+	gTessellationControlShaderObject = 0;
+	// delete tessellation evaluation shader object
+	glDeleteShader(gTessellationEvaluationShaderObject);
+	gTessellationEvaluationShaderObject = 0;
 	//delete fragment shader object
 	glDeleteShader(gFragmentShaderObject);
 	gFragmentShaderObject=0;
