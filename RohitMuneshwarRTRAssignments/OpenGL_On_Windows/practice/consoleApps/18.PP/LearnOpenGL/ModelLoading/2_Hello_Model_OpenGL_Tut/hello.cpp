@@ -1,0 +1,865 @@
+#include<windows.h>
+#include<stdio.h> //for file IO
+#include<gl/glew.h> //for GLSL extensions
+#include<gl/GL.h>
+#include<stdlib.h>
+#include "vmath.h"
+#include<vector>
+#pragma comment(lib,"glew32.lib")
+#pragma comment(lib, "opengl32.lib")
+#pragma comment(lib, "user32.lib")
+#pragma comment(lib, "gdi32.lib")
+
+#define WIN_WIDTH 800
+#define WIN_HEIGHT 600
+
+using namespace vmath;
+
+enum
+{
+	VDG_ATTRIBUTE_VERTEX = 0,
+	VDG_ATTRIBUTE_COLOR =1,
+	VDG_ATTRIBUTE_NORMAL =2,
+	VDG_ATTRIBUTE_TEXTURE0 =3
+};
+
+LRESULT CALLBACK WndProc(HWND hwnd, UINT iMsg, WPARAM wParam, LPARAM lParam);
+
+bool gbDone = false;
+bool gbFullScreen = false;
+HWND ghwnd=NULL;
+DWORD dwStyle;
+WINDOWPLACEMENT wpPrev = {sizeof(WINDOWPLACEMENT)}; //for fullscreen
+
+//changes for opengl
+bool gbActiveWindow = false;
+bool gbEscapePressed = false;
+HDC ghdc = NULL;
+HGLRC ghrc = NULL;
+
+//log file
+FILE *gLogFile = NULL;
+
+//shaders
+GLuint gVertexShaderObject;
+GLuint gFragmentShaderObject;
+GLuint gShaderProgramObject;
+
+//vao and vbo
+GLuint gVao;
+GLuint gVbo;
+
+//uniform variables
+GLuint gUniformModel, gUniformView, gUniformProjection;
+GLuint gUniformTextureSampler;
+
+//textures
+GLuint gTextureBricks;
+
+//perspective projection matrix
+mat4 gPerspectiveProjectionMatrix;
+
+//set modelview & modelviewprojection matrices to identity
+mat4 gTransalationTransformationMatrix;
+mat4 gRotationTransformationMatrix;
+mat4 gScaleTransformationMatrix;
+mat4 gModelTransformationMatrix;
+mat4 gViewTransformationMatrix;
+mat4 gProjectionTransformationMatrix;
+
+//for obj data
+std::vector<vec3> gVertices;
+std::vector<vec2> gUvs;
+std::vector<vec3> gNormals;
+
+int WINAPI WinMain(HINSTANCE hInstance, HINSTANCE hPrevInstance, LPSTR lpszCmdLIne, int iCmdShow){
+	void initialize(void);
+	void uninitialize(void);
+	void display(void);
+	WNDCLASSEX wndclass;
+	TCHAR AppName[] = TEXT("Window Custom");
+	TCHAR WinName[] = TEXT("Perspective Triangle using Programmable Pipeline");
+	HWND hwnd;
+	MSG msg;
+	RECT rect;
+	
+	if(fopen_s(&gLogFile,"ppLog.txt","w")!=0)
+	{
+		MessageBox(NULL,TEXT("Log File Can Not Be Created\nExitting..."),TEXT("Error"),MB_OK | MB_TOPMOST | MB_ICONSTOP);
+		uninitialize();
+	}else
+	{
+		fprintf(gLogFile,"\nLog file is opened successfully...\n");
+	}
+	
+	//initialize window class
+	wndclass.cbSize = sizeof(WNDCLASSEX);
+	wndclass.style = CS_HREDRAW | CS_VREDRAW | CS_OWNDC; //change for opengl
+	wndclass.lpfnWndProc = WndProc;
+	wndclass.cbClsExtra = 0;
+	wndclass.cbWndExtra = 0;
+	wndclass.hInstance = hInstance;
+	wndclass.hIcon = LoadIcon(NULL, IDI_APPLICATION);
+	wndclass.hCursor = LoadCursor(NULL, IDC_ARROW);
+	wndclass.hbrBackground = (HBRUSH) GetStockObject(WHITE_BRUSH);
+	wndclass.lpszMenuName = NULL;
+	wndclass.lpszClassName = AppName;
+	wndclass.hIconSm = LoadIcon(NULL, IDI_APPLICATION);
+	//initialization complete
+	
+	RegisterClassEx(&wndclass); //Register Class
+	
+	SystemParametersInfo(SPI_GETWORKAREA,0,&rect,0);
+	int width = (rect.right-rect.left)/2 - WIN_WIDTH/2;
+	int height = (rect.bottom - rect.top)/2 - WIN_HEIGHT/2;
+	//int width = GetSystemMetrics(SM_CXSCREEN)/2 - WIN_WIDTH/2;
+	//int height = GetSystemMetrics(SM_CYSCREEN)/2 - WIN_HEIGHT/2;
+	
+	
+	//create window in memory
+	hwnd = CreateWindowEx(  //change for opengl
+	WS_EX_APPWINDOW,
+	AppName,
+	WinName,
+	WS_OVERLAPPEDWINDOW | WS_CLIPCHILDREN | WS_CLIPSIBLINGS | WS_VISIBLE, //change for opengl
+	width,
+	height,
+	WIN_WIDTH,
+	WIN_HEIGHT,
+	NULL,
+	NULL,
+	hInstance,
+	NULL
+	);
+	ghwnd = hwnd;
+	ShowWindow(hwnd, iCmdShow); //Show Window
+	//ShowWindow(hwnd, SW_MAXIMIZE); //Show Window
+	
+	//update window removed, not necessary for opengl
+	//UpdateWindow(hwnd); // color/paint the background of the window
+	//added below two for opengl
+	SetForegroundWindow(hwnd);
+	SetFocus(hwnd);
+	
+	initialize(); //opengl
+	//message loop
+	while(gbDone==false){
+		
+		if(PeekMessage(&msg, NULL, 0, 0, PM_REMOVE)){
+			if(msg.message == WM_QUIT){
+				gbDone = true;
+			}else{
+				TranslateMessage(&msg);
+				DispatchMessage(&msg);
+			}
+		}else{
+			//rendering starts here
+			//opengl change
+			if(gbActiveWindow == true){
+				if(gbEscapePressed == true){
+					gbDone = true;
+				}
+				display(); //for double buffer
+			}
+		}
+	}
+	
+	uninitialize();
+	return ((int) msg.wParam);
+}
+
+LRESULT CALLBACK WndProc(HWND hwnd, UINT iMsg, WPARAM wParam, LPARAM lParam){
+	void ToggleFullscreen(void);
+	void resize(int, int);
+	//void display(void);
+	void uninitialize(void);
+	switch(iMsg){
+		//case for opengl
+		case WM_ACTIVATE:
+			if(HIWORD(wParam)==0){
+				gbActiveWindow = true;
+			}else{
+				gbActiveWindow = false;
+			}
+		break;
+		//case added for opengl
+		case WM_SIZE:
+			resize(LOWORD(lParam),HIWORD(lParam));
+		break;
+		//WM_PAINT ch painting single buffer ahe. So u will face screen tearing/flickering (state save nhi krta yet - single state)
+		/*case WM_PAINT:
+			display(); //opengl
+		break;*/ //removed as it is not needed for double buffering
+		//for opengl
+		case WM_CLOSE:
+			uninitialize();
+		break;
+		//for opengl
+		/*case WM_ERASEBKGND:
+			return (0);
+		break;*/ //removed as not needed for double buffering
+		case WM_KEYDOWN:
+			switch(wParam){
+				case VK_ESCAPE:
+					if(gbEscapePressed==false)
+						gbEscapePressed = true;
+					break;
+				break;
+				case 0x46: //F or f key
+					if(gbFullScreen==false)
+					{
+						ToggleFullscreen();
+						gbFullScreen = true;
+					}else
+					{
+						ToggleFullscreen();
+						gbFullScreen = false;
+					}
+				break;
+			}
+		break;
+		case WM_DESTROY:
+			PostQuitMessage(0);
+		break;
+	}
+	return DefWindowProc(hwnd, iMsg, wParam, lParam);
+}
+
+void ToggleFullscreen(){
+	HMONITOR hMonitor;
+	//check kara window fullscreen ahe ka
+	if(gbFullScreen == false){
+		//get current window style
+		 dwStyle = GetWindowLong(ghwnd,GWL_STYLE);
+		 
+		 //does it includes overlapped window
+		if(dwStyle & WS_OVERLAPPEDWINDOW){
+			
+			//evaluate current window placement
+			bool bWindowPlacement = GetWindowPlacement(ghwnd,&wpPrev);
+			
+			//take the information of the window which you want to make full screen
+			hMonitor = MonitorFromWindow(ghwnd, MONITORINFOF_PRIMARY);
+			MONITORINFO mi;
+			mi.cbSize = sizeof(MONITORINFO);
+			bool bMonitorInfo = GetMonitorInfo(hMonitor, &mi);
+			
+			if(bWindowPlacement && bMonitorInfo){
+				//set window style accordingly
+				SetWindowLong(ghwnd, GWL_STYLE, dwStyle & ~WS_OVERLAPPEDWINDOW);
+				//set window position accordingly
+				SetWindowPos(ghwnd, HWND_TOP, mi.rcMonitor.left, mi.rcMonitor.top, (mi.rcMonitor.right - mi.rcMonitor.left), 
+				(mi.rcMonitor.bottom - mi.rcMonitor.top), SWP_NOZORDER | SWP_FRAMECHANGED);
+			}
+			//hide the cursor
+			ShowCursor(FALSE);
+			gbFullScreen = true;
+		}
+	}else{
+		//code to restore the full screen
+		SetWindowLong(ghwnd, GWL_STYLE, dwStyle & WS_OVERLAPPEDWINDOW);
+		//set window placement back to previous
+		SetWindowPlacement(ghwnd, &wpPrev);
+		//set window position
+		SetWindowPos(ghwnd, HWND_TOP, 0,0,0,0, SWP_NOMOVE | SWP_NOSIZE | SWP_NOOWNERZORDER | SWP_NOZORDER | SWP_FRAMECHANGED);
+		//show cursor
+		ShowCursor(TRUE);
+		gbFullScreen = false;
+	}
+}
+
+void initialize(){
+	//function prototype declaration
+	void createVertexShader(void);
+	void createFragmentShader(void);
+	void createShaderProgram(void);
+	void getUniformLocations(void);
+	void initializeVaos(void);
+	void initializeGLProperties(void);
+	bool loadOBJ(char*);
+	void resize(int,int);
+	void uninitialize(void);
+
+	//code
+	PIXELFORMATDESCRIPTOR pfd;
+	int iPixelFormatIndex;
+	
+	ZeroMemory(&pfd, sizeof(PIXELFORMATDESCRIPTOR));
+	
+	//initialization of pfd
+	pfd.nSize = sizeof(PIXELFORMATDESCRIPTOR);
+	pfd.nVersion = 1;
+	pfd.dwFlags = PFD_DRAW_TO_WINDOW | PFD_SUPPORT_OPENGL | PFD_DOUBLEBUFFER; //for double buffer
+	pfd.iPixelType = PFD_TYPE_RGBA;
+	pfd.cColorBits = 32;
+	pfd.cRedBits = 8;
+	pfd.cGreenBits = 8;
+	pfd.cBlueBits = 8;
+	pfd.cAlphaBits = 8;
+	pfd.cDepthBits=32;
+	
+	ghdc = GetDC(ghwnd);
+	iPixelFormatIndex = ChoosePixelFormat(ghdc, &pfd);
+	if(iPixelFormatIndex == 0){
+		ReleaseDC(ghwnd, ghdc);
+		ghdc = NULL;
+	}
+	
+	if(SetPixelFormat(ghdc, iPixelFormatIndex, &pfd)==FALSE){
+		ReleaseDC(ghwnd, ghdc);
+		ghdc = NULL;
+	}
+	
+	ghrc = wglCreateContext(ghdc);
+	if(ghrc == NULL){
+		ReleaseDC(ghwnd, ghdc);
+		ghdc = NULL;
+	}
+	
+	if(wglMakeCurrent(ghdc,ghrc)== FALSE){
+		wglDeleteContext(ghrc);
+		ghrc = NULL;
+		ReleaseDC(ghwnd, ghdc);
+		ghdc = NULL;
+	}
+	
+	//GLEW initialization code for GLSL
+	GLenum glew_error = glewInit();
+	if(glew_error != GLEW_OK)
+	{
+		wglDeleteContext(ghrc);
+		ghrc = NULL;
+		ReleaseDC(ghwnd, ghdc);
+		ghdc = NULL;
+	}
+	
+	//load obj file
+	char* path = "cube.obj";
+	bool isObjLoadingSuccessful = loadOBJ(path);
+	if (isObjLoadingSuccessful==false) {
+		fprintf(gLogFile,"Obj file is not loaded...");
+	}
+	else {
+		fprintf(gLogFile, "Obj file is loaded successfully...");
+	}
+	for (int i = 0; i < gVertices.size(); i++) {
+		fprintf(gLogFile, "\nvertex data: %f %f %f", gVertices[i][0], gVertices[i][1], gVertices[i][2]);
+	}
+	
+	
+	createVertexShader(); //create vertex shader
+	createFragmentShader(); //create fragment shader
+	createShaderProgram(); //create shader program
+	getUniformLocations(); //get uniform locations
+	initializeVaos(); //initialize vaos
+	initializeGLProperties(); //set OpenGL states
+	
+	//set transformation matrices to identify matrix
+	gTransalationTransformationMatrix = mat4::identity();
+	gRotationTransformationMatrix = mat4::identity();
+	gScaleTransformationMatrix = mat4::identity();
+	gModelTransformationMatrix = mat4::identity();
+	gViewTransformationMatrix = mat4::identity();
+	gProjectionTransformationMatrix = mat4::identity();
+	
+	
+	//resize
+	resize(WIN_WIDTH,WIN_HEIGHT);
+}
+
+void display(){
+	//function prototypes
+	void drawCube(void);
+
+	//code
+	glClear(GL_COLOR_BUFFER_BIT //clear color buffer
+				| GL_DEPTH_BUFFER_BIT //clear depth buffer as we are using depth testing
+			); // | GL_STENCIL_BUFFER add kelyawar output disat nhi.... why?
+	
+	//start using OpenGL program object
+	glUseProgram(gShaderProgramObject);
+	//bind vao
+	glBindVertexArray(gVao);
+	//OpenGL drawing
+	//set modelview & modelviewprojection matrices to identity
+	gModelTransformationMatrix = mat4::identity();
+	gViewTransformationMatrix = mat4::identity();
+	gProjectionTransformationMatrix=mat4::identity();
+	
+	//translate
+	gTransalationTransformationMatrix = translate(0.0f, 0.0f, -6.0f);
+	gModelTransformationMatrix = gModelTransformationMatrix * gTransalationTransformationMatrix;
+
+	//set projection matrix
+	gProjectionTransformationMatrix = gPerspectiveProjectionMatrix;
+	
+	//pass the above modelViewProjectionMatrix to the vertex shader in 'u_mvp_matrix' shader variable
+	//whose position value we already calculated in initWithFrame() by using glGetUniformLocation()
+	glUniformMatrix4fv(gUniformModel, 1, GL_FALSE, gModelTransformationMatrix);
+	glUniformMatrix4fv(gUniformView, 1, GL_FALSE, gViewTransformationMatrix);
+	glUniformMatrix4fv(gUniformProjection, 1, GL_FALSE, gProjectionTransformationMatrix);
+	
+	//drawCube();
+	
+
+	//draw, either by glDrawTriangles() or glDrawArrays() or glDrawElements()
+	glDrawArrays(GL_TRIANGLES, //primitive type we like to draw
+		0, //starting index of the vertex array we'd like to draw
+		36 //how many vertices we want to draw - we render only one triangle from our data, which is exactly 3 vertices long
+	);
+
+	//unbind vao
+	glBindVertexArray(0);
+	
+	//stop using OpenGL program object
+	glUseProgram(0);
+	
+	
+	SwapBuffers(ghdc);
+}
+
+void resize(int width,int height){
+	if(height == 0){
+		height = 1;
+	}
+	glViewport(0,0,(GLsizei)width,(GLsizei)height);
+	
+	//glOrtho(left,right,bottom,top,near,far);
+	/*if(width<=height)
+	{
+			gOrthographicProjectionMatrix = ortho(-100.0f,100.0f, (-100.0f * (height/width)), (100.0f * (height/width)), -100.0f, 100.0f);
+	}else
+	{
+		gOrthographicProjectionMatrix = ortho(-100.0f, 100.0f, (-100.0f * (width/height)), (100.0f * (width/height)), -100.0f, 100.0f);
+	}*/
+	gPerspectiveProjectionMatrix = perspective(45.0f, (GLfloat)width/(GLfloat)height, 0.1f,100.0f);
+}
+
+void uninitialize(){
+	if(gbFullScreen == true){
+		dwStyle = GetWindowLong(ghwnd, GWL_STYLE);
+		SetWindowLong(ghwnd,GWL_STYLE, dwStyle | WS_OVERLAPPEDWINDOW);
+		SetWindowPlacement(ghwnd,&wpPrev);
+		SetWindowPos(ghwnd,HWND_TOP,0,0,0,0,SWP_NOMOVE | SWP_NOSIZE | SWP_NOOWNERZORDER | SWP_NOZORDER | SWP_FRAMECHANGED);
+		ShowCursor(TRUE);
+	}
+	
+	//destroy vao
+	if(gVao)
+	{
+		glDeleteVertexArrays(1, &gVao);
+		gVao = 0;
+	}
+	
+	//destroy vbo
+	if(gVbo)
+	{
+		glDeleteBuffers(1, &gVbo);
+		gVbo = 0;
+	}
+	
+	//detach vertex shader from shader program object
+	glDetachShader(gShaderProgramObject, gVertexShaderObject);
+	
+	//detach fragment shader from shader program object
+	glDetachShader(gShaderProgramObject, gFragmentShaderObject);
+	
+	//delete vertex shader object
+	glDeleteShader(gVertexShaderObject);
+	gVertexShaderObject = 0;
+	
+	//delete fragment shader object
+	glDeleteShader(gFragmentShaderObject);
+	gFragmentShaderObject=0;
+	
+	//delete shader program object
+	glDeleteProgram(gShaderProgramObject);
+	gShaderProgramObject=0;
+	
+
+	//unlink shader program
+	glUseProgram(0);
+	
+	//deselect the rendering context
+	wglMakeCurrent(NULL,NULL);
+	
+	//delete the rendering context
+	wglDeleteContext(ghrc);
+	ghrc = NULL;
+	
+	//delete the device context
+	ReleaseDC(ghwnd, ghdc);
+	ghdc = NULL;
+	
+	if(gLogFile){
+		fprintf(gLogFile,"\nLog file is closed successfully...\n");
+		fclose(gLogFile);
+		gLogFile = NULL;
+	}
+	DestroyWindow(ghwnd);
+	ghwnd = NULL;
+}
+
+void createVertexShader(void)
+{
+	fprintf(gLogFile, "creating vertex shader initiated...\n");
+	//function prototype declaration
+	void uninitialize(void);
+
+	//local variables declaration
+	GLint iInfoLogLength = 0;
+	GLint iShaderCompileStatus = 0;
+	char *szInfoLog = NULL;
+
+	//code
+	//VERTEX SHADER
+	//create shader
+	gVertexShaderObject = glCreateShader(GL_VERTEX_SHADER);
+
+	//provide source code to shader
+	const GLchar *vertexShaderSourceCode =
+		"#version 440							"\
+		"\n										"\
+		"in vec3 vPosition;"\
+		"uniform mat4 u_model_matrix;"\
+		"uniform mat4 u_view_matrix;"\
+		"uniform mat4 u_projection_matrix;"\
+		"void main(void)						"\
+		"{										"\
+		"gl_Position = u_projection_matrix * u_view_matrix * u_model_matrix * vec4(vPosition, 1.0);	"\
+		"}										";
+
+
+	glShaderSource(gVertexShaderObject, 1, (const GLchar**)&vertexShaderSourceCode, NULL);
+	fprintf(gLogFile, "Actual shadig language version is %s\n", glGetString(GL_SHADING_LANGUAGE_VERSION));
+	//compile shader
+	glCompileShader(gVertexShaderObject);
+
+	glGetShaderiv(gVertexShaderObject, GL_COMPILE_STATUS, &iShaderCompileStatus);
+	if (iShaderCompileStatus == GL_FALSE)
+	{
+		glGetShaderiv(gVertexShaderObject, GL_INFO_LOG_LENGTH, &iInfoLogLength);
+		if (iInfoLogLength > 0)
+		{
+			szInfoLog = (char *)malloc(iInfoLogLength);
+			if (szInfoLog != NULL)
+			{
+				GLsizei written;
+				glGetShaderInfoLog(gVertexShaderObject, iInfoLogLength, &written, szInfoLog);
+				fprintf(gLogFile, "vertex shader compilation log: %s\n", szInfoLog);
+				free(szInfoLog);
+				uninitialize();
+				exit(0);
+			}
+		}
+	}
+	fprintf(gLogFile, "vertex shader created...\n");
+}
+
+void createFragmentShader(void)
+{
+	fprintf(gLogFile, "creating fragment shader initiated...\n");
+	//function prototype declaration
+	void uninitialize(void);
+
+	//local variables declaration
+	GLint iInfoLogLength = 0;
+	GLint iShaderCompileStatus = 0;
+	char *szInfoLog = NULL;
+
+	//code
+	//FRAGMENT SHADER
+	//create shader
+	gFragmentShaderObject = glCreateShader(GL_FRAGMENT_SHADER);
+
+	//provide source code to shader
+	const GLchar *fragmentShaderSourceCode =
+		"#version 440" \
+		"\n" \
+		"out vec4 FragColor;" \
+		"void main(void)" \
+		"{" \
+		"FragColor=vec4(0.3,0.2,0.5, 1.0);" \
+		"}";
+
+	glShaderSource(gFragmentShaderObject, 1, (const GLchar**)&fragmentShaderSourceCode, NULL);
+
+	//compile shader
+	glCompileShader(gFragmentShaderObject);
+	
+	glGetShaderiv(gFragmentShaderObject, GL_COMPILE_STATUS, &iShaderCompileStatus);
+	if (iShaderCompileStatus == GL_FALSE)
+	{
+		glGetShaderiv(gFragmentShaderObject, GL_INFO_LOG_LENGTH, &iInfoLogLength);
+		if (iInfoLogLength>0)
+		{
+			szInfoLog = (char *)malloc(iInfoLogLength);
+			if (szInfoLog != NULL)
+			{
+				GLsizei written;
+				glGetShaderInfoLog(gFragmentShaderObject, iInfoLogLength, &written, szInfoLog);
+				fprintf(gLogFile, "Fragment Shader Compilation Log: %s\n", szInfoLog);
+				free(szInfoLog);
+				uninitialize();
+				exit(0);
+			}
+		}
+	}
+	fprintf(gLogFile, "fragment shader created...\n");
+}
+
+void createShaderProgram(void)
+{
+	fprintf(gLogFile, "creating shader program initiated...\n");
+	//function prototype declaration
+	void uninitialize(void);
+
+	//local variables declaration
+	GLint iShaderProgramLinkStatus = 0;
+	GLint iInfoLogLength = 0;
+	char *szInfoLog = NULL;
+
+	//code
+	//SHADER PROGRAM
+	//create
+	gShaderProgramObject = glCreateProgram();
+
+	//attach vertex shader to shader program
+	glAttachShader(gShaderProgramObject, gVertexShaderObject);
+
+	//attach fragment shader to shader program
+	glAttachShader(gShaderProgramObject, gFragmentShaderObject);
+
+	//pre-link binding of shader program object with vertex shader position attribute
+	glBindAttribLocation(gShaderProgramObject, VDG_ATTRIBUTE_VERTEX, "vPosition");
+
+	//link shader
+	glLinkProgram(gShaderProgramObject);
+	
+	glGetProgramiv(gShaderProgramObject, GL_LINK_STATUS, &iShaderProgramLinkStatus);
+	if (iShaderProgramLinkStatus == GL_FALSE)
+	{
+		glGetProgramiv(gShaderProgramObject, GL_INFO_LOG_LENGTH, &iInfoLogLength);
+		if (iInfoLogLength>0)
+		{
+			szInfoLog = (char *)malloc(iInfoLogLength);
+			if (szInfoLog != NULL)
+			{
+				GLsizei written;
+				glGetProgramInfoLog(gShaderProgramObject, iInfoLogLength, &written, szInfoLog);
+				fprintf(gLogFile, "Shader Program Link Log: %s\n", szInfoLog);
+				free(szInfoLog);
+				uninitialize();
+				exit(0);
+			}
+		}
+	}
+	fprintf(gLogFile, "shader program created...\n");
+}
+
+void getUniformLocations(void)
+{
+	fprintf(gLogFile, "getting uniform locations...\n");
+	//get MVP uniform location
+	gUniformModel = glGetUniformLocation(gShaderProgramObject, "u_model_matrix");
+	gUniformView = glGetUniformLocation(gShaderProgramObject, "u_view_matrix");
+	gUniformProjection = glGetUniformLocation(gShaderProgramObject, "u_projection_matrix");
+}
+
+void initializeVaos(void)
+{
+	fprintf(gLogFile, "configuring vaos...\n");
+	
+	//vao
+	glGenVertexArrays(1, &gVao);
+	glBindVertexArray(gVao);
+
+	glGenBuffers(1, &gVbo);
+
+	//from this point onwards, any buffer calls we make (on the GL_ARRAY_BUFFER target) will be used to configure the currently bound buffer, which is gVbo
+	glBindBuffer(GL_ARRAY_BUFFER, //out of many types of buffer objects, the buffer type of vertex buffer object (vbo) is GL_ARRAY_BUFFER
+		gVbo //buffer object to bind
+	);
+
+	//copies previously defined vertex data into the buffer's memory
+	glBufferData(GL_ARRAY_BUFFER, //type of the buffer we want to copy data into
+		gVertices.size() * sizeof(vec3), //size of the data in bytes which we want to pass to the buffer
+		&gVertices[0], //actual data we want to send
+		GL_STATIC_DRAW //how we want graphics card to manage the given data
+	);
+
+	//tell OpenGL how it should interpret the vertex data (per vertex attribute)
+	//position of vertex
+	glVertexAttribPointer(VDG_ATTRIBUTE_VERTEX, //location of vertex attribute - which vertex attribute you want to configure
+		3, //size of vertex attribute
+		GL_FLOAT, //type of the data in vertex attribute
+		GL_FALSE, // if we want data to be normalized
+		3 * sizeof(float), // stride - the space between consecutive vertex attribute sets
+		(void *)0 // offset of where the position data begins in the buffer
+	);
+
+	//enable vertex attribute by giving vertex attribute location
+	glEnableVertexAttribArray(VDG_ATTRIBUTE_VERTEX);
+
+	glBindBuffer(GL_ARRAY_BUFFER, 0);
+
+	glBindVertexArray(0);
+	fprintf(gLogFile, "vaos configured...\n");
+}
+
+void initializeGLProperties(void)
+{
+	fprintf(gLogFile, "configuring OpenGL properties...\n");
+	glShadeModel(GL_SMOOTH);
+
+	//set-up depth buffer
+	glClearDepth(1.0f);
+
+	//enable depth testing
+	glEnable(GL_DEPTH_TEST);
+
+	//depth test to do
+	glDepthFunc(GL_LEQUAL);
+
+	//set really ice perspective calculations ?
+	glHint(GL_PERSPECTIVE_CORRECTION_HINT, GL_NICEST);
+
+	//we will always cull back faces for better performance
+	//glEnable(GL_CULL_FACE);
+
+	//wireframe model
+	//glPolygonMode(GL_FRONT_AND_BACK, GL_LINE);
+	glPolygonMode(GL_FRONT_AND_BACK, GL_FILL);
+
+	glClearColor(0.1f, 0.1f, 0.1f, 1.0f);
+}
+
+void drawCube(void)
+{
+
+	//bind vao
+	glBindVertexArray(gVao);
+
+	//draw, either by glDrawTriangles() or glDrawArrays() or glDrawElements()
+	glDrawArrays(GL_TRIANGLES, //primitive type we like to draw
+		0, //starting index of the vertex array we'd like to draw
+		36 //how many vertices we want to draw - we render only one triangle from our data, which is exactly 3 vertices long
+	);
+
+	//unbind vao
+	glBindVertexArray(0);
+}
+
+
+//load the obj file "path", write the data in out_vertices, out_uvs, out_normals adn return
+//false if something went wrong
+bool loadOBJ(char* path)
+{
+	//soem temporary variables in which we will store the contents of the obj file
+	std::vector<vec3> temp_vertices;
+	std::vector<vec2> temp_uvs;
+	std::vector<vec3> temp_normals;
+	std::vector<unsigned int> vertexIndices, uvIndices, normalIndices;
+	
+	//open the file first
+	FILE* file = fopen(path, //path of the file
+		"r" //open the file in read-only mode
+	);
+
+	//check if file is opened or not
+	if (file == NULL)
+	{
+		printf("Unable to open the file");
+		return false;
+	}
+
+	//read the file until the end
+	while (1)
+	{
+		char lineHeader[128]; //we assumed here that the first word of a line won't be longer than 128
+
+							  //read the first word of the line
+		int res = fscanf(file, //which file to scan
+			"%s",
+			lineHeader //read data in lineHeader
+		);
+
+		//check if we have reached the end of the file
+		if (res == EOF)
+		{
+			break;
+		}
+
+		//deal with the vertices list
+		if (strcmp(lineHeader, "v") == 0)
+		{
+			vec3 vertex;
+			fscanf(file, "%f %f %f\n", &vertex[0], &vertex[1], &vertex[2]);
+			temp_vertices.push_back(vertex);
+		}
+		else if (strcmp(lineHeader, "vt") == 0) //if vt then
+		{
+			vec2 uv;
+			fscanf(file, "%f %f\n", &uv[0], &uv[1]);
+			temp_uvs.push_back(uv);
+		}
+		else if (strcmp(lineHeader, "vn") == 0) //if vn then
+		{
+			vec3 normal;
+			fscanf(file, "%f %f %f\n", &normal[0], &normal[1], &normal[2]);
+			temp_normals.push_back(normal);
+		}
+		else if (strcmp(lineHeader, "f") == 0) //if f then
+		{
+			std::string vertex1, vertex2, vertex3;
+			unsigned int vertexIndex[3], uvIndex[2], normalIndex[3];
+
+			int matches = fscanf(file, "%d/%d/%d %d/%d/%d %d/%d/%d\n",
+				&vertexIndex[0], &uvIndex[0], &normalIndex[0],
+				&vertexIndex[1], &uvIndex[1], &normalIndex[1],
+				&vertexIndex[2], &uvIndex[2], &normalIndex[2]);
+
+			if (matches != 9)
+			{
+				printf("File can't be read by our simple parser: Try exporting with other options\n");
+				return 0;
+			}
+
+			vertexIndices.push_back(vertexIndex[0]);
+			vertexIndices.push_back(vertexIndex[1]);
+			vertexIndices.push_back(vertexIndex[2]);
+			uvIndices.push_back(uvIndex[0]);
+			uvIndices.push_back(uvIndex[1]);
+			uvIndices.push_back(uvIndex[2]);
+			normalIndices.push_back(normalIndex[0]);
+			normalIndices.push_back(normalIndex[1]);
+			normalIndices.push_back(normalIndex[2]);
+		}
+
+	}
+	
+	//for each vertex of each triangle
+	for (unsigned int i = 0; i < vertexIndices.size(); i++)
+	{
+		unsigned int vertexIndex = vertexIndices[i];
+		vec3 vertex = temp_vertices[vertexIndex-1]; //indexing starts at 0 and obj indexing starts at 1
+		gVertices.push_back(vertex);
+	}
+
+	//for each tex coords of each triangle
+	for (unsigned int i = 0; i < uvIndices.size(); i++)
+	{
+		unsigned int uvIndex = uvIndices[i];
+		vec2 uv = temp_uvs[uvIndex-1];
+		gUvs.push_back(uv);
+	}
+
+	//for each normal of each triangle
+	for (unsigned int i = 0; i < normalIndices.size(); i++)
+	{
+		unsigned int normalIndex = normalIndices[i];
+		vec3 normal = temp_normals[normalIndex - 1]; //indexing starts at 0 and obj indexing starts at 1
+		gNormals.push_back(normal);
+	}
+	return true;
+}

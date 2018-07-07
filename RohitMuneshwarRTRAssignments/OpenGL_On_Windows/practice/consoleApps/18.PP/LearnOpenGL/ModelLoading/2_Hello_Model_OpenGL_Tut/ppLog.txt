@@ -1,0 +1,51 @@
+
+Log file is opened successfully...
+Obj file is loaded successfully...
+vertex data: 1.000000 1.000000 -1.000000
+vertex data: 1.000000 -1.000000 -1.000000
+vertex data: -1.000000 -1.000000 -1.000000
+vertex data: 1.000000 1.000000 -1.000000
+vertex data: -1.000000 -1.000000 -1.000000
+vertex data: -1.000000 1.000000 -1.000000
+vertex data: -1.000000 -1.000000 1.000000
+vertex data: -1.000000 1.000000 1.000000
+vertex data: -1.000000 1.000000 -1.000000
+vertex data: -1.000000 -1.000000 1.000000
+vertex data: -1.000000 1.000000 -1.000000
+vertex data: -1.000000 -1.000000 -1.000000
+vertex data: 1.000000 -1.000000 1.000000
+vertex data: 0.999999 1.000000 1.000001
+vertex data: -1.000000 -1.000000 1.000000
+vertex data: 0.999999 1.000000 1.000001
+vertex data: -1.000000 1.000000 1.000000
+vertex data: -1.000000 -1.000000 1.000000
+vertex data: 1.000000 -1.000000 -1.000000
+vertex data: 1.000000 1.000000 -1.000000
+vertex data: 1.000000 -1.000000 1.000000
+vertex data: 1.000000 1.000000 -1.000000
+vertex data: 0.999999 1.000000 1.000001
+vertex data: 1.000000 -1.000000 1.000000
+vertex data: 1.000000 1.000000 -1.000000
+vertex data: -1.000000 1.000000 -1.000000
+vertex data: 0.999999 1.000000 1.000001
+vertex data: -1.000000 1.000000 -1.000000
+vertex data: -1.000000 1.000000 1.000000
+vertex data: 0.999999 1.000000 1.000001
+vertex data: 1.000000 -1.000000 -1.000000
+vertex data: 1.000000 -1.000000 1.000000
+vertex data: -1.000000 -1.000000 1.000000
+vertex data: 1.000000 -1.000000 -1.000000
+vertex data: -1.000000 -1.000000 1.000000
+vertex data: -1.000000 -1.000000 -1.000000creating vertex shader initiated...
+Actual shadig language version is 4.40 - Build 22.20.16.4708
+vertex shader created...
+creating fragment shader initiated...
+fragment shader created...
+creating shader program initiated...
+shader program created...
+getting uniform locations...
+configuring vaos...
+vaos configured...
+configuring OpenGL properties...
+
+Log file is closed successfully...

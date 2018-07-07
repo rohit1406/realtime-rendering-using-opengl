@@ -1,0 +1,350 @@
+// !$*UTF8*$!
+{
+	archiveVersion = 1;
+	classes = {
+	};
+	objectVersion = 46;
+	objects = {
+
+/* Begin PBXBuildFile section */
+		FF05A27620D0216200101573 /* main.m in Sources */ = {isa = PBXBuildFile; fileRef = FF05A27520D0216200101573 /* main.m */; };
+		FF05A27920D0216200101573 /* AppDelegate.m in Sources */ = {isa = PBXBuildFile; fileRef = FF05A27820D0216200101573 /* AppDelegate.m */; };
+		FF05A27C20D0216200101573 /* ViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = FF05A27B20D0216200101573 /* ViewController.m */; };
+		FF05A27F20D0216200101573 /* Main.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = FF05A27D20D0216200101573 /* Main.storyboard */; };
+		FF05A28120D0216200101573 /* Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = FF05A28020D0216200101573 /* Assets.xcassets */; };
+		FF05A28420D0216200101573 /* LaunchScreen.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = FF05A28220D0216200101573 /* LaunchScreen.storyboard */; };
+		FF05A28C20D021E600101573 /* Default-568h@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = FF05A28B20D021E600101573 /* Default-568h@2x.png */; };
+		FF05A29020D0223C00101573 /* GLESView.mm in Sources */ = {isa = PBXBuildFile; fileRef = FF05A28F20D0223C00101573 /* GLESView.mm */; };
+		FF05A29420D0239A00101573 /* Stone.bmp in Resources */ = {isa = PBXBuildFile; fileRef = FF05A29220D0239A00101573 /* Stone.bmp */; };
+		FF05A29520D0239A00101573 /* Vijay_Kundali.bmp in Resources */ = {isa = PBXBuildFile; fileRef = FF05A29320D0239A00101573 /* Vijay_Kundali.bmp */; };
+/* End PBXBuildFile section */
+
+/* Begin PBXFileReference section */
+		FF05A27120D0216200101573 /* iOS_PP_09_Persp_3d_Texture_03062018.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = iOS_PP_09_Persp_3d_Texture_03062018.app; sourceTree = BUILT_PRODUCTS_DIR; };
+		FF05A27520D0216200101573 /* main.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = main.m; sourceTree = "<group>"; };
+		FF05A27720D0216200101573 /* AppDelegate.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = AppDelegate.h; sourceTree = "<group>"; };
+		FF05A27820D0216200101573 /* AppDelegate.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = AppDelegate.m; sourceTree = "<group>"; };
+		FF05A27A20D0216200101573 /* ViewController.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = ViewController.h; sourceTree = "<group>"; };
+		FF05A27B20D0216200101573 /* ViewController.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = ViewController.m; sourceTree = "<group>"; };
+		FF05A27E20D0216200101573 /* Base */ = {isa = PBXFileReference; lastKnownFileType = file.storyboard; name = Base; path = Base.lproj/Main.storyboard; sourceTree = "<group>"; };
+		FF05A28020D0216200101573 /* Assets.xcassets */ = {isa = PBXFileReference; lastKnownFileType = folder.assetcatalog; path = Assets.xcassets; sourceTree = "<group>"; };
+		FF05A28320D0216200101573 /* Base */ = {isa = PBXFileReference; lastKnownFileType = file.storyboard; name = Base; path = Base.lproj/LaunchScreen.storyboard; sourceTree = "<group>"; };
+		FF05A28520D0216200101573 /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
+		FF05A28B20D021E600101573 /* Default-568h@2x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; name = "Default-568h@2x.png"; path = "../Default-568h@2x.png"; sourceTree = "<group>"; };
+		FF05A28E20D0223C00101573 /* GLESView.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = GLESView.h; sourceTree = "<group>"; };
+		FF05A28F20D0223C00101573 /* GLESView.mm */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.objcpp; path = GLESView.mm; sourceTree = "<group>"; };
+		FF05A29120D0224600101573 /* vmath.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = vmath.h; sourceTree = "<group>"; };
+		FF05A29220D0239A00101573 /* Stone.bmp */ = {isa = PBXFileReference; lastKnownFileType = image.bmp; path = Stone.bmp; sourceTree = SOURCE_ROOT; };
+		FF05A29320D0239A00101573 /* Vijay_Kundali.bmp */ = {isa = PBXFileReference; lastKnownFileType = image.bmp; path = Vijay_Kundali.bmp; sourceTree = SOURCE_ROOT; };
+/* End PBXFileReference section */
+
+/* Begin PBXFrameworksBuildPhase section */
+		FF05A26E20D0216200101573 /* Frameworks */ = {
+			isa = PBXFrameworksBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+/* End PBXFrameworksBuildPhase section */
+
+/* Begin PBXGroup section */
+		FF05A26820D0216200101573 = {
+			isa = PBXGroup;
+			children = (
+				FF05A27320D0216200101573 /* iOS_PP_09_Persp_3d_Texture_03062018 */,
+				FF05A27220D0216200101573 /* Products */,
+			);
+			sourceTree = "<group>";
+		};
+		FF05A27220D0216200101573 /* Products */ = {
+			isa = PBXGroup;
+			children = (
+				FF05A27120D0216200101573 /* iOS_PP_09_Persp_3d_Texture_03062018.app */,
+			);
+			name = Products;
+			sourceTree = "<group>";
+		};
+		FF05A27320D0216200101573 /* iOS_PP_09_Persp_3d_Texture_03062018 */ = {
+			isa = PBXGroup;
+			children = (
+				FF05A27720D0216200101573 /* AppDelegate.h */,
+				FF05A27820D0216200101573 /* AppDelegate.m */,
+				FF05A27A20D0216200101573 /* ViewController.h */,
+				FF05A27B20D0216200101573 /* ViewController.m */,
+				FF05A28E20D0223C00101573 /* GLESView.h */,
+				FF05A28F20D0223C00101573 /* GLESView.mm */,
+				FF05A29120D0224600101573 /* vmath.h */,
+				FF05A27D20D0216200101573 /* Main.storyboard */,
+				FF05A28020D0216200101573 /* Assets.xcassets */,
+				FF05A28220D0216200101573 /* LaunchScreen.storyboard */,
+				FF05A28520D0216200101573 /* Info.plist */,
+				FF05A28D20D021F400101573 /* Resources */,
+				FF05A27420D0216200101573 /* Supporting Files */,
+			);
+			name = iOS_PP_09_Persp_3d_Texture_03062018;
+			path = iOS_PP_08_Persp_3d_Texture_03062018;
+			sourceTree = "<group>";
+		};
+		FF05A27420D0216200101573 /* Supporting Files */ = {
+			isa = PBXGroup;
+			children = (
+				FF05A27520D0216200101573 /* main.m */,
+			);
+			name = "Supporting Files";
+			sourceTree = "<group>";
+		};
+		FF05A28D20D021F400101573 /* Resources */ = {
+			isa = PBXGroup;
+			children = (
+				FF05A29220D0239A00101573 /* Stone.bmp */,
+				FF05A29320D0239A00101573 /* Vijay_Kundali.bmp */,
+				FF05A28B20D021E600101573 /* Default-568h@2x.png */,
+			);
+			name = Resources;
+			sourceTree = "<group>";
+		};
+/* End PBXGroup section */
+
+/* Begin PBXNativeTarget section */
+		FF05A27020D0216200101573 /* iOS_PP_09_Persp_3d_Texture_03062018 */ = {
+			isa = PBXNativeTarget;
+			buildConfigurationList = FF05A28820D0216200101573 /* Build configuration list for PBXNativeTarget "iOS_PP_09_Persp_3d_Texture_03062018" */;
+			buildPhases = (
+				FF05A26D20D0216200101573 /* Sources */,
+				FF05A26E20D0216200101573 /* Frameworks */,
+				FF05A26F20D0216200101573 /* Resources */,
+			);
+			buildRules = (
+			);
+			dependencies = (
+			);
+			name = iOS_PP_09_Persp_3d_Texture_03062018;
+			productName = iOS_PP_08_Persp_3d_Texture_03062018;
+			productReference = FF05A27120D0216200101573 /* iOS_PP_09_Persp_3d_Texture_03062018.app */;
+			productType = "com.apple.product-type.application";
+		};
+/* End PBXNativeTarget section */
+
+/* Begin PBXProject section */
+		FF05A26920D0216200101573 /* Project object */ = {
+			isa = PBXProject;
+			attributes = {
+				LastUpgradeCheck = 0820;
+				TargetAttributes = {
+					FF05A27020D0216200101573 = {
+						CreatedOnToolsVersion = 8.2.1;
+						ProvisioningStyle = Manual;
+					};
+				};
+			};
+			buildConfigurationList = FF05A26C20D0216200101573 /* Build configuration list for PBXProject "iOS_PP_09_Persp_3d_Texture_03062018" */;
+			compatibilityVersion = "Xcode 3.2";
+			developmentRegion = English;
+			hasScannedForEncodings = 0;
+			knownRegions = (
+				en,
+				Base,
+			);
+			mainGroup = FF05A26820D0216200101573;
+			productRefGroup = FF05A27220D0216200101573 /* Products */;
+			projectDirPath = "";
+			projectRoot = "";
+			targets = (
+				FF05A27020D0216200101573 /* iOS_PP_09_Persp_3d_Texture_03062018 */,
+			);
+		};
+/* End PBXProject section */
+
+/* Begin PBXResourcesBuildPhase section */
+		FF05A26F20D0216200101573 /* Resources */ = {
+			isa = PBXResourcesBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+				FF05A28420D0216200101573 /* LaunchScreen.storyboard in Resources */,
+				FF05A28C20D021E600101573 /* Default-568h@2x.png in Resources */,
+				FF05A29520D0239A00101573 /* Vijay_Kundali.bmp in Resources */,
+				FF05A29420D0239A00101573 /* Stone.bmp in Resources */,
+				FF05A28120D0216200101573 /* Assets.xcassets in Resources */,
+				FF05A27F20D0216200101573 /* Main.storyboard in Resources */,
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+/* End PBXResourcesBuildPhase section */
+
+/* Begin PBXSourcesBuildPhase section */
+		FF05A26D20D0216200101573 /* Sources */ = {
+			isa = PBXSourcesBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+				FF05A27C20D0216200101573 /* ViewController.m in Sources */,
+				FF05A27920D0216200101573 /* AppDelegate.m in Sources */,
+				FF05A27620D0216200101573 /* main.m in Sources */,
+				FF05A29020D0223C00101573 /* GLESView.mm in Sources */,
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+/* End PBXSourcesBuildPhase section */
+
+/* Begin PBXVariantGroup section */
+		FF05A27D20D0216200101573 /* Main.storyboard */ = {
+			isa = PBXVariantGroup;
+			children = (
+				FF05A27E20D0216200101573 /* Base */,
+			);
+			name = Main.storyboard;
+			sourceTree = "<group>";
+		};
+		FF05A28220D0216200101573 /* LaunchScreen.storyboard */ = {
+			isa = PBXVariantGroup;
+			children = (
+				FF05A28320D0216200101573 /* Base */,
+			);
+			name = LaunchScreen.storyboard;
+			sourceTree = "<group>";
+		};
+/* End PBXVariantGroup section */
+
+/* Begin XCBuildConfiguration section */
+		FF05A28620D0216200101573 /* Debug */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				ALWAYS_SEARCH_USER_PATHS = NO;
+				CLANG_ANALYZER_NONNULL = YES;
+				CLANG_CXX_LANGUAGE_STANDARD = "gnu++0x";
+				CLANG_CXX_LIBRARY = "libc++";
+				CLANG_ENABLE_MODULES = YES;
+				CLANG_ENABLE_OBJC_ARC = YES;
+				CLANG_WARN_BOOL_CONVERSION = YES;
+				CLANG_WARN_CONSTANT_CONVERSION = YES;
+				CLANG_WARN_DIRECT_OBJC_ISA_USAGE = YES_ERROR;
+				CLANG_WARN_DOCUMENTATION_COMMENTS = YES;
+				CLANG_WARN_EMPTY_BODY = YES;
+				CLANG_WARN_ENUM_CONVERSION = YES;
+				CLANG_WARN_INFINITE_RECURSION = YES;
+				CLANG_WARN_INT_CONVERSION = YES;
+				CLANG_WARN_OBJC_ROOT_CLASS = YES_ERROR;
+				CLANG_WARN_SUSPICIOUS_MOVE = YES;
+				CLANG_WARN_UNREACHABLE_CODE = YES;
+				CLANG_WARN__DUPLICATE_METHOD_MATCH = YES;
+				"CODE_SIGN_IDENTITY[sdk=iphoneos*]" = "iPhone Developer";
+				COPY_PHASE_STRIP = NO;
+				DEBUG_INFORMATION_FORMAT = dwarf;
+				ENABLE_STRICT_OBJC_MSGSEND = YES;
+				ENABLE_TESTABILITY = YES;
+				GCC_C_LANGUAGE_STANDARD = gnu99;
+				GCC_DYNAMIC_NO_PIC = NO;
+				GCC_NO_COMMON_BLOCKS = YES;
+				GCC_OPTIMIZATION_LEVEL = 0;
+				GCC_PREPROCESSOR_DEFINITIONS = (
+					"DEBUG=1",
+					"$(inherited)",
+				);
+				GCC_WARN_64_TO_32_BIT_CONVERSION = YES;
+				GCC_WARN_ABOUT_RETURN_TYPE = YES_ERROR;
+				GCC_WARN_UNDECLARED_SELECTOR = YES;
+				GCC_WARN_UNINITIALIZED_AUTOS = YES_AGGRESSIVE;
+				GCC_WARN_UNUSED_FUNCTION = YES;
+				GCC_WARN_UNUSED_VARIABLE = YES;
+				IPHONEOS_DEPLOYMENT_TARGET = 10.2;
+				MTL_ENABLE_DEBUG_INFO = YES;
+				ONLY_ACTIVE_ARCH = YES;
+				SDKROOT = iphoneos;
+				TARGETED_DEVICE_FAMILY = "1,2";
+			};
+			name = Debug;
+		};
+		FF05A28720D0216200101573 /* Release */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				ALWAYS_SEARCH_USER_PATHS = NO;
+				CLANG_ANALYZER_NONNULL = YES;
+				CLANG_CXX_LANGUAGE_STANDARD = "gnu++0x";
+				CLANG_CXX_LIBRARY = "libc++";
+				CLANG_ENABLE_MODULES = YES;
+				CLANG_ENABLE_OBJC_ARC = YES;
+				CLANG_WARN_BOOL_CONVERSION = YES;
+				CLANG_WARN_CONSTANT_CONVERSION = YES;
+				CLANG_WARN_DIRECT_OBJC_ISA_USAGE = YES_ERROR;
+				CLANG_WARN_DOCUMENTATION_COMMENTS = YES;
+				CLANG_WARN_EMPTY_BODY = YES;
+				CLANG_WARN_ENUM_CONVERSION = YES;
+				CLANG_WARN_INFINITE_RECURSION = YES;
+				CLANG_WARN_INT_CONVERSION = YES;
+				CLANG_WARN_OBJC_ROOT_CLASS = YES_ERROR;
+				CLANG_WARN_SUSPICIOUS_MOVE = YES;
+				CLANG_WARN_UNREACHABLE_CODE = YES;
+				CLANG_WARN__DUPLICATE_METHOD_MATCH = YES;
+				"CODE_SIGN_IDENTITY[sdk=iphoneos*]" = "iPhone Developer";
+				COPY_PHASE_STRIP = NO;
+				DEBUG_INFORMATION_FORMAT = "dwarf-with-dsym";
+				ENABLE_NS_ASSERTIONS = NO;
+				ENABLE_STRICT_OBJC_MSGSEND = YES;
+				GCC_C_LANGUAGE_STANDARD = gnu99;
+				GCC_NO_COMMON_BLOCKS = YES;
+				GCC_WARN_64_TO_32_BIT_CONVERSION = YES;
+				GCC_WARN_ABOUT_RETURN_TYPE = YES_ERROR;
+				GCC_WARN_UNDECLARED_SELECTOR = YES;
+				GCC_WARN_UNINITIALIZED_AUTOS = YES_AGGRESSIVE;
+				GCC_WARN_UNUSED_FUNCTION = YES;
+				GCC_WARN_UNUSED_VARIABLE = YES;
+				IPHONEOS_DEPLOYMENT_TARGET = 10.2;
+				MTL_ENABLE_DEBUG_INFO = NO;
+				SDKROOT = iphoneos;
+				TARGETED_DEVICE_FAMILY = "1,2";
+				VALIDATE_PRODUCT = YES;
+			};
+			name = Release;
+		};
+		FF05A28920D0216200101573 /* Debug */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
+				CLANG_ENABLE_OBJC_ARC = NO;
+				DEVELOPMENT_TEAM = "";
+				INFOPLIST_FILE = iOS_PP_08_Persp_3d_Texture_03062018/Info.plist;
+				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks";
+				PRODUCT_BUNDLE_IDENTIFIER = "astromedicomp.org.iOS-PP-08-Persp-3d-Texture-03062018";
+				PRODUCT_NAME = "$(TARGET_NAME)";
+				TARGETED_DEVICE_FAMILY = 1;
+			};
+			name = Debug;
+		};
+		FF05A28A20D0216200101573 /* Release */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
+				CLANG_ENABLE_OBJC_ARC = NO;
+				DEVELOPMENT_TEAM = "";
+				INFOPLIST_FILE = iOS_PP_08_Persp_3d_Texture_03062018/Info.plist;
+				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks";
+				PRODUCT_BUNDLE_IDENTIFIER = "astromedicomp.org.iOS-PP-08-Persp-3d-Texture-03062018";
+				PRODUCT_NAME = "$(TARGET_NAME)";
+				TARGETED_DEVICE_FAMILY = 1;
+			};
+			name = Release;
+		};
+/* End XCBuildConfiguration section */
+
+/* Begin XCConfigurationList section */
+		FF05A26C20D0216200101573 /* Build configuration list for PBXProject "iOS_PP_09_Persp_3d_Texture_03062018" */ = {
+			isa = XCConfigurationList;
+			buildConfigurations = (
+				FF05A28620D0216200101573 /* Debug */,
+				FF05A28720D0216200101573 /* Release */,
+			);
+			defaultConfigurationIsVisible = 0;
+			defaultConfigurationName = Release;
+		};
+		FF05A28820D0216200101573 /* Build configuration list for PBXNativeTarget "iOS_PP_09_Persp_3d_Texture_03062018" */ = {
+			isa = XCConfigurationList;
+			buildConfigurations = (
+				FF05A28920D0216200101573 /* Debug */,
+				FF05A28A20D0216200101573 /* Release */,
+			);
+			defaultConfigurationIsVisible = 0;
+		};
+/* End XCConfigurationList section */
+	};
+	rootObject = FF05A26920D0216200101573 /* Project object */;
+}

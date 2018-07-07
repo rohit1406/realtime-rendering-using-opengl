@@ -1,0 +1,340 @@
+// !$*UTF8*$!
+{
+	archiveVersion = 1;
+	classes = {
+	};
+	objectVersion = 46;
+	objects = {
+
+/* Begin PBXBuildFile section */
+		FF270EAE20DEE8E80066C8E7 /* main.m in Sources */ = {isa = PBXBuildFile; fileRef = FF270EAD20DEE8E80066C8E7 /* main.m */; };
+		FF270EB120DEE8E80066C8E7 /* AppDelegate.m in Sources */ = {isa = PBXBuildFile; fileRef = FF270EB020DEE8E80066C8E7 /* AppDelegate.m */; };
+		FF270EB420DEE8E80066C8E7 /* ViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = FF270EB320DEE8E80066C8E7 /* ViewController.m */; };
+		FF270EB720DEE8E80066C8E7 /* Main.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = FF270EB520DEE8E80066C8E7 /* Main.storyboard */; };
+		FF270EB920DEE8E80066C8E7 /* Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = FF270EB820DEE8E80066C8E7 /* Assets.xcassets */; };
+		FF270EBC20DEE8E80066C8E7 /* LaunchScreen.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = FF270EBA20DEE8E80066C8E7 /* LaunchScreen.storyboard */; };
+		FF270EC420DEE92E0066C8E7 /* Default-568h@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = FF270EC320DEE92E0066C8E7 /* Default-568h@2x.png */; };
+		FF270EC920DEE9620066C8E7 /* GLESView.mm in Sources */ = {isa = PBXBuildFile; fileRef = FF270EC820DEE9620066C8E7 /* GLESView.mm */; };
+/* End PBXBuildFile section */
+
+/* Begin PBXFileReference section */
+		FF270EA920DEE8E70066C8E7 /* iOS_PP_16_Persp_Light_Sphere_PVF_03062018.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = iOS_PP_16_Persp_Light_Sphere_PVF_03062018.app; sourceTree = BUILT_PRODUCTS_DIR; };
+		FF270EAD20DEE8E80066C8E7 /* main.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = main.m; sourceTree = "<group>"; };
+		FF270EAF20DEE8E80066C8E7 /* AppDelegate.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = AppDelegate.h; sourceTree = "<group>"; };
+		FF270EB020DEE8E80066C8E7 /* AppDelegate.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = AppDelegate.m; sourceTree = "<group>"; };
+		FF270EB220DEE8E80066C8E7 /* ViewController.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = ViewController.h; sourceTree = "<group>"; };
+		FF270EB320DEE8E80066C8E7 /* ViewController.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = ViewController.m; sourceTree = "<group>"; };
+		FF270EB620DEE8E80066C8E7 /* Base */ = {isa = PBXFileReference; lastKnownFileType = file.storyboard; name = Base; path = Base.lproj/Main.storyboard; sourceTree = "<group>"; };
+		FF270EB820DEE8E80066C8E7 /* Assets.xcassets */ = {isa = PBXFileReference; lastKnownFileType = folder.assetcatalog; path = Assets.xcassets; sourceTree = "<group>"; };
+		FF270EBB20DEE8E80066C8E7 /* Base */ = {isa = PBXFileReference; lastKnownFileType = file.storyboard; name = Base; path = Base.lproj/LaunchScreen.storyboard; sourceTree = "<group>"; };
+		FF270EBD20DEE8E80066C8E7 /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
+		FF270EC320DEE92E0066C8E7 /* Default-568h@2x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; name = "Default-568h@2x.png"; path = "../Default-568h@2x.png"; sourceTree = "<group>"; };
+		FF270EC620DEE9520066C8E7 /* vmath.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = vmath.h; sourceTree = "<group>"; };
+		FF270EC720DEE9620066C8E7 /* GLESView.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = GLESView.h; sourceTree = "<group>"; };
+		FF270EC820DEE9620066C8E7 /* GLESView.mm */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.objcpp; path = GLESView.mm; sourceTree = "<group>"; };
+/* End PBXFileReference section */
+
+/* Begin PBXFrameworksBuildPhase section */
+		FF270EA620DEE8E70066C8E7 /* Frameworks */ = {
+			isa = PBXFrameworksBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+/* End PBXFrameworksBuildPhase section */
+
+/* Begin PBXGroup section */
+		FF270EA020DEE8E70066C8E7 = {
+			isa = PBXGroup;
+			children = (
+				FF270EAB20DEE8E80066C8E7 /* iOS_PP_16_Persp_Light_Sphere_PVF_03062018 */,
+				FF270EAA20DEE8E70066C8E7 /* Products */,
+			);
+			sourceTree = "<group>";
+		};
+		FF270EAA20DEE8E70066C8E7 /* Products */ = {
+			isa = PBXGroup;
+			children = (
+				FF270EA920DEE8E70066C8E7 /* iOS_PP_16_Persp_Light_Sphere_PVF_03062018.app */,
+			);
+			name = Products;
+			sourceTree = "<group>";
+		};
+		FF270EAB20DEE8E80066C8E7 /* iOS_PP_16_Persp_Light_Sphere_PVF_03062018 */ = {
+			isa = PBXGroup;
+			children = (
+				FF270EAF20DEE8E80066C8E7 /* AppDelegate.h */,
+				FF270EB020DEE8E80066C8E7 /* AppDelegate.m */,
+				FF270EB220DEE8E80066C8E7 /* ViewController.h */,
+				FF270EB320DEE8E80066C8E7 /* ViewController.m */,
+				FF270EC720DEE9620066C8E7 /* GLESView.h */,
+				FF270EC820DEE9620066C8E7 /* GLESView.mm */,
+				FF270EB520DEE8E80066C8E7 /* Main.storyboard */,
+				FF270EB820DEE8E80066C8E7 /* Assets.xcassets */,
+				FF270EBA20DEE8E80066C8E7 /* LaunchScreen.storyboard */,
+				FF270EBD20DEE8E80066C8E7 /* Info.plist */,
+				FF270EC520DEE9330066C8E7 /* Resources */,
+				FF270EAC20DEE8E80066C8E7 /* Supporting Files */,
+			);
+			path = iOS_PP_16_Persp_Light_Sphere_PVF_03062018;
+			sourceTree = "<group>";
+		};
+		FF270EAC20DEE8E80066C8E7 /* Supporting Files */ = {
+			isa = PBXGroup;
+			children = (
+				FF270EAD20DEE8E80066C8E7 /* main.m */,
+			);
+			name = "Supporting Files";
+			sourceTree = "<group>";
+		};
+		FF270EC520DEE9330066C8E7 /* Resources */ = {
+			isa = PBXGroup;
+			children = (
+				FF270EC620DEE9520066C8E7 /* vmath.h */,
+				FF270EC320DEE92E0066C8E7 /* Default-568h@2x.png */,
+			);
+			name = Resources;
+			sourceTree = "<group>";
+		};
+/* End PBXGroup section */
+
+/* Begin PBXNativeTarget section */
+		FF270EA820DEE8E70066C8E7 /* iOS_PP_16_Persp_Light_Sphere_PVF_03062018 */ = {
+			isa = PBXNativeTarget;
+			buildConfigurationList = FF270EC020DEE8E80066C8E7 /* Build configuration list for PBXNativeTarget "iOS_PP_16_Persp_Light_Sphere_PVF_03062018" */;
+			buildPhases = (
+				FF270EA520DEE8E70066C8E7 /* Sources */,
+				FF270EA620DEE8E70066C8E7 /* Frameworks */,
+				FF270EA720DEE8E70066C8E7 /* Resources */,
+			);
+			buildRules = (
+			);
+			dependencies = (
+			);
+			name = iOS_PP_16_Persp_Light_Sphere_PVF_03062018;
+			productName = iOS_PP_16_Persp_Light_Sphere_PVF_03062018;
+			productReference = FF270EA920DEE8E70066C8E7 /* iOS_PP_16_Persp_Light_Sphere_PVF_03062018.app */;
+			productType = "com.apple.product-type.application";
+		};
+/* End PBXNativeTarget section */
+
+/* Begin PBXProject section */
+		FF270EA120DEE8E70066C8E7 /* Project object */ = {
+			isa = PBXProject;
+			attributes = {
+				LastUpgradeCheck = 0820;
+				ORGANIZATIONNAME = "rohit muneshwar";
+				TargetAttributes = {
+					FF270EA820DEE8E70066C8E7 = {
+						CreatedOnToolsVersion = 8.2.1;
+						ProvisioningStyle = Manual;
+					};
+				};
+			};
+			buildConfigurationList = FF270EA420DEE8E70066C8E7 /* Build configuration list for PBXProject "iOS_PP_16_Persp_Light_Sphere_PVF_03062018" */;
+			compatibilityVersion = "Xcode 3.2";
+			developmentRegion = English;
+			hasScannedForEncodings = 0;
+			knownRegions = (
+				en,
+				Base,
+			);
+			mainGroup = FF270EA020DEE8E70066C8E7;
+			productRefGroup = FF270EAA20DEE8E70066C8E7 /* Products */;
+			projectDirPath = "";
+			projectRoot = "";
+			targets = (
+				FF270EA820DEE8E70066C8E7 /* iOS_PP_16_Persp_Light_Sphere_PVF_03062018 */,
+			);
+		};
+/* End PBXProject section */
+
+/* Begin PBXResourcesBuildPhase section */
+		FF270EA720DEE8E70066C8E7 /* Resources */ = {
+			isa = PBXResourcesBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+				FF270EBC20DEE8E80066C8E7 /* LaunchScreen.storyboard in Resources */,
+				FF270EC420DEE92E0066C8E7 /* Default-568h@2x.png in Resources */,
+				FF270EB920DEE8E80066C8E7 /* Assets.xcassets in Resources */,
+				FF270EB720DEE8E80066C8E7 /* Main.storyboard in Resources */,
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+/* End PBXResourcesBuildPhase section */
+
+/* Begin PBXSourcesBuildPhase section */
+		FF270EA520DEE8E70066C8E7 /* Sources */ = {
+			isa = PBXSourcesBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+				FF270EB420DEE8E80066C8E7 /* ViewController.m in Sources */,
+				FF270EB120DEE8E80066C8E7 /* AppDelegate.m in Sources */,
+				FF270EAE20DEE8E80066C8E7 /* main.m in Sources */,
+				FF270EC920DEE9620066C8E7 /* GLESView.mm in Sources */,
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+/* End PBXSourcesBuildPhase section */
+
+/* Begin PBXVariantGroup section */
+		FF270EB520DEE8E80066C8E7 /* Main.storyboard */ = {
+			isa = PBXVariantGroup;
+			children = (
+				FF270EB620DEE8E80066C8E7 /* Base */,
+			);
+			name = Main.storyboard;
+			sourceTree = "<group>";
+		};
+		FF270EBA20DEE8E80066C8E7 /* LaunchScreen.storyboard */ = {
+			isa = PBXVariantGroup;
+			children = (
+				FF270EBB20DEE8E80066C8E7 /* Base */,
+			);
+			name = LaunchScreen.storyboard;
+			sourceTree = "<group>";
+		};
+/* End PBXVariantGroup section */
+
+/* Begin XCBuildConfiguration section */
+		FF270EBE20DEE8E80066C8E7 /* Debug */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				ALWAYS_SEARCH_USER_PATHS = NO;
+				CLANG_ANALYZER_NONNULL = YES;
+				CLANG_CXX_LANGUAGE_STANDARD = "gnu++0x";
+				CLANG_CXX_LIBRARY = "libc++";
+				CLANG_ENABLE_MODULES = YES;
+				CLANG_ENABLE_OBJC_ARC = YES;
+				CLANG_WARN_BOOL_CONVERSION = YES;
+				CLANG_WARN_CONSTANT_CONVERSION = YES;
+				CLANG_WARN_DIRECT_OBJC_ISA_USAGE = YES_ERROR;
+				CLANG_WARN_DOCUMENTATION_COMMENTS = YES;
+				CLANG_WARN_EMPTY_BODY = YES;
+				CLANG_WARN_ENUM_CONVERSION = YES;
+				CLANG_WARN_INFINITE_RECURSION = YES;
+				CLANG_WARN_INT_CONVERSION = YES;
+				CLANG_WARN_OBJC_ROOT_CLASS = YES_ERROR;
+				CLANG_WARN_SUSPICIOUS_MOVE = YES;
+				CLANG_WARN_UNREACHABLE_CODE = YES;
+				CLANG_WARN__DUPLICATE_METHOD_MATCH = YES;
+				"CODE_SIGN_IDENTITY[sdk=iphoneos*]" = "iPhone Developer";
+				COPY_PHASE_STRIP = NO;
+				DEBUG_INFORMATION_FORMAT = dwarf;
+				ENABLE_STRICT_OBJC_MSGSEND = YES;
+				ENABLE_TESTABILITY = YES;
+				GCC_C_LANGUAGE_STANDARD = gnu99;
+				GCC_DYNAMIC_NO_PIC = NO;
+				GCC_NO_COMMON_BLOCKS = YES;
+				GCC_OPTIMIZATION_LEVEL = 0;
+				GCC_PREPROCESSOR_DEFINITIONS = (
+					"DEBUG=1",
+					"$(inherited)",
+				);
+				GCC_WARN_64_TO_32_BIT_CONVERSION = YES;
+				GCC_WARN_ABOUT_RETURN_TYPE = YES_ERROR;
+				GCC_WARN_UNDECLARED_SELECTOR = YES;
+				GCC_WARN_UNINITIALIZED_AUTOS = YES_AGGRESSIVE;
+				GCC_WARN_UNUSED_FUNCTION = YES;
+				GCC_WARN_UNUSED_VARIABLE = YES;
+				IPHONEOS_DEPLOYMENT_TARGET = 10.2;
+				MTL_ENABLE_DEBUG_INFO = YES;
+				ONLY_ACTIVE_ARCH = YES;
+				SDKROOT = iphoneos;
+				TARGETED_DEVICE_FAMILY = "1,2";
+			};
+			name = Debug;
+		};
+		FF270EBF20DEE8E80066C8E7 /* Release */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				ALWAYS_SEARCH_USER_PATHS = NO;
+				CLANG_ANALYZER_NONNULL = YES;
+				CLANG_CXX_LANGUAGE_STANDARD = "gnu++0x";
+				CLANG_CXX_LIBRARY = "libc++";
+				CLANG_ENABLE_MODULES = YES;
+				CLANG_ENABLE_OBJC_ARC = YES;
+				CLANG_WARN_BOOL_CONVERSION = YES;
+				CLANG_WARN_CONSTANT_CONVERSION = YES;
+				CLANG_WARN_DIRECT_OBJC_ISA_USAGE = YES_ERROR;
+				CLANG_WARN_DOCUMENTATION_COMMENTS = YES;
+				CLANG_WARN_EMPTY_BODY = YES;
+				CLANG_WARN_ENUM_CONVERSION = YES;
+				CLANG_WARN_INFINITE_RECURSION = YES;
+				CLANG_WARN_INT_CONVERSION = YES;
+				CLANG_WARN_OBJC_ROOT_CLASS = YES_ERROR;
+				CLANG_WARN_SUSPICIOUS_MOVE = YES;
+				CLANG_WARN_UNREACHABLE_CODE = YES;
+				CLANG_WARN__DUPLICATE_METHOD_MATCH = YES;
+				"CODE_SIGN_IDENTITY[sdk=iphoneos*]" = "iPhone Developer";
+				COPY_PHASE_STRIP = NO;
+				DEBUG_INFORMATION_FORMAT = "dwarf-with-dsym";
+				ENABLE_NS_ASSERTIONS = NO;
+				ENABLE_STRICT_OBJC_MSGSEND = YES;
+				GCC_C_LANGUAGE_STANDARD = gnu99;
+				GCC_NO_COMMON_BLOCKS = YES;
+				GCC_WARN_64_TO_32_BIT_CONVERSION = YES;
+				GCC_WARN_ABOUT_RETURN_TYPE = YES_ERROR;
+				GCC_WARN_UNDECLARED_SELECTOR = YES;
+				GCC_WARN_UNINITIALIZED_AUTOS = YES_AGGRESSIVE;
+				GCC_WARN_UNUSED_FUNCTION = YES;
+				GCC_WARN_UNUSED_VARIABLE = YES;
+				IPHONEOS_DEPLOYMENT_TARGET = 10.2;
+				MTL_ENABLE_DEBUG_INFO = NO;
+				SDKROOT = iphoneos;
+				TARGETED_DEVICE_FAMILY = "1,2";
+				VALIDATE_PRODUCT = YES;
+			};
+			name = Release;
+		};
+		FF270EC120DEE8E80066C8E7 /* Debug */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
+				CLANG_ENABLE_OBJC_ARC = NO;
+				DEVELOPMENT_TEAM = "";
+				INFOPLIST_FILE = iOS_PP_16_Persp_Light_Sphere_PVF_03062018/Info.plist;
+				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks";
+				PRODUCT_BUNDLE_IDENTIFIER = "astromedicomp.org.iOS-PP-16-Persp-Light-Sphere-PVF-03062018";
+				PRODUCT_NAME = "$(TARGET_NAME)";
+			};
+			name = Debug;
+		};
+		FF270EC220DEE8E80066C8E7 /* Release */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
+				CLANG_ENABLE_OBJC_ARC = NO;
+				DEVELOPMENT_TEAM = "";
+				INFOPLIST_FILE = iOS_PP_16_Persp_Light_Sphere_PVF_03062018/Info.plist;
+				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks";
+				PRODUCT_BUNDLE_IDENTIFIER = "astromedicomp.org.iOS-PP-16-Persp-Light-Sphere-PVF-03062018";
+				PRODUCT_NAME = "$(TARGET_NAME)";
+			};
+			name = Release;
+		};
+/* End XCBuildConfiguration section */
+
+/* Begin XCConfigurationList section */
+		FF270EA420DEE8E70066C8E7 /* Build configuration list for PBXProject "iOS_PP_16_Persp_Light_Sphere_PVF_03062018" */ = {
+			isa = XCConfigurationList;
+			buildConfigurations = (
+				FF270EBE20DEE8E80066C8E7 /* Debug */,
+				FF270EBF20DEE8E80066C8E7 /* Release */,
+			);
+			defaultConfigurationIsVisible = 0;
+			defaultConfigurationName = Release;
+		};
+		FF270EC020DEE8E80066C8E7 /* Build configuration list for PBXNativeTarget "iOS_PP_16_Persp_Light_Sphere_PVF_03062018" */ = {
+			isa = XCConfigurationList;
+			buildConfigurations = (
+				FF270EC120DEE8E80066C8E7 /* Debug */,
+				FF270EC220DEE8E80066C8E7 /* Release */,
+			);
+			defaultConfigurationIsVisible = 0;
+		};
+/* End XCConfigurationList section */
+	};
+	rootObject = FF270EA120DEE8E70066C8E7 /* Project object */;
+}
