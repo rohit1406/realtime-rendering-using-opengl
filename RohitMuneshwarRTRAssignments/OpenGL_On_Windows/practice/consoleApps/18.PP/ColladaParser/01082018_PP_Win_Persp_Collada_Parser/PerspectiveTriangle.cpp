@@ -28,6 +28,8 @@ enum
 	VDG_ATTRIBUTE_COLOR,
 	VDG_ATTRIBUTE_NORMAL,
 	VDG_ATTRIBUTE_TEXTURE0,
+	VDG_ATTRIBUTE_BONE_IDS,
+	VDG_ATTRIBUTE_WEIGHTS
 };
 
 LRESULT CALLBACK WndProc(HWND hwnd, UINT iMsg, WPARAM wParam, LPARAM lParam);
@@ -52,13 +54,17 @@ GLuint gFragmentShaderObject;
 GLuint gShaderProgramObject;
 
 GLuint gVao;
-GLuint gVbo_position, gVbo_normal;
-GLuint gMVPUniform;
+GLuint gVbo_position, gVbo_normal, gVbo_boneIds, gVbo_weights;
+GLuint gModelUniform;
+GLuint gProjectionUniform;
+GLuint gViewUniform;
 
 mat4 gPerspectiveProjectionMatrix;
 
 //model loading
 GLuint gPositionDataSize;
+GLuint gNormalDataSize;
+
 //for fetching collada file contents
 //std::vector<struct MeshInformation> geom_vec;    // Vector containing COLLADA meshes
 
@@ -323,25 +329,42 @@ void initialize(){
 	
 	//provide source code to shader
 	const GLchar *vertexShaderSourceCode =
-				/*"#version 440" \
-				"\n" \
-				"in vec4 vPosition;" \
-				"uniform mat4 u_mvp_matrix;" \
-				"void main(void)" \
-				"{" \
-				"gl_Position=u_mvp_matrix * vPosition;" \
-				"}";*/
-				"#version 440							"\
-				"\n										"\
-				"in vec4 vPosition;						"\
-				"in vec3 vNormal;"\
-				"uniform mat4 u_mvp_matrix;				"\
-				"out vec3 out_normal;"\
-				"void main(void)						"\
-				"{										"\
-				"gl_Position = u_mvp_matrix * vPosition;	"\
-				"out_normal = vNormal;"\
-				"}										";
+		/*"#version 440" \
+		"\n" \
+		"in vec4 vPosition;" \
+		"uniform mat4 u_mvp_matrix;" \
+		"void main(void)" \
+		"{" \
+		"gl_Position=u_mvp_matrix * vPosition;" \
+		"}";*/
+		"#version 440							"\
+		"\n										"\
+		"in vec4 vPosition;						"\
+		"in vec3 vNormal;"\
+		"in ivec4 bone_ids;"\
+		"in vec4 weights;"\
+		"uniform mat4 u_model_matrix;				"\
+		"uniform mat4 u_view_matrix;				"\
+		"uniform mat4 u_projection_matrix;				"\
+		"out vec3 out_normal;"\
+		"out vec3 out_light_direction;"\
+		"const int MAX_BONES = 100;"\
+		"uniform mat4 bones[MAX_BONES];"\
+		"void main(void)						"\
+		"{"\
+		"mat4 bone_transform = bones[bone_ids[0]] * weights[0];"\
+		"bone_transform += bones[bone_ids[1]] * weights[1];"\
+		"bone_transform += bones[bone_ids[2]] * weights[2];"\
+		"bone_transform += bones[bone_ids[3]] * weights[3];"\
+		"vec4 boned_position = bone_transform * vPosition; "\
+		""\
+		""\
+		"vec3 lightPos = vec3(0.0,0.0,-9.0);"\
+		"vec4 eyeCoordinates = u_view_matrix * u_model_matrix * boned_position;"\
+		"out_light_direction = lightPos - eyeCoordinates.xyz;"\
+		"gl_Position = u_projection_matrix*u_view_matrix*u_model_matrix * boned_position;	"\
+		"out_normal = mat3(u_view_matrix*u_model_matrix)* vNormal;"\
+		"}										";
 				
 				
 	glShaderSource(gVertexShaderObject, 1, (const GLchar**)&vertexShaderSourceCode,NULL);
@@ -377,13 +400,20 @@ void initialize(){
 	
 	//provide source code to shader
 	const GLchar *fragmentShaderSourceCode =
-				"#version 440" \
-				"\n" \
-				"out vec4 FragColor;" \
-				"void main(void)" \
-				"{" \
-				"FragColor=vec4(1.0,1.0,1.0,1.0);" \
-				"}";
+		"#version 440" \
+		"\n" \
+		"out vec4 FragColor;" \
+		"in vec3 out_normal;" \
+		"in vec3 out_light_direction;"\
+		"void main(void)"\
+		"{" \
+		"vec3 normal = normalize(out_normal);"\
+		"vec3 light_direction = normalize(out_light_direction);"\
+		"float diffuseIntensity = max(dot(normal,light_direction),0.0);"\
+		"vec3 diffuse = vec3(1.0) * diffuseIntensity;"\
+		"vec3 color = diffuse;"\
+		"FragColor=vec4( color,1.0);" \
+		"}";
 				
 	glShaderSource(gFragmentShaderObject, 1, (const GLchar**)&fragmentShaderSourceCode,NULL);
 	
@@ -425,6 +455,8 @@ void initialize(){
 	//pre-link binding of shader program object with vertex shader position attribute
 	glBindAttribLocation(gShaderProgramObject, VDG_ATTRIBUTE_VERTEX,"vPosition");
 	glBindAttribLocation(gShaderProgramObject, VDG_ATTRIBUTE_NORMAL,"vNormal");
+	glBindAttribLocation(gShaderProgramObject, VDG_ATTRIBUTE_BONE_IDS, "bone_ids");
+	glBindAttribLocation(gShaderProgramObject, VDG_ATTRIBUTE_WEIGHTS, "weights");
 	
 	//link shader
 	glLinkProgram(gShaderProgramObject);
@@ -449,14 +481,21 @@ void initialize(){
 	}
 	
 	//get MVP uniform location
-	gMVPUniform = glGetUniformLocation(gShaderProgramObject, "u_mvp_matrix");
-	
+	gModelUniform = glGetUniformLocation(gShaderProgramObject, "u_model_matrix");
+	gProjectionUniform = glGetUniformLocation(gShaderProgramObject, "u_projection_matrix");
+	gViewUniform = glGetUniformLocation(gShaderProgramObject, "u_view_matrix");
+
 	
 	// Initialize COLLADA geometries
-	struct ColladaData colladaDataContents = loadColladaFile("model.dae");
+	struct ColladaData colladaDataContents = loadColladaFile("colladaFiles/model.dae");
 	gPositionDataSize = colladaDataContents.meshData.vertexInfo.vec_vertex.size();
+	gNormalDataSize = colladaDataContents.meshData.normalInfo.vec_normal.size();
+
 	//meshInfo
-	fprintf(g_fp_logfile, "vertex data size: %d\n", colladaDataContents.meshData.vertexInfo.vec_vertex.size());
+	fprintf(g_fp_logfile, "vertex data size: %d %d\n", colladaDataContents.meshData.vertexInfo.vec_vertex.size(),
+		colladaDataContents.meshData.vertexInfo.vec_vertex_all.size());
+	fprintf(g_fp_logfile, "normal data size: %d %d\n", colladaDataContents.meshData.normalInfo.vec_normal.size(),
+		colladaDataContents.meshData.normalInfo.vec_normal_all.size());
 	//fprintf(g_fp_logfile, "skinning data size: %d %f\n", colladaDataContents.skinningInfo.vec_vertex_skin_data[0].jointIds[0],
 		//colladaDataContents.skinningInfo.vec_vertex_skin_data[0].weights[0]);
 	//num_objects = (int) geom_vec.size();
@@ -468,9 +507,9 @@ void initialize(){
 	//1584 - for sphere
 	//4260 - for man
 	//3338 - for pirhana
-	const GLuint pos_size = 4260 * 3;
+	//const GLuint pos_size = 1584 * 3;
 
-	GLfloat lPosition[pos_size];
+	/*GLfloat lPosition[pos_size];
 	for (int i = 0; i < colladaDataContents.meshData.vertexInfo.vec_vertex.size(); i++)
 	{
 		std::vector<double> vec_pos = colladaDataContents.meshData.vertexInfo.vec_vertex[i];
@@ -478,7 +517,7 @@ void initialize(){
 		lPosition[3*i+1] = vec_pos[1];
 		lPosition[3*i+2] = vec_pos[2];
 	}
-	
+	*/
 	
 	glGenVertexArrays(1, &gVao);
 	glBindVertexArray(gVao);
@@ -487,23 +526,29 @@ void initialize(){
 	glGenBuffers(1, &gVbo_position);
 	glBindBuffer(GL_ARRAY_BUFFER, gVbo_position);
 	
-	glBufferData(GL_ARRAY_BUFFER, sizeof(lPosition), lPosition, GL_STATIC_DRAW);
+	glBufferData(GL_ARRAY_BUFFER, gPositionDataSize *3 * sizeof(GL_FLOAT), &colladaDataContents.meshData.vertexInfo.vec_vertex_all[0], GL_STATIC_DRAW);
 	glVertexAttribPointer(VDG_ATTRIBUTE_VERTEX, 3, GL_FLOAT, GL_FALSE, 0, NULL);
-	
 	glEnableVertexAttribArray(VDG_ATTRIBUTE_VERTEX);
-	
 	glBindBuffer(GL_ARRAY_BUFFER, 0);
-	/*
+	
 	//normal
 	glGenBuffers(1, &gVbo_normal);
 	glBindBuffer(GL_ARRAY_BUFFER, gVbo_normal);
-	glBufferData(GL_ARRAY_BUFFER, geom_vec[0].map["NORMAL"].size, geom_vec[0].map["NORMAL"].data, GL_STATIC_DRAW);
-	glVertexAttribPointer(VDG_ATTRIBUTE_NORMAL, geom_vec[0].map["NORMAL"].stride, geom_vec[0].map["NORMAL"].type, GL_FALSE, 0, NULL);
-	
+	glBufferData(GL_ARRAY_BUFFER, gNormalDataSize * 3 * sizeof(GL_FLOAT), &colladaDataContents.meshData.normalInfo.vec_normal_all[0], GL_STATIC_DRAW);
+	glVertexAttribPointer(VDG_ATTRIBUTE_NORMAL, 3, GL_FLOAT, GL_FALSE, 0, NULL);
 	glEnableVertexAttribArray(VDG_ATTRIBUTE_NORMAL);
-	
 	glBindBuffer(GL_ARRAY_BUFFER, 0);
-	*/
+
+	//bone ids
+	glGenBuffers(1, &gVbo_boneIds);
+	glBindBuffer(GL_ARRAY_BUFFER, gVbo_boneIds);
+	//glBufferData(GL_ARRAY_BUFFER, gNormalDataSize * 3 * sizeof(GL_FLOAT), &colladaDataContents.meshData.normalInfo.vec_normal_all[0], GL_STATIC_DRAW);
+	//glVertexAttribPointer(VDG_ATTRIBUTE_BONE_IDS, 3, GL_FLOAT, GL_FALSE, 0, NULL);
+	glEnableVertexAttribArray(VDG_ATTRIBUTE_BONE_IDS);
+	glBindBuffer(GL_ARRAY_BUFFER, 0);
+	
+
+
 	glBindVertexArray(0);
 	
 	glShadeModel(GL_SMOOTH);
@@ -514,7 +559,7 @@ void initialize(){
 	//enable depth testing
 	glEnable(GL_DEPTH_TEST);
 	
-	glPolygonMode(GL_FRONT_AND_BACK, GL_LINE);
+	glPolygonMode(GL_FRONT_AND_BACK, GL_FILL);
 
 	//depth test to do
 	glDepthFunc(GL_LEQUAL);
@@ -547,19 +592,21 @@ void display(){
 	
 	//OpenGL drawing
 	//set modelview & modelviewprojection matrices to identity
-	mat4 modelViewMatrix = mat4::identity();
-	mat4 modelViewProjectionMatrix=mat4::identity();
-	
+	mat4 modelMatrix = mat4::identity();
+	mat4 viewMatrix = mat4::identity();
+
+	mat4 rotationMatrix = mat4::identity();
 	//translate
-	modelViewMatrix = translate(0.0f,0.0f,-5.0f);
-	
-	//multiply the modelview and perspective matrix to get modelviewprojection matrix
-	modelViewProjectionMatrix = gPerspectiveProjectionMatrix * modelViewMatrix; //order is important
+	modelMatrix = translate(0.0f,-2.0f,-10.0f);
+	rotationMatrix = rotate(-90.0f, 1.0f, 0.0f, 0.0f);
+	modelMatrix = modelMatrix * rotationMatrix;
 	
 	//pass the above modelViewProjectionMatrix to the vertex shader in 'u_mvp_matrix' shader variable
 	//whose position value we already calculated in initWithFrame() by using glGetUniformLocation()
-	glUniformMatrix4fv(gMVPUniform, 1, GL_FALSE, modelViewProjectionMatrix);
-	
+	glUniformMatrix4fv(gModelUniform, 1, GL_FALSE, modelMatrix);
+	glUniformMatrix4fv(gViewUniform, 1, GL_FALSE, viewMatrix);
+	glUniformMatrix4fv(gProjectionUniform, 1, GL_FALSE, gPerspectiveProjectionMatrix);
+
 	//bind vao
 	glBindVertexArray(gVao);
 	
@@ -621,6 +668,12 @@ void uninitialize(){
 	{
 		glDeleteBuffers(1, &gVbo_normal);
 		gVbo_normal = 0;
+	}
+
+	if (gVbo_boneIds)
+	{
+		glDeleteBuffers(1, &gVbo_boneIds);
+		gVbo_boneIds = 0;
 	}
 	
 	//detach vertex shader from shader program object

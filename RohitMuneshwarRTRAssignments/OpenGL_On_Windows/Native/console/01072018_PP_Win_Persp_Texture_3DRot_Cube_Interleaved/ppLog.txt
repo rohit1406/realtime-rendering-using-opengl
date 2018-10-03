@@ -5,6 +5,5 @@ L Key Pressed: 1
 L Key Pressed: 0
 L Key Pressed: 1
 L Key Pressed: 0
-L Key Pressed: 1
 
 Log file is closed successfully...

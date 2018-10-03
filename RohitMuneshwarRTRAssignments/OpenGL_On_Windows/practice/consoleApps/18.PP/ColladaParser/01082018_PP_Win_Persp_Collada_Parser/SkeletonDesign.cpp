@@ -10,7 +10,7 @@ char *first_token = NULL;
 /*int main(void) {
 	//function prototypes declaration
 
-	char *fileName = "sphere.dae";
+	char *fileName = "colladaFiles/model.dae";
 	struct ColladaData colladaFileData = loadDaeData(fileName);
 	//printf("main>> %d %f\n",collada.meshData.vertexInfo.vec_vertex.size(),
 		//collada.meshData.vertexInfo.vec_vertex[0]);
@@ -38,11 +38,11 @@ struct ColladaData loadDaeData(char *fileName)
 	
 	//printf("entry>> %d %d\n", collada.meshData.vertexInfo.stride, collada.meshData.vertexInfo.vec_vertex.size());
 	//get skin data - library_controllers
-	//XMLElement *skinData = doc.FirstChildElement("COLLADA")->FirstChildElement("library_controllers")->FirstChildElement("controller")->FirstChildElement("skin");
-	//getSkinData(skinData); //this is raw data
-	//printf("Skin info>>%s\n",collada.skinData.vec_skin_joints[0].name);
-	//getVertexSkinningData();
-
+	XMLElement *skinData = doc.FirstChildElement("COLLADA")->FirstChildElement("library_controllers")->FirstChildElement("controller")->FirstChildElement("skin");
+	getSkinData(skinData); //this is raw data
+	printf("Skin info>>%s\n",collada.skinData.vec_skin_joints[0].name);
+	getVertexSkinningData();
+	printf("Vertex affecting skin data - %d\n ", collada.skinningInfo.vec_vertex_skin_data[148].jointIds.size());
 	//get joint data - library_visual_scenes
 	//XMLElement *armature = doc.FirstChildElement("COLLADA")->FirstChildElement("library_visual_scenes")->FirstChildElement("visual_scene")->FirstChildElement("node")->NextSiblingElement("node");
 
@@ -350,6 +350,7 @@ void getGeometryData(XMLNode *geometryData)
 				ele = ele->NextSiblingElement("input");
 			}
 			printf("vertexAttribInputCount >>>>>>>>>>>>%d|\n", vertexAttribInputCount);
+			break;
 			//check input tags ends
 		}
 		temp_child_source = temp_child_source->NextSibling();
@@ -358,6 +359,7 @@ void getGeometryData(XMLNode *geometryData)
 
 
 	XMLNode *child_source = geometryData->FirstChild();
+	int sourceCounter = 0;
 	while(child_source != nullptr)
 	{
 		XMLElement *child_source_element = child_source->ToElement();
@@ -379,10 +381,12 @@ void getGeometryData(XMLNode *geometryData)
 		}*/
 		if(strcmp(attributeType, "source")==0)
 		{
+			sourceCounter = sourceCounter + 1;
 			//vertex
 			printf(">>>>WhileIterating - inputcount - %d %s\n", vertexAttribInputCount, attributeId);
 			printf(">>>>%s %s\n", geometryTypeData.inputTags[0].source, attributeId);
-			switch (vertexAttribInputCount)
+			
+			switch (sourceCounter)
 			{
 			case 4:
 				if (strstr(geometryTypeData.inputTags[3].source, attributeId) != NULL)
@@ -402,7 +406,8 @@ void getGeometryData(XMLNode *geometryData)
 						attrib_token = strtok(NULL, space_seperator);
 					}
 				}
-				case 3:
+				break;
+			case 3:
 				if (strstr(geometryTypeData.inputTags[2].source, attributeId) != NULL)
 				{
 					//set id
@@ -420,7 +425,8 @@ void getGeometryData(XMLNode *geometryData)
 						attrib_token = strtok(NULL, space_seperator);
 					}
 				}
-				case 2:
+				break;
+			case 2:
 				if (strstr(geometryTypeData.inputTags[1].source, attributeId) != NULL)
 				{
 					//set id
@@ -438,25 +444,12 @@ void getGeometryData(XMLNode *geometryData)
 						attrib_token = strtok(NULL, space_seperator);
 					}
 				}
-				case 1:
-				
 				break;
-			default:
-				printf("GeometryData: count is not matching for input count %d.\n", vertexAttribInputCount);
-			}
-
-		}
-		else if (strcmp(attributeType, "vertices") == 0)
-		{
-			const char *verticesAttribId;
-			child_source_element->FirstChildElement("input")->QueryStringAttribute("source", &verticesAttribId);
-			printf("inside vertices - |%s| |%s|\n", geometryTypeData.inputTags[0].source, verticesAttribId);
-			//if (strstr(geometryTypeData.inputTags[0].source, verticesAttribId) != NULL)
-			{
+			case 1:
 				//set id
 				//geometryMeshData.cubeMeshPositions->id = const_cast<char *> (attributeId);
 				//set stride
-				printf(">>|%s|\n", geometryData->FirstChild()->ToElement()->FirstAttribute()->Value());
+				//printf(">>|%s|\n", geometryData->FirstChild()->ToElement()->FirstAttribute()->Value());
 				geometryData->FirstChild()->ToElement()->FirstChildElement("float_array")->NextSiblingElement("technique_common")->FirstChildElement("accessor")->QueryIntAttribute("stride", &geometryMeshData.cubeMeshPositions.stride);
 				//set data
 				data = const_cast<char *> (geometryData->FirstChild()->ToElement()->FirstChildElement("float_array")->GetText());
@@ -468,7 +461,11 @@ void getGeometryData(XMLNode *geometryData)
 				}
 
 				printf(">>|%d|\n", geometryMeshData.cubeMeshPositions.vec_cute_mesh_positions.size());
+				break;
+			default:
+				printf("GeometryData: count is not matching for input count %d.\n", vertexAttribInputCount);
 			}
+
 		}
 		else if (strcmp("triangles", attributeType) == 0 || strcmp("polylist", attributeType) == 0)
 		{
@@ -477,6 +474,11 @@ void getGeometryData(XMLNode *geometryData)
 			//char *polylist_p =  const_cast<char *> (child_source_element->FirstChildElement("input")->NextSiblingElement("p")->GetText());
 			std::vector<int> polylist_faces_f;
 
+			//print data sizes of all geometry data
+			printf(">>>GeometryData: vec_positions size- %d \n", geometryMeshData.cubeMeshPositions.vec_cute_mesh_positions.size());
+			printf(">>>GeometryData: vec_coloe size- %d \n", geometryMeshData.cubeMeshColors.vec_cute_mesh_colors.size());
+			printf(">>>GeometryData: vec_normal size- %d \n", geometryMeshData.cubeMeshNormals.vec_cute_mesh_normals.size());
+			printf(">>>GeometryData: vec_texcoord size- %d \n", geometryMeshData.cubeMeshTexcoords.vec_cute_mesh_texcoords.size());
 			//check input tags starts
 			/*int inputCount = 0;
 			XMLElement *ele = child_source_element->FirstChildElement("input");
@@ -488,11 +490,11 @@ void getGeometryData(XMLNode *geometryData)
 			//check input tags ends
 
 			//arrange all the positions in a vector
-			std::vector<std::vector<double>> vec_positions;
+			std::vector<std::vector<float>> vec_positions;
 			
 			for (int i = 0; i < geometryMeshData.cubeMeshPositions.vec_cute_mesh_positions.size(); i=i+ geometryMeshData.cubeMeshPositions.stride)
 			{
-				std::vector<double> position;
+				std::vector<float> position;
 				position.push_back(geometryMeshData.cubeMeshPositions.vec_cute_mesh_positions[i]);
 				position.push_back(geometryMeshData.cubeMeshPositions.vec_cute_mesh_positions[i+1]);
 				position.push_back(geometryMeshData.cubeMeshPositions.vec_cute_mesh_positions[i+2]);
@@ -502,11 +504,11 @@ void getGeometryData(XMLNode *geometryData)
 			//end arrangement
 
 			//arrange all the normals in a vector
-			std::vector<std::vector<double>> vec_normal;
+			std::vector<std::vector<float>> vec_normal;
 
 			for (int i = 0; i < geometryMeshData.cubeMeshNormals.vec_cute_mesh_normals.size(); i = i + geometryMeshData.cubeMeshNormals.stride)
 			{
-				std::vector<double> normal;
+				std::vector<float> normal;
 				normal.push_back(geometryMeshData.cubeMeshNormals.vec_cute_mesh_normals[i]);
 				normal.push_back(geometryMeshData.cubeMeshNormals.vec_cute_mesh_normals[i + 1]);
 				normal.push_back(geometryMeshData.cubeMeshNormals.vec_cute_mesh_normals[i + 2]);
@@ -516,11 +518,11 @@ void getGeometryData(XMLNode *geometryData)
 			//end arrangement
 
 			//arrange all the texture in a vector
-			std::vector<std::vector<double>> vec_texture;
+			std::vector<std::vector<float>> vec_texture;
 
 			for (int i = 0; i < geometryMeshData.cubeMeshTexcoords.vec_cute_mesh_texcoords.size(); i = i + geometryMeshData.cubeMeshTexcoords.stride)
 			{
-				std::vector<double> texture;
+				std::vector<float> texture;
 				texture.push_back(geometryMeshData.cubeMeshTexcoords.vec_cute_mesh_texcoords[i]);
 				texture.push_back(geometryMeshData.cubeMeshTexcoords.vec_cute_mesh_texcoords[i + 1]);
 				vec_texture.push_back(texture);
@@ -529,11 +531,11 @@ void getGeometryData(XMLNode *geometryData)
 			//end arrangement
 
 			//arrange all the colors in a vector
-			std::vector<std::vector<double>> vec_color;
+			std::vector<std::vector<float>> vec_color;
 
 			for (int i = 0; i < geometryMeshData.cubeMeshColors.vec_cute_mesh_colors.size(); i = i + geometryMeshData.cubeMeshColors.stride)
 			{
-				std::vector<double> color;
+				std::vector<float> color;
 				color.push_back(geometryMeshData.cubeMeshColors.vec_cute_mesh_colors[i]);
 				color.push_back(geometryMeshData.cubeMeshColors.vec_cute_mesh_colors[i + 1]);
 				color.push_back(geometryMeshData.cubeMeshColors.vec_cute_mesh_colors[i + 2]);
@@ -556,11 +558,12 @@ void getGeometryData(XMLNode *geometryData)
 				switch (vertexAttribInputCount)
 				{
 				case 4:
-					meshInfo.colorInfo.vec_color.push_back(vec_color[polylist_faces_f[i]+3]);
+					meshInfo.colorInfo.vec_color.push_back(vec_color[polylist_faces_f[i+3]]);
 				case 3:
-					meshInfo.texcoordInfo.vec_texcoord.push_back(vec_texture[polylist_faces_f[i]+2]);
+					meshInfo.texcoordInfo.vec_texcoord.push_back(vec_texture[polylist_faces_f[i+2]]);
 				case 2:
-					meshInfo.normalInfo.vec_normal.push_back(vec_normal[polylist_faces_f[i]+1]);
+					//printf("GeometryData: normals - %d %d %d\n",i, polylist_faces_f[i], polylist_faces_f[i+1]);
+					meshInfo.normalInfo.vec_normal.push_back(vec_normal[polylist_faces_f[i+1]]);
 				case 1:
 					meshInfo.vertexInfo.vec_vertex.push_back(vec_positions[polylist_faces_f[i]]);
 					break;
@@ -590,5 +593,54 @@ void getGeometryData(XMLNode *geometryData)
 	child_source= child_source->NextSibling();
 	}
 
+	//convert vector<vector> to vector
+	for (int i = 0; i < meshInfo.vertexInfo.vec_vertex.size(); i++)
+	{
+		std::vector<float> vec_pos = meshInfo.vertexInfo.vec_vertex[i];
+		meshInfo.vertexInfo.vec_vertex_all.push_back(vec_pos[0]);
+		meshInfo.vertexInfo.vec_vertex_all.push_back(vec_pos[1]);
+		meshInfo.vertexInfo.vec_vertex_all.push_back(vec_pos[2]);
+		//lPosition[3 * i + 0] = vec_pos[0];
+		//lPosition[3 * i + 1] = vec_pos[1];
+		//lPosition[3 * i + 2] = vec_pos[2];
+	}
+	for (int i = 0; i < meshInfo.normalInfo.vec_normal.size(); i++)
+	{
+		std::vector<float> vec_nor = meshInfo.normalInfo.vec_normal[i];
+		meshInfo.normalInfo.vec_normal_all.push_back(vec_nor[0]);
+		meshInfo.normalInfo.vec_normal_all.push_back(vec_nor[1]);
+		meshInfo.normalInfo.vec_normal_all.push_back(vec_nor[2]);
+		//lPosition[3 * i + 0] = vec_pos[0];
+		//lPosition[3 * i + 1] = vec_pos[1];
+		//lPosition[3 * i + 2] = vec_pos[2];
+	}
+	for (int i = 0; i < meshInfo.texcoordInfo.vec_texcoord.size(); i++)
+	{
+		std::vector<float> vec_texcord = meshInfo.texcoordInfo.vec_texcoord[i];
+		meshInfo.texcoordInfo.vec_texcoord_all.push_back(vec_texcord[0]);
+		meshInfo.texcoordInfo.vec_texcoord_all.push_back(vec_texcord[1]);
+		meshInfo.texcoordInfo.vec_texcoord_all.push_back(vec_texcord[2]);
+		//lPosition[3 * i + 0] = vec_pos[0];
+		//lPosition[3 * i + 1] = vec_pos[1];
+		//lPosition[3 * i + 2] = vec_pos[2];
+	}
+	for (int i = 0; i < meshInfo.colorInfo.vec_color.size(); i++)
+	{
+		std::vector<float> vec_col = meshInfo.colorInfo.vec_color[i];
+		meshInfo.colorInfo.vec_color_all.push_back(vec_col[0]);
+		meshInfo.colorInfo.vec_color_all.push_back(vec_col[1]);
+		meshInfo.colorInfo.vec_color_all.push_back(vec_col[2]);
+		//lPosition[3 * i + 0] = vec_pos[0];
+		//lPosition[3 * i + 1] = vec_pos[1];
+		//lPosition[3 * i + 2] = vec_pos[2];
+	}
+	printf("GeoData: positions sizes >> %d %d\n", meshInfo.vertexInfo.vec_vertex_all.size(),
+		meshInfo.vertexInfo.vec_vertex.size());
+	printf("GeoData: normal sizes >> %d %d\n", meshInfo.normalInfo.vec_normal_all.size(),
+		meshInfo.normalInfo.vec_normal.size());
+	printf("GeoData: texture sizes >> %d %d\n", meshInfo.texcoordInfo.vec_texcoord_all.size(),
+		meshInfo.texcoordInfo.vec_texcoord.size());
+	printf("GeoData: color sizes >> %d %d\n", meshInfo.colorInfo.vec_color_all.size(),
+		meshInfo.colorInfo.vec_color.size());
 	collada.meshData = meshInfo;
 }

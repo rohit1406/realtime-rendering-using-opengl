@@ -1,0 +1,1413 @@
+Log File Is Successfully Opened.
+D3D11CreateDeviceAndSwapChain() Succeeded.
+The Chosen Driver Is Of HardWare Type.
+The Supported Highest Feature Level Is 11.0.
+Success: D3DCompile for vertex shader.
+Success: gpID3D11Device->CreateVertexShader.
+Success: D3DCompile for pixel shader.
+Success: gpID3D11Device->CreateVertexShader.
+Success: gpID3D11Device->CreateBuffer for Sphere vertices position.
+Success: gpID3D11Device->CreateBuffer for Sphere vertices normal.
+Success: gpID3D11Device->CreateBuffer indexbuffer for Sphere vertices .
+ID3D11Device::CreateInputLayout() Succeeded.
+ID3D11Device::CreateBuffer() Succeeded For Constant Buffer.
+ID3D11Device::CreateRenderTargetView() Succeeded.
+ID3D11Device::CreateTexture2D() Succeeded.
+ID3D11Device::CreateDepthStencilView() Succeeded.
+resize() Succeeded.
+initialize() Successed.
+Success: D3DCompile for vertex shader.
+Success: gpID3D11Device->CreateVertexShader.
+Success: D3DCompile for pixel shader.
+Success: gpID3D11Device->CreateVertexShader.
+Success: D3DCompile for vertex shader.
+Success: gpID3D11Device->CreateVertexShader.
+Success: D3DCompile for pixel shader.
+Success: gpID3D11Device->CreateVertexShader.
+Success: D3DCompile for vertex shader.
+Success: gpID3D11Device->CreateVertexShader.
+Success: D3DCompile for pixel shader.
+Success: gpID3D11Device->CreateVertexShader.
+Success: D3DCompile for vertex shader.
+Success: gpID3D11Device->CreateVertexShader.
+Success: D3DCompile for pixel shader.
+Success: gpID3D11Device->CreateVertexShader.
+Success: D3DCompile for vertex shader.
+Success: gpID3D11Device->CreateVertexShader.
+Success: D3DCompile for pixel shader.
+Success: gpID3D11Device->CreateVertexShader.
+Success: D3DCompile for vertex shader.
+Success: gpID3D11Device->CreateVertexShader.
+Success: D3DCompile for pixel shader.
+Success: gpID3D11Device->CreateVertexShader.
+Success: D3DCompile for vertex shader.
+Success: gpID3D11Device->CreateVertexShader.
+Success: D3DCompile for pixel shader.
+Success: gpID3D11Device->CreateVertexShader.
+Success: D3DCompile for vertex shader.
+Success: gpID3D11Device->CreateVertexShader.
+Success: D3DCompile for pixel shader.
+Success: gpID3D11Device->CreateVertexShader.
+Success: D3DCompile for vertex shader.
+Success: gpID3D11Device->CreateVertexShader.
+Success: D3DCompile for pixel shader.
+Success: gpID3D11Device->CreateVertexShader.
+Success: D3DCompile for vertex shader.
+Success: gpID3D11Device->CreateVertexShader.
+Success: D3DCompile for pixel shader.
+Success: gpID3D11Device->CreateVertexShader.
+Success: D3DCompile for vertex shader.
+Success: gpID3D11Device->CreateVertexShader.
+Success: D3DCompile for pixel shader.
+Success: gpID3D11Device->CreateVertexShader.
+Success: D3DCompile for vertex shader.
+Success: gpID3D11Device->CreateVertexShader.
+Success: D3DCompile for pixel shader.
+Success: gpID3D11Device->CreateVertexShader.
+Success: D3DCompile for vertex shader.
+Success: gpID3D11Device->CreateVertexShader.
+Success: D3DCompile for pixel shader.
+Success: gpID3D11Device->CreateVertexShader.
+Success: D3DCompile for vertex shader.
+Success: gpID3D11Device->CreateVertexShader.
+Success: D3DCompile for pixel shader.
+Success: gpID3D11Device->CreateVertexShader.
+Success: D3DCompile for vertex shader.
+Success: gpID3D11Device->CreateVertexShader.
+Success: D3DCompile for pixel shader.
+Success: gpID3D11Device->CreateVertexShader.
+Success: D3DCompile for vertex shader.
+Success: gpID3D11Device->CreateVertexShader.
+Success: D3DCompile for pixel shader.
+Success: gpID3D11Device->CreateVertexShader.
+Success: D3DCompile for vertex shader.
+Success: gpID3D11Device->CreateVertexShader.
+Success: D3DCompile for pixel shader.
+Success: gpID3D11Device->CreateVertexShader.
+Success: D3DCompile for vertex shader.
+Success: gpID3D11Device->CreateVertexShader.
+Success: D3DCompile for pixel shader.
+Success: gpID3D11Device->CreateVertexShader.
+Success: D3DCompile for vertex shader.
+Success: gpID3D11Device->CreateVertexShader.
+Success: D3DCompile for pixel shader.
+Success: gpID3D11Device->CreateVertexShader.
+Success: D3DCompile for vertex shader.
+Success: gpID3D11Device->CreateVertexShader.
+Success: D3DCompile for pixel shader.
+Success: gpID3D11Device->CreateVertexShader.
+Success: D3DCompile for vertex shader.
+Success: gpID3D11Device->CreateVertexShader.
+Success: D3DCompile for pixel shader.
+Success: gpID3D11Device->CreateVertexShader.
+Success: D3DCompile for vertex shader.
+Success: gpID3D11Device->CreateVertexShader.
+Success: D3DCompile for pixel shader.
+Success: gpID3D11Device->CreateVertexShader.
+Success: D3DCompile for vertex shader.
+Success: gpID3D11Device->CreateVertexShader.
+Success: D3DCompile for pixel shader.
+Success: gpID3D11Device->CreateVertexShader.
+Success: D3DCompile for vertex shader.
+Success: gpID3D11Device->CreateVertexShader.
+Success: D3DCompile for pixel shader.
+Success: gpID3D11Device->CreateVertexShader.
+Success: D3DCompile for vertex shader.
+Success: gpID3D11Device->CreateVertexShader.
+Success: D3DCompile for pixel shader.
+Success: gpID3D11Device->CreateVertexShader.
+Success: D3DCompile for vertex shader.
+Success: gpID3D11Device->CreateVertexShader.
+Success: D3DCompile for pixel shader.
+Success: gpID3D11Device->CreateVertexShader.
+Light Toggeled - 1.
+Success: D3DCompile for vertex shader.
+Success: gpID3D11Device->CreateVertexShader.
+Success: D3DCompile for pixel shader.
+Success: gpID3D11Device->CreateVertexShader.
+Success: D3DCompile for vertex shader.
+Success: gpID3D11Device->CreateVertexShader.
+Success: D3DCompile for pixel shader.
+Success: gpID3D11Device->CreateVertexShader.
+Success: D3DCompile for vertex shader.
+Success: gpID3D11Device->CreateVertexShader.
+Success: D3DCompile for pixel shader.
+Success: gpID3D11Device->CreateVertexShader.
+Success: D3DCompile for vertex shader.
+Success: gpID3D11Device->CreateVertexShader.
+Success: D3DCompile for pixel shader.
+Success: gpID3D11Device->CreateVertexShader.
+Success: D3DCompile for vertex shader.
+Success: gpID3D11Device->CreateVertexShader.
+Success: D3DCompile for pixel shader.
+Success: gpID3D11Device->CreateVertexShader.
+Success: D3DCompile for vertex shader.
+Success: gpID3D11Device->CreateVertexShader.
+Success: D3DCompile for pixel shader.
+Success: gpID3D11Device->CreateVertexShader.
+Success: D3DCompile for vertex shader.
+Success: gpID3D11Device->CreateVertexShader.
+Success: D3DCompile for pixel shader.
+Success: gpID3D11Device->CreateVertexShader.
+Success: D3DCompile for vertex shader.
+Success: gpID3D11Device->CreateVertexShader.
+Success: D3DCompile for pixel shader.
+Success: gpID3D11Device->CreateVertexShader.
+Success: D3DCompile for vertex shader.
+Success: gpID3D11Device->CreateVertexShader.
+Success: D3DCompile for pixel shader.
+Success: gpID3D11Device->CreateVertexShader.
+Success: D3DCompile for vertex shader.
+Success: gpID3D11Device->CreateVertexShader.
+Success: D3DCompile for pixel shader.
+Success: gpID3D11Device->CreateVertexShader.
+Success: D3DCompile for vertex shader.
+Success: gpID3D11Device->CreateVertexShader.
+Success: D3DCompile for pixel shader.
+Success: gpID3D11Device->CreateVertexShader.
+Success: D3DCompile for vertex shader.
+Success: gpID3D11Device->CreateVertexShader.
+Success: D3DCompile for pixel shader.
+Success: gpID3D11Device->CreateVertexShader.
+Success: D3DCompile for vertex shader.
+Success: gpID3D11Device->CreateVertexShader.
+Success: D3DCompile for pixel shader.
+Success: gpID3D11Device->CreateVertexShader.
+Success: D3DCompile for vertex shader.
+Success: gpID3D11Device->CreateVertexShader.
+Success: D3DCompile for pixel shader.
+Success: gpID3D11Device->CreateVertexShader.
+Success: D3DCompile for vertex shader.
+Success: gpID3D11Device->CreateVertexShader.
+Success: D3DCompile for pixel shader.
+Success: gpID3D11Device->CreateVertexShader.
+Success: D3DCompile for vertex shader.
+Success: gpID3D11Device->CreateVertexShader.
+Success: D3DCompile for pixel shader.
+Success: gpID3D11Device->CreateVertexShader.
+Success: D3DCompile for vertex shader.
+Success: gpID3D11Device->CreateVertexShader.
+Success: D3DCompile for pixel shader.
+Success: gpID3D11Device->CreateVertexShader.
+Success: D3DCompile for vertex shader.
+Success: gpID3D11Device->CreateVertexShader.
+Success: D3DCompile for pixel shader.
+Success: gpID3D11Device->CreateVertexShader.
+Success: D3DCompile for vertex shader.
+Success: gpID3D11Device->CreateVertexShader.
+Success: D3DCompile for pixel shader.
+Success: gpID3D11Device->CreateVertexShader.
+Success: D3DCompile for vertex shader.
+Success: gpID3D11Device->CreateVertexShader.
+Success: D3DCompile for pixel shader.
+Success: gpID3D11Device->CreateVertexShader.
+Success: D3DCompile for vertex shader.
+Success: gpID3D11Device->CreateVertexShader.
+Success: D3DCompile for pixel shader.
+Success: gpID3D11Device->CreateVertexShader.
+Success: D3DCompile for vertex shader.
+Success: gpID3D11Device->CreateVertexShader.
+Success: D3DCompile for pixel shader.
+Success: gpID3D11Device->CreateVertexShader.
+Success: D3DCompile for vertex shader.
+Success: gpID3D11Device->CreateVertexShader.
+Success: D3DCompile for pixel shader.
+Success: gpID3D11Device->CreateVertexShader.
+Success: D3DCompile for vertex shader.
+Success: gpID3D11Device->CreateVertexShader.
+Success: D3DCompile for pixel shader.
+Success: gpID3D11Device->CreateVertexShader.
+Success: D3DCompile for vertex shader.
+Success: gpID3D11Device->CreateVertexShader.
+Success: D3DCompile for pixel shader.
+Success: gpID3D11Device->CreateVertexShader.
+Success: D3DCompile for vertex shader.
+Success: gpID3D11Device->CreateVertexShader.
+Success: D3DCompile for pixel shader.
+Success: gpID3D11Device->CreateVertexShader.
+Success: D3DCompile for vertex shader.
+Success: gpID3D11Device->CreateVertexShader.
+Success: D3DCompile for pixel shader.
+Success: gpID3D11Device->CreateVertexShader.
+Success: D3DCompile for vertex shader.
+Success: gpID3D11Device->CreateVertexShader.
+Success: D3DCompile for pixel shader.
+Success: gpID3D11Device->CreateVertexShader.
+Success: D3DCompile for vertex shader.
+Success: gpID3D11Device->CreateVertexShader.
+Success: D3DCompile for pixel shader.
+Success: gpID3D11Device->CreateVertexShader.
+Success: D3DCompile for vertex shader.
+Success: gpID3D11Device->CreateVertexShader.
+Success: D3DCompile for pixel shader.
+Success: gpID3D11Device->CreateVertexShader.
+Success: D3DCompile for vertex shader.
+Success: gpID3D11Device->CreateVertexShader.
+Success: D3DCompile for pixel shader.
+Success: gpID3D11Device->CreateVertexShader.
+Success: D3DCompile for vertex shader.
+Success: gpID3D11Device->CreateVertexShader.
+Success: D3DCompile for pixel shader.
+Success: gpID3D11Device->CreateVertexShader.
+Success: D3DCompile for vertex shader.
+Success: gpID3D11Device->CreateVertexShader.
+Success: D3DCompile for pixel shader.
+Success: gpID3D11Device->CreateVertexShader.
+Success: D3DCompile for vertex shader.
+Success: gpID3D11Device->CreateVertexShader.
+Success: D3DCompile for pixel shader.
+Success: gpID3D11Device->CreateVertexShader.
+Success: D3DCompile for vertex shader.
+Success: gpID3D11Device->CreateVertexShader.
+Success: D3DCompile for pixel shader.
+Success: gpID3D11Device->CreateVertexShader.
+Success: D3DCompile for vertex shader.
+Success: gpID3D11Device->CreateVertexShader.
+Success: D3DCompile for pixel shader.
+Success: gpID3D11Device->CreateVertexShader.
+Success: D3DCompile for vertex shader.
+Success: gpID3D11Device->CreateVertexShader.
+Success: D3DCompile for pixel shader.
+Success: gpID3D11Device->CreateVertexShader.
+Success: D3DCompile for vertex shader.
+Success: gpID3D11Device->CreateVertexShader.
+Success: D3DCompile for pixel shader.
+Success: gpID3D11Device->CreateVertexShader.
+Success: D3DCompile for vertex shader.
+Success: gpID3D11Device->CreateVertexShader.
+Success: D3DCompile for pixel shader.
+Success: gpID3D11Device->CreateVertexShader.
+Success: D3DCompile for vertex shader.
+Success: gpID3D11Device->CreateVertexShader.
+Success: D3DCompile for pixel shader.
+Success: gpID3D11Device->CreateVertexShader.
+Success: D3DCompile for vertex shader.
+Success: gpID3D11Device->CreateVertexShader.
+Success: D3DCompile for pixel shader.
+Success: gpID3D11Device->CreateVertexShader.
+Success: D3DCompile for vertex shader.
+Success: gpID3D11Device->CreateVertexShader.
+Success: D3DCompile for pixel shader.
+Success: gpID3D11Device->CreateVertexShader.
+Success: D3DCompile for vertex shader.
+Success: gpID3D11Device->CreateVertexShader.
+Success: D3DCompile for pixel shader.
+Success: gpID3D11Device->CreateVertexShader.
+Success: D3DCompile for vertex shader.
+Success: gpID3D11Device->CreateVertexShader.
+Success: D3DCompile for pixel shader.
+Success: gpID3D11Device->CreateVertexShader.
+Success: D3DCompile for vertex shader.
+Success: gpID3D11Device->CreateVertexShader.
+Success: D3DCompile for pixel shader.
+Success: gpID3D11Device->CreateVertexShader.
+Success: D3DCompile for vertex shader.
+Success: gpID3D11Device->CreateVertexShader.
+Success: D3DCompile for pixel shader.
+Success: gpID3D11Device->CreateVertexShader.
+Success: D3DCompile for vertex shader.
+Success: gpID3D11Device->CreateVertexShader.
+Success: D3DCompile for pixel shader.
+Success: gpID3D11Device->CreateVertexShader.
+Success: D3DCompile for vertex shader.
+Success: gpID3D11Device->CreateVertexShader.
+Success: D3DCompile for pixel shader.
+Success: gpID3D11Device->CreateVertexShader.
+Success: D3DCompile for vertex shader.
+Success: gpID3D11Device->CreateVertexShader.
+Success: D3DCompile for pixel shader.
+Success: gpID3D11Device->CreateVertexShader.
+Success: D3DCompile for vertex shader.
+Success: gpID3D11Device->CreateVertexShader.
+Success: D3DCompile for pixel shader.
+Success: gpID3D11Device->CreateVertexShader.
+Success: D3DCompile for vertex shader.
+Success: gpID3D11Device->CreateVertexShader.
+Success: D3DCompile for pixel shader.
+Success: gpID3D11Device->CreateVertexShader.
+Success: D3DCompile for vertex shader.
+Success: gpID3D11Device->CreateVertexShader.
+Success: D3DCompile for pixel shader.
+Success: gpID3D11Device->CreateVertexShader.
+Success: D3DCompile for vertex shader.
+Success: gpID3D11Device->CreateVertexShader.
+Success: D3DCompile for pixel shader.
+Success: gpID3D11Device->CreateVertexShader.
+Success: D3DCompile for vertex shader.
+Success: gpID3D11Device->CreateVertexShader.
+Success: D3DCompile for pixel shader.
+Success: gpID3D11Device->CreateVertexShader.
+Success: D3DCompile for vertex shader.
+Success: gpID3D11Device->CreateVertexShader.
+Success: D3DCompile for pixel shader.
+Success: gpID3D11Device->CreateVertexShader.
+Success: D3DCompile for vertex shader.
+Success: gpID3D11Device->CreateVertexShader.
+Success: D3DCompile for pixel shader.
+Success: gpID3D11Device->CreateVertexShader.
+Success: D3DCompile for vertex shader.
+Success: gpID3D11Device->CreateVertexShader.
+Success: D3DCompile for pixel shader.
+Success: gpID3D11Device->CreateVertexShader.
+Success: D3DCompile for vertex shader.
+Success: gpID3D11Device->CreateVertexShader.
+Success: D3DCompile for pixel shader.
+Success: gpID3D11Device->CreateVertexShader.
+Success: D3DCompile for vertex shader.
+Success: gpID3D11Device->CreateVertexShader.
+Success: D3DCompile for pixel shader.
+Success: gpID3D11Device->CreateVertexShader.
+Success: D3DCompile for vertex shader.
+Success: gpID3D11Device->CreateVertexShader.
+Success: D3DCompile for pixel shader.
+Success: gpID3D11Device->CreateVertexShader.
+Success: D3DCompile for vertex shader.
+Success: gpID3D11Device->CreateVertexShader.
+Success: D3DCompile for pixel shader.
+Success: gpID3D11Device->CreateVertexShader.
+Success: D3DCompile for vertex shader.
+Success: gpID3D11Device->CreateVertexShader.
+Success: D3DCompile for pixel shader.
+Success: gpID3D11Device->CreateVertexShader.
+Success: D3DCompile for vertex shader.
+Success: gpID3D11Device->CreateVertexShader.
+Success: D3DCompile for pixel shader.
+Success: gpID3D11Device->CreateVertexShader.
+Success: D3DCompile for vertex shader.
+Success: gpID3D11Device->CreateVertexShader.
+Success: D3DCompile for pixel shader.
+Success: gpID3D11Device->CreateVertexShader.
+Success: D3DCompile for vertex shader.
+Success: gpID3D11Device->CreateVertexShader.
+Success: D3DCompile for pixel shader.
+Success: gpID3D11Device->CreateVertexShader.
+Success: D3DCompile for vertex shader.
+Success: gpID3D11Device->CreateVertexShader.
+Success: D3DCompile for pixel shader.
+Success: gpID3D11Device->CreateVertexShader.
+Success: D3DCompile for vertex shader.
+Success: gpID3D11Device->CreateVertexShader.
+Success: D3DCompile for pixel shader.
+Success: gpID3D11Device->CreateVertexShader.
+Success: D3DCompile for vertex shader.
+Success: gpID3D11Device->CreateVertexShader.
+Success: D3DCompile for pixel shader.
+Success: gpID3D11Device->CreateVertexShader.
+Success: D3DCompile for vertex shader.
+Success: gpID3D11Device->CreateVertexShader.
+Success: D3DCompile for pixel shader.
+Success: gpID3D11Device->CreateVertexShader.
+Success: D3DCompile for vertex shader.
+Success: gpID3D11Device->CreateVertexShader.
+Success: D3DCompile for pixel shader.
+Success: gpID3D11Device->CreateVertexShader.
+Success: D3DCompile for vertex shader.
+Success: gpID3D11Device->CreateVertexShader.
+Success: D3DCompile for pixel shader.
+Success: gpID3D11Device->CreateVertexShader.
+Success: D3DCompile for vertex shader.
+Success: gpID3D11Device->CreateVertexShader.
+Success: D3DCompile for pixel shader.
+Success: gpID3D11Device->CreateVertexShader.
+Success: D3DCompile for vertex shader.
+Success: gpID3D11Device->CreateVertexShader.
+Success: D3DCompile for pixel shader.
+Success: gpID3D11Device->CreateVertexShader.
+Success: D3DCompile for vertex shader.
+Success: gpID3D11Device->CreateVertexShader.
+Success: D3DCompile for pixel shader.
+Success: gpID3D11Device->CreateVertexShader.
+Success: D3DCompile for vertex shader.
+Success: gpID3D11Device->CreateVertexShader.
+Success: D3DCompile for pixel shader.
+Success: gpID3D11Device->CreateVertexShader.
+Success: D3DCompile for vertex shader.
+Success: gpID3D11Device->CreateVertexShader.
+Success: D3DCompile for pixel shader.
+Success: gpID3D11Device->CreateVertexShader.
+Success: D3DCompile for vertex shader.
+Success: gpID3D11Device->CreateVertexShader.
+Success: D3DCompile for pixel shader.
+Success: gpID3D11Device->CreateVertexShader.
+Success: D3DCompile for vertex shader.
+Success: gpID3D11Device->CreateVertexShader.
+Success: D3DCompile for pixel shader.
+Success: gpID3D11Device->CreateVertexShader.
+Success: D3DCompile for vertex shader.
+Success: gpID3D11Device->CreateVertexShader.
+Success: D3DCompile for pixel shader.
+Success: gpID3D11Device->CreateVertexShader.
+Success: D3DCompile for vertex shader.
+Success: gpID3D11Device->CreateVertexShader.
+Success: D3DCompile for pixel shader.
+Success: gpID3D11Device->CreateVertexShader.
+Success: D3DCompile for vertex shader.
+Success: gpID3D11Device->CreateVertexShader.
+Success: D3DCompile for pixel shader.
+Success: gpID3D11Device->CreateVertexShader.
+Success: D3DCompile for vertex shader.
+Success: gpID3D11Device->CreateVertexShader.
+Success: D3DCompile for pixel shader.
+Success: gpID3D11Device->CreateVertexShader.
+Success: D3DCompile for vertex shader.
+Success: gpID3D11Device->CreateVertexShader.
+Success: D3DCompile for pixel shader.
+Success: gpID3D11Device->CreateVertexShader.
+Success: D3DCompile for vertex shader.
+Success: gpID3D11Device->CreateVertexShader.
+Success: D3DCompile for pixel shader.
+Success: gpID3D11Device->CreateVertexShader.
+Success: D3DCompile for vertex shader.
+Success: gpID3D11Device->CreateVertexShader.
+Success: D3DCompile for pixel shader.
+Success: gpID3D11Device->CreateVertexShader.
+Success: D3DCompile for vertex shader.
+Success: gpID3D11Device->CreateVertexShader.
+Success: D3DCompile for pixel shader.
+Success: gpID3D11Device->CreateVertexShader.
+Success: D3DCompile for vertex shader.
+Success: gpID3D11Device->CreateVertexShader.
+Success: D3DCompile for pixel shader.
+Success: gpID3D11Device->CreateVertexShader.
+Success: D3DCompile for vertex shader.
+Success: gpID3D11Device->CreateVertexShader.
+Success: D3DCompile for pixel shader.
+Success: gpID3D11Device->CreateVertexShader.
+Success: D3DCompile for vertex shader.
+Success: gpID3D11Device->CreateVertexShader.
+Success: D3DCompile for pixel shader.
+Success: gpID3D11Device->CreateVertexShader.
+Success: D3DCompile for vertex shader.
+Success: gpID3D11Device->CreateVertexShader.
+Success: D3DCompile for pixel shader.
+Success: gpID3D11Device->CreateVertexShader.
+Success: D3DCompile for vertex shader.
+Success: gpID3D11Device->CreateVertexShader.
+Success: D3DCompile for pixel shader.
+Success: gpID3D11Device->CreateVertexShader.
+Success: D3DCompile for vertex shader.
+Success: gpID3D11Device->CreateVertexShader.
+Success: D3DCompile for pixel shader.
+Success: gpID3D11Device->CreateVertexShader.
+Success: D3DCompile for vertex shader.
+Success: gpID3D11Device->CreateVertexShader.
+Success: D3DCompile for pixel shader.
+Success: gpID3D11Device->CreateVertexShader.
+Success: D3DCompile for vertex shader.
+Success: gpID3D11Device->CreateVertexShader.
+Success: D3DCompile for pixel shader.
+Success: gpID3D11Device->CreateVertexShader.
+Success: D3DCompile for vertex shader.
+Success: gpID3D11Device->CreateVertexShader.
+Success: D3DCompile for pixel shader.
+Success: gpID3D11Device->CreateVertexShader.
+Success: D3DCompile for vertex shader.
+Success: gpID3D11Device->CreateVertexShader.
+Success: D3DCompile for pixel shader.
+Success: gpID3D11Device->CreateVertexShader.
+Success: D3DCompile for vertex shader.
+Success: gpID3D11Device->CreateVertexShader.
+Success: D3DCompile for pixel shader.
+Success: gpID3D11Device->CreateVertexShader.
+Success: D3DCompile for vertex shader.
+Success: gpID3D11Device->CreateVertexShader.
+Success: D3DCompile for pixel shader.
+Success: gpID3D11Device->CreateVertexShader.
+Success: D3DCompile for vertex shader.
+Success: gpID3D11Device->CreateVertexShader.
+Success: D3DCompile for pixel shader.
+Success: gpID3D11Device->CreateVertexShader.
+Success: D3DCompile for vertex shader.
+Success: gpID3D11Device->CreateVertexShader.
+Success: D3DCompile for pixel shader.
+Success: gpID3D11Device->CreateVertexShader.
+Success: D3DCompile for vertex shader.
+Success: gpID3D11Device->CreateVertexShader.
+Success: D3DCompile for pixel shader.
+Success: gpID3D11Device->CreateVertexShader.
+Success: D3DCompile for vertex shader.
+Success: gpID3D11Device->CreateVertexShader.
+Success: D3DCompile for pixel shader.
+Success: gpID3D11Device->CreateVertexShader.
+Success: D3DCompile for vertex shader.
+Success: gpID3D11Device->CreateVertexShader.
+Success: D3DCompile for pixel shader.
+Success: gpID3D11Device->CreateVertexShader.
+Success: D3DCompile for vertex shader.
+Success: gpID3D11Device->CreateVertexShader.
+Success: D3DCompile for pixel shader.
+Success: gpID3D11Device->CreateVertexShader.
+Success: D3DCompile for vertex shader.
+Success: gpID3D11Device->CreateVertexShader.
+Success: D3DCompile for pixel shader.
+Success: gpID3D11Device->CreateVertexShader.
+Success: D3DCompile for vertex shader.
+Success: gpID3D11Device->CreateVertexShader.
+Success: D3DCompile for pixel shader.
+Success: gpID3D11Device->CreateVertexShader.
+Success: D3DCompile for vertex shader.
+Success: gpID3D11Device->CreateVertexShader.
+Success: D3DCompile for pixel shader.
+Success: gpID3D11Device->CreateVertexShader.
+Success: D3DCompile for vertex shader.
+Success: gpID3D11Device->CreateVertexShader.
+Success: D3DCompile for pixel shader.
+Success: gpID3D11Device->CreateVertexShader.
+Success: D3DCompile for vertex shader.
+Success: gpID3D11Device->CreateVertexShader.
+Success: D3DCompile for pixel shader.
+Success: gpID3D11Device->CreateVertexShader.
+Success: D3DCompile for vertex shader.
+Success: gpID3D11Device->CreateVertexShader.
+Success: D3DCompile for pixel shader.
+Success: gpID3D11Device->CreateVertexShader.
+Success: D3DCompile for vertex shader.
+Success: gpID3D11Device->CreateVertexShader.
+Success: D3DCompile for pixel shader.
+Success: gpID3D11Device->CreateVertexShader.
+Success: D3DCompile for vertex shader.
+Success: gpID3D11Device->CreateVertexShader.
+Success: D3DCompile for pixel shader.
+Success: gpID3D11Device->CreateVertexShader.
+Success: D3DCompile for vertex shader.
+Success: gpID3D11Device->CreateVertexShader.
+Success: D3DCompile for pixel shader.
+Success: gpID3D11Device->CreateVertexShader.
+Success: D3DCompile for vertex shader.
+Success: gpID3D11Device->CreateVertexShader.
+Success: D3DCompile for pixel shader.
+Success: gpID3D11Device->CreateVertexShader.
+Success: D3DCompile for vertex shader.
+Success: gpID3D11Device->CreateVertexShader.
+Success: D3DCompile for pixel shader.
+Success: gpID3D11Device->CreateVertexShader.
+Success: D3DCompile for vertex shader.
+Success: gpID3D11Device->CreateVertexShader.
+Success: D3DCompile for pixel shader.
+Success: gpID3D11Device->CreateVertexShader.
+Success: D3DCompile for vertex shader.
+Success: gpID3D11Device->CreateVertexShader.
+Success: D3DCompile for pixel shader.
+Success: gpID3D11Device->CreateVertexShader.
+Success: D3DCompile for vertex shader.
+Success: gpID3D11Device->CreateVertexShader.
+Success: D3DCompile for pixel shader.
+Success: gpID3D11Device->CreateVertexShader.
+Success: D3DCompile for vertex shader.
+Success: gpID3D11Device->CreateVertexShader.
+Success: D3DCompile for pixel shader.
+Success: gpID3D11Device->CreateVertexShader.
+Success: D3DCompile for vertex shader.
+Success: gpID3D11Device->CreateVertexShader.
+Success: D3DCompile for pixel shader.
+Success: gpID3D11Device->CreateVertexShader.
+Success: D3DCompile for vertex shader.
+Success: gpID3D11Device->CreateVertexShader.
+Success: D3DCompile for pixel shader.
+Success: gpID3D11Device->CreateVertexShader.
+Success: D3DCompile for vertex shader.
+Success: gpID3D11Device->CreateVertexShader.
+Success: D3DCompile for pixel shader.
+Success: gpID3D11Device->CreateVertexShader.
+Success: D3DCompile for vertex shader.
+Success: gpID3D11Device->CreateVertexShader.
+Success: D3DCompile for pixel shader.
+Success: gpID3D11Device->CreateVertexShader.
+Success: D3DCompile for vertex shader.
+Success: gpID3D11Device->CreateVertexShader.
+Success: D3DCompile for pixel shader.
+Success: gpID3D11Device->CreateVertexShader.
+Success: D3DCompile for vertex shader.
+Success: gpID3D11Device->CreateVertexShader.
+Success: D3DCompile for pixel shader.
+Success: gpID3D11Device->CreateVertexShader.
+Success: D3DCompile for vertex shader.
+Success: gpID3D11Device->CreateVertexShader.
+Success: D3DCompile for pixel shader.
+Success: gpID3D11Device->CreateVertexShader.
+Success: D3DCompile for vertex shader.
+Success: gpID3D11Device->CreateVertexShader.
+Success: D3DCompile for pixel shader.
+Success: gpID3D11Device->CreateVertexShader.
+Success: D3DCompile for vertex shader.
+Success: gpID3D11Device->CreateVertexShader.
+Success: D3DCompile for pixel shader.
+Success: gpID3D11Device->CreateVertexShader.
+Success: D3DCompile for vertex shader.
+Success: gpID3D11Device->CreateVertexShader.
+Success: D3DCompile for pixel shader.
+Success: gpID3D11Device->CreateVertexShader.
+Success: D3DCompile for vertex shader.
+Success: gpID3D11Device->CreateVertexShader.
+Success: D3DCompile for pixel shader.
+Success: gpID3D11Device->CreateVertexShader.
+Success: D3DCompile for vertex shader.
+Success: gpID3D11Device->CreateVertexShader.
+Success: D3DCompile for pixel shader.
+Success: gpID3D11Device->CreateVertexShader.
+Success: D3DCompile for vertex shader.
+Success: gpID3D11Device->CreateVertexShader.
+Success: D3DCompile for pixel shader.
+Success: gpID3D11Device->CreateVertexShader.
+Success: D3DCompile for vertex shader.
+Success: gpID3D11Device->CreateVertexShader.
+Success: D3DCompile for pixel shader.
+Success: gpID3D11Device->CreateVertexShader.
+Success: D3DCompile for vertex shader.
+Success: gpID3D11Device->CreateVertexShader.
+Success: D3DCompile for pixel shader.
+Success: gpID3D11Device->CreateVertexShader.
+Success: D3DCompile for vertex shader.
+Success: gpID3D11Device->CreateVertexShader.
+Success: D3DCompile for pixel shader.
+Success: gpID3D11Device->CreateVertexShader.
+Success: D3DCompile for vertex shader.
+Success: gpID3D11Device->CreateVertexShader.
+Success: D3DCompile for pixel shader.
+Success: gpID3D11Device->CreateVertexShader.
+Success: D3DCompile for vertex shader.
+Success: gpID3D11Device->CreateVertexShader.
+Success: D3DCompile for pixel shader.
+Success: gpID3D11Device->CreateVertexShader.
+Success: D3DCompile for vertex shader.
+Success: gpID3D11Device->CreateVertexShader.
+Success: D3DCompile for pixel shader.
+Success: gpID3D11Device->CreateVertexShader.
+Success: D3DCompile for vertex shader.
+Success: gpID3D11Device->CreateVertexShader.
+Success: D3DCompile for pixel shader.
+Success: gpID3D11Device->CreateVertexShader.
+Success: D3DCompile for vertex shader.
+Success: gpID3D11Device->CreateVertexShader.
+Success: D3DCompile for pixel shader.
+Success: gpID3D11Device->CreateVertexShader.
+Success: D3DCompile for vertex shader.
+Success: gpID3D11Device->CreateVertexShader.
+Success: D3DCompile for pixel shader.
+Success: gpID3D11Device->CreateVertexShader.
+Success: D3DCompile for vertex shader.
+Success: gpID3D11Device->CreateVertexShader.
+Success: D3DCompile for pixel shader.
+Success: gpID3D11Device->CreateVertexShader.
+Success: D3DCompile for vertex shader.
+Success: gpID3D11Device->CreateVertexShader.
+Success: D3DCompile for pixel shader.
+Success: gpID3D11Device->CreateVertexShader.
+Success: D3DCompile for vertex shader.
+Success: gpID3D11Device->CreateVertexShader.
+Success: D3DCompile for pixel shader.
+Success: gpID3D11Device->CreateVertexShader.
+Success: D3DCompile for vertex shader.
+Success: gpID3D11Device->CreateVertexShader.
+Success: D3DCompile for pixel shader.
+Success: gpID3D11Device->CreateVertexShader.
+Success: D3DCompile for vertex shader.
+Success: gpID3D11Device->CreateVertexShader.
+Success: D3DCompile for pixel shader.
+Success: gpID3D11Device->CreateVertexShader.
+Success: D3DCompile for vertex shader.
+Success: gpID3D11Device->CreateVertexShader.
+Success: D3DCompile for pixel shader.
+Success: gpID3D11Device->CreateVertexShader.
+Success: D3DCompile for vertex shader.
+Success: gpID3D11Device->CreateVertexShader.
+Success: D3DCompile for pixel shader.
+Success: gpID3D11Device->CreateVertexShader.
+Success: D3DCompile for vertex shader.
+Success: gpID3D11Device->CreateVertexShader.
+Success: D3DCompile for pixel shader.
+Success: gpID3D11Device->CreateVertexShader.
+Success: D3DCompile for vertex shader.
+Success: gpID3D11Device->CreateVertexShader.
+Success: D3DCompile for pixel shader.
+Success: gpID3D11Device->CreateVertexShader.
+Success: D3DCompile for vertex shader.
+Success: gpID3D11Device->CreateVertexShader.
+Success: D3DCompile for pixel shader.
+Success: gpID3D11Device->CreateVertexShader.
+Success: D3DCompile for vertex shader.
+Success: gpID3D11Device->CreateVertexShader.
+Success: D3DCompile for pixel shader.
+Success: gpID3D11Device->CreateVertexShader.
+Success: D3DCompile for vertex shader.
+Success: gpID3D11Device->CreateVertexShader.
+Success: D3DCompile for pixel shader.
+Success: gpID3D11Device->CreateVertexShader.
+Success: D3DCompile for vertex shader.
+Success: gpID3D11Device->CreateVertexShader.
+Success: D3DCompile for pixel shader.
+Success: gpID3D11Device->CreateVertexShader.
+Success: D3DCompile for vertex shader.
+Success: gpID3D11Device->CreateVertexShader.
+Success: D3DCompile for pixel shader.
+Success: gpID3D11Device->CreateVertexShader.
+Success: D3DCompile for vertex shader.
+Success: gpID3D11Device->CreateVertexShader.
+Success: D3DCompile for pixel shader.
+Success: gpID3D11Device->CreateVertexShader.
+Success: D3DCompile for vertex shader.
+Success: gpID3D11Device->CreateVertexShader.
+Success: D3DCompile for pixel shader.
+Success: gpID3D11Device->CreateVertexShader.
+Success: D3DCompile for vertex shader.
+Success: gpID3D11Device->CreateVertexShader.
+Success: D3DCompile for pixel shader.
+Success: gpID3D11Device->CreateVertexShader.
+Success: D3DCompile for vertex shader.
+Success: gpID3D11Device->CreateVertexShader.
+Success: D3DCompile for pixel shader.
+Success: gpID3D11Device->CreateVertexShader.
+Success: D3DCompile for vertex shader.
+Success: gpID3D11Device->CreateVertexShader.
+Success: D3DCompile for pixel shader.
+Success: gpID3D11Device->CreateVertexShader.
+Success: D3DCompile for vertex shader.
+Success: gpID3D11Device->CreateVertexShader.
+Success: D3DCompile for pixel shader.
+Success: gpID3D11Device->CreateVertexShader.
+Success: D3DCompile for vertex shader.
+Success: gpID3D11Device->CreateVertexShader.
+Success: D3DCompile for pixel shader.
+Success: gpID3D11Device->CreateVertexShader.
+Success: D3DCompile for vertex shader.
+Success: gpID3D11Device->CreateVertexShader.
+Success: D3DCompile for pixel shader.
+Success: gpID3D11Device->CreateVertexShader.
+Success: D3DCompile for vertex shader.
+Success: gpID3D11Device->CreateVertexShader.
+Success: D3DCompile for pixel shader.
+Success: gpID3D11Device->CreateVertexShader.
+Success: D3DCompile for vertex shader.
+Success: gpID3D11Device->CreateVertexShader.
+Success: D3DCompile for pixel shader.
+Success: gpID3D11Device->CreateVertexShader.
+Success: D3DCompile for vertex shader.
+Success: gpID3D11Device->CreateVertexShader.
+Success: D3DCompile for pixel shader.
+Success: gpID3D11Device->CreateVertexShader.
+Success: D3DCompile for vertex shader.
+Success: gpID3D11Device->CreateVertexShader.
+Success: D3DCompile for pixel shader.
+Success: gpID3D11Device->CreateVertexShader.
+Success: D3DCompile for vertex shader.
+Success: gpID3D11Device->CreateVertexShader.
+Success: D3DCompile for pixel shader.
+Success: gpID3D11Device->CreateVertexShader.
+Success: D3DCompile for vertex shader.
+Success: gpID3D11Device->CreateVertexShader.
+Success: D3DCompile for pixel shader.
+Success: gpID3D11Device->CreateVertexShader.
+Success: D3DCompile for vertex shader.
+Success: gpID3D11Device->CreateVertexShader.
+Success: D3DCompile for pixel shader.
+Success: gpID3D11Device->CreateVertexShader.
+Success: D3DCompile for vertex shader.
+Success: gpID3D11Device->CreateVertexShader.
+Success: D3DCompile for pixel shader.
+Success: gpID3D11Device->CreateVertexShader.
+Success: D3DCompile for vertex shader.
+Success: gpID3D11Device->CreateVertexShader.
+Success: D3DCompile for pixel shader.
+Success: gpID3D11Device->CreateVertexShader.
+Success: D3DCompile for vertex shader.
+Success: gpID3D11Device->CreateVertexShader.
+Success: D3DCompile for pixel shader.
+Success: gpID3D11Device->CreateVertexShader.
+Success: D3DCompile for vertex shader.
+Success: gpID3D11Device->CreateVertexShader.
+Success: D3DCompile for pixel shader.
+Success: gpID3D11Device->CreateVertexShader.
+Success: D3DCompile for vertex shader.
+Success: gpID3D11Device->CreateVertexShader.
+Success: D3DCompile for pixel shader.
+Success: gpID3D11Device->CreateVertexShader.
+Success: D3DCompile for vertex shader.
+Success: gpID3D11Device->CreateVertexShader.
+Success: D3DCompile for pixel shader.
+Success: gpID3D11Device->CreateVertexShader.
+Success: D3DCompile for vertex shader.
+Success: gpID3D11Device->CreateVertexShader.
+Success: D3DCompile for pixel shader.
+Success: gpID3D11Device->CreateVertexShader.
+Success: D3DCompile for vertex shader.
+Success: gpID3D11Device->CreateVertexShader.
+Success: D3DCompile for pixel shader.
+Success: gpID3D11Device->CreateVertexShader.
+Success: D3DCompile for vertex shader.
+Success: gpID3D11Device->CreateVertexShader.
+Success: D3DCompile for pixel shader.
+Success: gpID3D11Device->CreateVertexShader.
+Success: D3DCompile for vertex shader.
+Success: gpID3D11Device->CreateVertexShader.
+Success: D3DCompile for pixel shader.
+Success: gpID3D11Device->CreateVertexShader.
+Success: D3DCompile for vertex shader.
+Success: gpID3D11Device->CreateVertexShader.
+Success: D3DCompile for pixel shader.
+Success: gpID3D11Device->CreateVertexShader.
+Success: D3DCompile for vertex shader.
+Success: gpID3D11Device->CreateVertexShader.
+Success: D3DCompile for pixel shader.
+Success: gpID3D11Device->CreateVertexShader.
+Success: D3DCompile for vertex shader.
+Success: gpID3D11Device->CreateVertexShader.
+Success: D3DCompile for pixel shader.
+Success: gpID3D11Device->CreateVertexShader.
+Success: D3DCompile for vertex shader.
+Success: gpID3D11Device->CreateVertexShader.
+Success: D3DCompile for pixel shader.
+Success: gpID3D11Device->CreateVertexShader.
+Success: D3DCompile for vertex shader.
+Success: gpID3D11Device->CreateVertexShader.
+Success: D3DCompile for pixel shader.
+Success: gpID3D11Device->CreateVertexShader.
+Success: D3DCompile for vertex shader.
+Success: gpID3D11Device->CreateVertexShader.
+Success: D3DCompile for pixel shader.
+Success: gpID3D11Device->CreateVertexShader.
+Success: D3DCompile for vertex shader.
+Success: gpID3D11Device->CreateVertexShader.
+Success: D3DCompile for pixel shader.
+Success: gpID3D11Device->CreateVertexShader.
+Success: D3DCompile for vertex shader.
+Success: gpID3D11Device->CreateVertexShader.
+Success: D3DCompile for pixel shader.
+Success: gpID3D11Device->CreateVertexShader.
+Success: D3DCompile for vertex shader.
+Success: gpID3D11Device->CreateVertexShader.
+Success: D3DCompile for pixel shader.
+Success: gpID3D11Device->CreateVertexShader.
+Success: D3DCompile for vertex shader.
+Success: gpID3D11Device->CreateVertexShader.
+Success: D3DCompile for pixel shader.
+Success: gpID3D11Device->CreateVertexShader.
+Success: D3DCompile for vertex shader.
+Success: gpID3D11Device->CreateVertexShader.
+Success: D3DCompile for pixel shader.
+Success: gpID3D11Device->CreateVertexShader.
+Success: D3DCompile for vertex shader.
+Success: gpID3D11Device->CreateVertexShader.
+Success: D3DCompile for pixel shader.
+Success: gpID3D11Device->CreateVertexShader.
+Success: D3DCompile for vertex shader.
+Success: gpID3D11Device->CreateVertexShader.
+Success: D3DCompile for pixel shader.
+Success: gpID3D11Device->CreateVertexShader.
+Success: D3DCompile for vertex shader.
+Success: gpID3D11Device->CreateVertexShader.
+Success: D3DCompile for pixel shader.
+Success: gpID3D11Device->CreateVertexShader.
+Success: D3DCompile for vertex shader.
+Success: gpID3D11Device->CreateVertexShader.
+Success: D3DCompile for pixel shader.
+Success: gpID3D11Device->CreateVertexShader.
+Success: D3DCompile for vertex shader.
+Success: gpID3D11Device->CreateVertexShader.
+Success: D3DCompile for pixel shader.
+Success: gpID3D11Device->CreateVertexShader.
+Success: D3DCompile for vertex shader.
+Success: gpID3D11Device->CreateVertexShader.
+Success: D3DCompile for pixel shader.
+Success: gpID3D11Device->CreateVertexShader.
+Success: D3DCompile for vertex shader.
+Success: gpID3D11Device->CreateVertexShader.
+Success: D3DCompile for pixel shader.
+Success: gpID3D11Device->CreateVertexShader.
+Success: D3DCompile for vertex shader.
+Success: gpID3D11Device->CreateVertexShader.
+Success: D3DCompile for pixel shader.
+Success: gpID3D11Device->CreateVertexShader.
+Success: D3DCompile for vertex shader.
+Success: gpID3D11Device->CreateVertexShader.
+Success: D3DCompile for pixel shader.
+Success: gpID3D11Device->CreateVertexShader.
+Success: D3DCompile for vertex shader.
+Success: gpID3D11Device->CreateVertexShader.
+Success: D3DCompile for pixel shader.
+Success: gpID3D11Device->CreateVertexShader.
+Success: D3DCompile for vertex shader.
+Success: gpID3D11Device->CreateVertexShader.
+Success: D3DCompile for pixel shader.
+Success: gpID3D11Device->CreateVertexShader.
+Success: D3DCompile for vertex shader.
+Success: gpID3D11Device->CreateVertexShader.
+Success: D3DCompile for pixel shader.
+Success: gpID3D11Device->CreateVertexShader.
+Success: D3DCompile for vertex shader.
+Success: gpID3D11Device->CreateVertexShader.
+Success: D3DCompile for pixel shader.
+Success: gpID3D11Device->CreateVertexShader.
+Success: D3DCompile for vertex shader.
+Success: gpID3D11Device->CreateVertexShader.
+Success: D3DCompile for pixel shader.
+Success: gpID3D11Device->CreateVertexShader.
+Success: D3DCompile for vertex shader.
+Success: gpID3D11Device->CreateVertexShader.
+Success: D3DCompile for pixel shader.
+Success: gpID3D11Device->CreateVertexShader.
+Success: D3DCompile for vertex shader.
+Success: gpID3D11Device->CreateVertexShader.
+Success: D3DCompile for pixel shader.
+Success: gpID3D11Device->CreateVertexShader.
+Success: D3DCompile for vertex shader.
+Success: gpID3D11Device->CreateVertexShader.
+Success: D3DCompile for pixel shader.
+Success: gpID3D11Device->CreateVertexShader.
+Success: D3DCompile for vertex shader.
+Success: gpID3D11Device->CreateVertexShader.
+Success: D3DCompile for pixel shader.
+Success: gpID3D11Device->CreateVertexShader.
+Success: D3DCompile for vertex shader.
+Success: gpID3D11Device->CreateVertexShader.
+Success: D3DCompile for pixel shader.
+Success: gpID3D11Device->CreateVertexShader.
+Success: D3DCompile for vertex shader.
+Success: gpID3D11Device->CreateVertexShader.
+Success: D3DCompile for pixel shader.
+Success: gpID3D11Device->CreateVertexShader.
+Success: D3DCompile for vertex shader.
+Success: gpID3D11Device->CreateVertexShader.
+Success: D3DCompile for pixel shader.
+Success: gpID3D11Device->CreateVertexShader.
+Success: D3DCompile for vertex shader.
+Success: gpID3D11Device->CreateVertexShader.
+Success: D3DCompile for pixel shader.
+Success: gpID3D11Device->CreateVertexShader.
+Success: D3DCompile for vertex shader.
+Success: gpID3D11Device->CreateVertexShader.
+Success: D3DCompile for pixel shader.
+Success: gpID3D11Device->CreateVertexShader.
+Success: D3DCompile for vertex shader.
+Success: gpID3D11Device->CreateVertexShader.
+Success: D3DCompile for pixel shader.
+Success: gpID3D11Device->CreateVertexShader.
+Success: D3DCompile for vertex shader.
+Success: gpID3D11Device->CreateVertexShader.
+Success: D3DCompile for pixel shader.
+Success: gpID3D11Device->CreateVertexShader.
+Success: D3DCompile for vertex shader.
+Success: gpID3D11Device->CreateVertexShader.
+Success: D3DCompile for pixel shader.
+Success: gpID3D11Device->CreateVertexShader.
+Success: D3DCompile for vertex shader.
+Success: gpID3D11Device->CreateVertexShader.
+Success: D3DCompile for pixel shader.
+Success: gpID3D11Device->CreateVertexShader.
+Success: D3DCompile for vertex shader.
+Success: gpID3D11Device->CreateVertexShader.
+Success: D3DCompile for pixel shader.
+Success: gpID3D11Device->CreateVertexShader.
+Success: D3DCompile for vertex shader.
+Success: gpID3D11Device->CreateVertexShader.
+Success: D3DCompile for pixel shader.
+Success: gpID3D11Device->CreateVertexShader.
+Success: D3DCompile for vertex shader.
+Success: gpID3D11Device->CreateVertexShader.
+Success: D3DCompile for pixel shader.
+Success: gpID3D11Device->CreateVertexShader.
+Success: D3DCompile for vertex shader.
+Success: gpID3D11Device->CreateVertexShader.
+Success: D3DCompile for pixel shader.
+Success: gpID3D11Device->CreateVertexShader.
+Success: D3DCompile for vertex shader.
+Success: gpID3D11Device->CreateVertexShader.
+Success: D3DCompile for pixel shader.
+Success: gpID3D11Device->CreateVertexShader.
+Success: D3DCompile for vertex shader.
+Success: gpID3D11Device->CreateVertexShader.
+Success: D3DCompile for pixel shader.
+Success: gpID3D11Device->CreateVertexShader.
+Success: D3DCompile for vertex shader.
+Success: gpID3D11Device->CreateVertexShader.
+Success: D3DCompile for pixel shader.
+Success: gpID3D11Device->CreateVertexShader.
+Success: D3DCompile for vertex shader.
+Success: gpID3D11Device->CreateVertexShader.
+Success: D3DCompile for pixel shader.
+Success: gpID3D11Device->CreateVertexShader.
+Success: D3DCompile for vertex shader.
+Success: gpID3D11Device->CreateVertexShader.
+Success: D3DCompile for pixel shader.
+Success: gpID3D11Device->CreateVertexShader.
+Success: D3DCompile for vertex shader.
+Success: gpID3D11Device->CreateVertexShader.
+Success: D3DCompile for pixel shader.
+Success: gpID3D11Device->CreateVertexShader.
+Success: D3DCompile for vertex shader.
+Success: gpID3D11Device->CreateVertexShader.
+Success: D3DCompile for pixel shader.
+Success: gpID3D11Device->CreateVertexShader.
+Success: D3DCompile for vertex shader.
+Success: gpID3D11Device->CreateVertexShader.
+Success: D3DCompile for pixel shader.
+Success: gpID3D11Device->CreateVertexShader.
+Success: D3DCompile for vertex shader.
+Success: gpID3D11Device->CreateVertexShader.
+Success: D3DCompile for pixel shader.
+Success: gpID3D11Device->CreateVertexShader.
+Success: D3DCompile for vertex shader.
+Success: gpID3D11Device->CreateVertexShader.
+Success: D3DCompile for pixel shader.
+Success: gpID3D11Device->CreateVertexShader.
+Success: D3DCompile for vertex shader.
+Success: gpID3D11Device->CreateVertexShader.
+Success: D3DCompile for pixel shader.
+Success: gpID3D11Device->CreateVertexShader.
+Success: D3DCompile for vertex shader.
+Success: gpID3D11Device->CreateVertexShader.
+Success: D3DCompile for pixel shader.
+Success: gpID3D11Device->CreateVertexShader.
+Success: D3DCompile for vertex shader.
+Success: gpID3D11Device->CreateVertexShader.
+Success: D3DCompile for pixel shader.
+Success: gpID3D11Device->CreateVertexShader.
+Success: D3DCompile for vertex shader.
+Success: gpID3D11Device->CreateVertexShader.
+Success: D3DCompile for pixel shader.
+Success: gpID3D11Device->CreateVertexShader.
+Success: D3DCompile for vertex shader.
+Success: gpID3D11Device->CreateVertexShader.
+Success: D3DCompile for pixel shader.
+Success: gpID3D11Device->CreateVertexShader.
+Success: D3DCompile for vertex shader.
+Success: gpID3D11Device->CreateVertexShader.
+Success: D3DCompile for pixel shader.
+Success: gpID3D11Device->CreateVertexShader.
+Success: D3DCompile for vertex shader.
+Success: gpID3D11Device->CreateVertexShader.
+Success: D3DCompile for pixel shader.
+Success: gpID3D11Device->CreateVertexShader.
+Success: D3DCompile for vertex shader.
+Success: gpID3D11Device->CreateVertexShader.
+Success: D3DCompile for pixel shader.
+Success: gpID3D11Device->CreateVertexShader.
+Success: D3DCompile for vertex shader.
+Success: gpID3D11Device->CreateVertexShader.
+Success: D3DCompile for pixel shader.
+Success: gpID3D11Device->CreateVertexShader.
+Success: D3DCompile for vertex shader.
+Success: gpID3D11Device->CreateVertexShader.
+Success: D3DCompile for pixel shader.
+Success: gpID3D11Device->CreateVertexShader.
+Success: D3DCompile for vertex shader.
+Success: gpID3D11Device->CreateVertexShader.
+Success: D3DCompile for pixel shader.
+Success: gpID3D11Device->CreateVertexShader.
+Success: D3DCompile for vertex shader.
+Success: gpID3D11Device->CreateVertexShader.
+Success: D3DCompile for pixel shader.
+Success: gpID3D11Device->CreateVertexShader.
+Success: D3DCompile for vertex shader.
+Success: gpID3D11Device->CreateVertexShader.
+Success: D3DCompile for pixel shader.
+Success: gpID3D11Device->CreateVertexShader.
+Success: D3DCompile for vertex shader.
+Success: gpID3D11Device->CreateVertexShader.
+Success: D3DCompile for pixel shader.
+Success: gpID3D11Device->CreateVertexShader.
+Success: D3DCompile for vertex shader.
+Success: gpID3D11Device->CreateVertexShader.
+Success: D3DCompile for pixel shader.
+Success: gpID3D11Device->CreateVertexShader.
+Success: D3DCompile for vertex shader.
+Success: gpID3D11Device->CreateVertexShader.
+Success: D3DCompile for pixel shader.
+Success: gpID3D11Device->CreateVertexShader.
+Success: D3DCompile for vertex shader.
+Success: gpID3D11Device->CreateVertexShader.
+Success: D3DCompile for pixel shader.
+Success: gpID3D11Device->CreateVertexShader.
+Success: D3DCompile for vertex shader.
+Success: gpID3D11Device->CreateVertexShader.
+Success: D3DCompile for pixel shader.
+Success: gpID3D11Device->CreateVertexShader.
+Success: D3DCompile for vertex shader.
+Success: gpID3D11Device->CreateVertexShader.
+Success: D3DCompile for pixel shader.
+Success: gpID3D11Device->CreateVertexShader.
+Success: D3DCompile for vertex shader.
+Success: gpID3D11Device->CreateVertexShader.
+Success: D3DCompile for pixel shader.
+Success: gpID3D11Device->CreateVertexShader.
+Success: D3DCompile for vertex shader.
+Success: gpID3D11Device->CreateVertexShader.
+Success: D3DCompile for pixel shader.
+Success: gpID3D11Device->CreateVertexShader.
+Success: D3DCompile for vertex shader.
+Success: gpID3D11Device->CreateVertexShader.
+Success: D3DCompile for pixel shader.
+Success: gpID3D11Device->CreateVertexShader.
+Success: D3DCompile for vertex shader.
+Success: gpID3D11Device->CreateVertexShader.
+Success: D3DCompile for pixel shader.
+Success: gpID3D11Device->CreateVertexShader.
+Success: D3DCompile for vertex shader.
+Success: gpID3D11Device->CreateVertexShader.
+Success: D3DCompile for pixel shader.
+Success: gpID3D11Device->CreateVertexShader.
+Success: D3DCompile for vertex shader.
+Success: gpID3D11Device->CreateVertexShader.
+Success: D3DCompile for pixel shader.
+Success: gpID3D11Device->CreateVertexShader.
+Success: D3DCompile for vertex shader.
+Success: gpID3D11Device->CreateVertexShader.
+Success: D3DCompile for pixel shader.
+Success: gpID3D11Device->CreateVertexShader.
+Success: D3DCompile for vertex shader.
+Success: gpID3D11Device->CreateVertexShader.
+Success: D3DCompile for pixel shader.
+Success: gpID3D11Device->CreateVertexShader.
+Success: D3DCompile for vertex shader.
+Success: gpID3D11Device->CreateVertexShader.
+Success: D3DCompile for pixel shader.
+Success: gpID3D11Device->CreateVertexShader.
+Success: D3DCompile for vertex shader.
+Success: gpID3D11Device->CreateVertexShader.
+Success: D3DCompile for pixel shader.
+Success: gpID3D11Device->CreateVertexShader.
+Success: D3DCompile for vertex shader.
+Success: gpID3D11Device->CreateVertexShader.
+Success: D3DCompile for pixel shader.
+Success: gpID3D11Device->CreateVertexShader.
+Success: D3DCompile for vertex shader.
+Success: gpID3D11Device->CreateVertexShader.
+Success: D3DCompile for pixel shader.
+Success: gpID3D11Device->CreateVertexShader.
+Success: D3DCompile for vertex shader.
+Success: gpID3D11Device->CreateVertexShader.
+Success: D3DCompile for pixel shader.
+Success: gpID3D11Device->CreateVertexShader.
+Success: D3DCompile for vertex shader.
+Success: gpID3D11Device->CreateVertexShader.
+Success: D3DCompile for pixel shader.
+Success: gpID3D11Device->CreateVertexShader.
+Success: D3DCompile for vertex shader.
+Success: gpID3D11Device->CreateVertexShader.
+Success: D3DCompile for pixel shader.
+Success: gpID3D11Device->CreateVertexShader.
+Success: D3DCompile for vertex shader.
+Success: gpID3D11Device->CreateVertexShader.
+Success: D3DCompile for pixel shader.
+Success: gpID3D11Device->CreateVertexShader.
+Success: D3DCompile for vertex shader.
+Success: gpID3D11Device->CreateVertexShader.
+Success: D3DCompile for pixel shader.
+Success: gpID3D11Device->CreateVertexShader.
+Success: D3DCompile for vertex shader.
+Success: gpID3D11Device->CreateVertexShader.
+Success: D3DCompile for pixel shader.
+Success: gpID3D11Device->CreateVertexShader.
+Success: D3DCompile for vertex shader.
+Success: gpID3D11Device->CreateVertexShader.
+Success: D3DCompile for pixel shader.
+Success: gpID3D11Device->CreateVertexShader.
+Success: D3DCompile for vertex shader.
+Success: gpID3D11Device->CreateVertexShader.
+Success: D3DCompile for pixel shader.
+Success: gpID3D11Device->CreateVertexShader.
+Success: D3DCompile for vertex shader.
+Success: gpID3D11Device->CreateVertexShader.
+Success: D3DCompile for pixel shader.
+Success: gpID3D11Device->CreateVertexShader.
+Success: D3DCompile for vertex shader.
+Success: gpID3D11Device->CreateVertexShader.
+Success: D3DCompile for pixel shader.
+Success: gpID3D11Device->CreateVertexShader.
+Success: D3DCompile for vertex shader.
+Success: gpID3D11Device->CreateVertexShader.
+Success: D3DCompile for pixel shader.
+Success: gpID3D11Device->CreateVertexShader.
+Success: D3DCompile for vertex shader.
+Success: gpID3D11Device->CreateVertexShader.
+Success: D3DCompile for pixel shader.
+Success: gpID3D11Device->CreateVertexShader.
+Success: D3DCompile for vertex shader.
+Success: gpID3D11Device->CreateVertexShader.
+Success: D3DCompile for pixel shader.
+Success: gpID3D11Device->CreateVertexShader.
+Success: D3DCompile for vertex shader.
+Success: gpID3D11Device->CreateVertexShader.
+Success: D3DCompile for pixel shader.
+Success: gpID3D11Device->CreateVertexShader.
+Success: D3DCompile for vertex shader.
+Success: gpID3D11Device->CreateVertexShader.
+Success: D3DCompile for pixel shader.
+Success: gpID3D11Device->CreateVertexShader.
+Success: D3DCompile for vertex shader.
+Success: gpID3D11Device->CreateVertexShader.
+Success: D3DCompile for pixel shader.
+Success: gpID3D11Device->CreateVertexShader.
+Success: D3DCompile for vertex shader.
+Success: gpID3D11Device->CreateVertexShader.
+Success: D3DCompile for pixel shader.
+Success: gpID3D11Device->CreateVertexShader.
+Success: D3DCompile for vertex shader.
+Success: gpID3D11Device->CreateVertexShader.
+Success: D3DCompile for pixel shader.
+Success: gpID3D11Device->CreateVertexShader.
+Success: D3DCompile for vertex shader.
+Success: gpID3D11Device->CreateVertexShader.
+Success: D3DCompile for pixel shader.
+Success: gpID3D11Device->CreateVertexShader.
+Success: D3DCompile for vertex shader.
+Success: gpID3D11Device->CreateVertexShader.
+Success: D3DCompile for pixel shader.
+Success: gpID3D11Device->CreateVertexShader.
+Success: D3DCompile for vertex shader.
+Success: gpID3D11Device->CreateVertexShader.
+Success: D3DCompile for pixel shader.
+Success: gpID3D11Device->CreateVertexShader.
+Success: D3DCompile for vertex shader.
+Success: gpID3D11Device->CreateVertexShader.
+Success: D3DCompile for pixel shader.
+Success: gpID3D11Device->CreateVertexShader.
+Success: D3DCompile for vertex shader.
+Success: gpID3D11Device->CreateVertexShader.
+Success: D3DCompile for pixel shader.
+Success: gpID3D11Device->CreateVertexShader.
+Success: D3DCompile for vertex shader.
+Success: gpID3D11Device->CreateVertexShader.
+Success: D3DCompile for pixel shader.
+Success: gpID3D11Device->CreateVertexShader.
+Success: D3DCompile for vertex shader.
+Success: gpID3D11Device->CreateVertexShader.
+Success: D3DCompile for pixel shader.
+Success: gpID3D11Device->CreateVertexShader.
+Success: D3DCompile for vertex shader.
+Success: gpID3D11Device->CreateVertexShader.
+Success: D3DCompile for pixel shader.
+Success: gpID3D11Device->CreateVertexShader.
+Success: D3DCompile for vertex shader.
+Success: gpID3D11Device->CreateVertexShader.
+Success: D3DCompile for pixel shader.
+Success: gpID3D11Device->CreateVertexShader.
+Success: D3DCompile for vertex shader.
+Success: gpID3D11Device->CreateVertexShader.
+Success: D3DCompile for pixel shader.
+Success: gpID3D11Device->CreateVertexShader.
+Success: D3DCompile for vertex shader.
+Success: gpID3D11Device->CreateVertexShader.
+Success: D3DCompile for pixel shader.
+Success: gpID3D11Device->CreateVertexShader.
+Success: D3DCompile for vertex shader.
+Success: gpID3D11Device->CreateVertexShader.
+Success: D3DCompile for pixel shader.
+Success: gpID3D11Device->CreateVertexShader.
+Success: D3DCompile for vertex shader.
+Success: gpID3D11Device->CreateVertexShader.
+Success: D3DCompile for pixel shader.
+Success: gpID3D11Device->CreateVertexShader.
+Success: D3DCompile for vertex shader.
+Success: gpID3D11Device->CreateVertexShader.
+Success: D3DCompile for pixel shader.
+Success: gpID3D11Device->CreateVertexShader.
+Success: D3DCompile for vertex shader.
+Success: gpID3D11Device->CreateVertexShader.
+Success: D3DCompile for pixel shader.
+Success: gpID3D11Device->CreateVertexShader.
+Success: D3DCompile for vertex shader.
+Success: gpID3D11Device->CreateVertexShader.
+Success: D3DCompile for pixel shader.
+Success: gpID3D11Device->CreateVertexShader.
+Success: D3DCompile for vertex shader.
+Success: gpID3D11Device->CreateVertexShader.
+Success: D3DCompile for pixel shader.
+Success: gpID3D11Device->CreateVertexShader.
+Success: D3DCompile for vertex shader.
+Success: gpID3D11Device->CreateVertexShader.
+Success: D3DCompile for pixel shader.
+Success: gpID3D11Device->CreateVertexShader.
+Success: D3DCompile for vertex shader.
+Success: gpID3D11Device->CreateVertexShader.
+Success: D3DCompile for pixel shader.
+Success: gpID3D11Device->CreateVertexShader.
+Success: D3DCompile for vertex shader.
+Success: gpID3D11Device->CreateVertexShader.
+Success: D3DCompile for pixel shader.
+Success: gpID3D11Device->CreateVertexShader.
+Success: D3DCompile for vertex shader.
+Success: gpID3D11Device->CreateVertexShader.
+Success: D3DCompile for pixel shader.
+Success: gpID3D11Device->CreateVertexShader.
+Success: D3DCompile for vertex shader.
+Success: gpID3D11Device->CreateVertexShader.
+Success: D3DCompile for pixel shader.
+Success: gpID3D11Device->CreateVertexShader.
+Success: D3DCompile for vertex shader.
+Success: gpID3D11Device->CreateVertexShader.
+Success: D3DCompile for pixel shader.
+Success: gpID3D11Device->CreateVertexShader.
+Success: D3DCompile for vertex shader.
+Success: gpID3D11Device->CreateVertexShader.
+Success: D3DCompile for pixel shader.
+Success: gpID3D11Device->CreateVertexShader.
+Success: D3DCompile for vertex shader.
+Success: gpID3D11Device->CreateVertexShader.
+Success: D3DCompile for pixel shader.
+Success: gpID3D11Device->CreateVertexShader.
+Success: D3DCompile for vertex shader.
+Success: gpID3D11Device->CreateVertexShader.
+Success: D3DCompile for pixel shader.
+Success: gpID3D11Device->CreateVertexShader.
+Success: D3DCompile for vertex shader.
+Success: gpID3D11Device->CreateVertexShader.
+Success: D3DCompile for pixel shader.
+Success: gpID3D11Device->CreateVertexShader.
+Success: D3DCompile for vertex shader.
+Success: gpID3D11Device->CreateVertexShader.
+Success: D3DCompile for pixel shader.
+Success: gpID3D11Device->CreateVertexShader.
+Success: D3DCompile for vertex shader.
+Success: gpID3D11Device->CreateVertexShader.
+Success: D3DCompile for pixel shader.
+Success: gpID3D11Device->CreateVertexShader.
+Success: D3DCompile for vertex shader.
+Success: gpID3D11Device->CreateVertexShader.
+Success: D3DCompile for pixel shader.
+Success: gpID3D11Device->CreateVertexShader.
+Success: D3DCompile for vertex shader.
+Success: gpID3D11Device->CreateVertexShader.
+Success: D3DCompile for pixel shader.
+Success: gpID3D11Device->CreateVertexShader.
+Success: D3DCompile for vertex shader.
+Success: gpID3D11Device->CreateVertexShader.
+Success: D3DCompile for pixel shader.
+Success: gpID3D11Device->CreateVertexShader.
+Success: D3DCompile for vertex shader.
+Success: gpID3D11Device->CreateVertexShader.
+Success: D3DCompile for pixel shader.
+Success: gpID3D11Device->CreateVertexShader.
+Success: D3DCompile for vertex shader.
+Success: gpID3D11Device->CreateVertexShader.
+Success: D3DCompile for pixel shader.
+Success: gpID3D11Device->CreateVertexShader.
+Success: D3DCompile for vertex shader.
+Success: gpID3D11Device->CreateVertexShader.
+Success: D3DCompile for pixel shader.
+Success: gpID3D11Device->CreateVertexShader.
+Success: D3DCompile for vertex shader.
+Success: gpID3D11Device->CreateVertexShader.
+Success: D3DCompile for pixel shader.
+Success: gpID3D11Device->CreateVertexShader.
+Success: D3DCompile for vertex shader.
+Success: gpID3D11Device->CreateVertexShader.
+Success: D3DCompile for pixel shader.
+Success: gpID3D11Device->CreateVertexShader.
+Success: D3DCompile for vertex shader.
+Success: gpID3D11Device->CreateVertexShader.
+Success: D3DCompile for pixel shader.
+Success: gpID3D11Device->CreateVertexShader.
+Success: D3DCompile for vertex shader.
+Success: gpID3D11Device->CreateVertexShader.
+Success: D3DCompile for pixel shader.
+Success: gpID3D11Device->CreateVertexShader.
+Success: D3DCompile for vertex shader.
+Success: gpID3D11Device->CreateVertexShader.
+Success: D3DCompile for pixel shader.
+Success: gpID3D11Device->CreateVertexShader.
+Success: D3DCompile for vertex shader.
+Success: gpID3D11Device->CreateVertexShader.
+Success: D3DCompile for pixel shader.
+Success: gpID3D11Device->CreateVertexShader.
+Success: D3DCompile for vertex shader.
+Success: gpID3D11Device->CreateVertexShader.

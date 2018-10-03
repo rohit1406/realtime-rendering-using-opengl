@@ -1,0 +1,16 @@
+Log File Is Successfully Opened.
+D3D11CreateDeviceAndSwapChain() Succeeded.
+The Chosen Driver Is Of HardWare Type.
+The Supported Highest Feature Level Is 11.0.
+D3DCompile() Succeeded For Vertex Shader.
+ID3D11Device::CreateVertexShader() Succeeded.
+D3DCompile() Succeeded For Pixel Shader.
+ID3D11Device::CreatePixelShader() Succeeded.
+Success: gpID3D11Device->CreateBuffer for straight checkerboard vertices poaition.
+Success: gpID3D11Device->CreateBuffer for straight checkerboard vertices texcoord.
+Success: gpID3D11Device->CreateBuffer for Cube vertices position.
+Success: gpID3D11Device->CreateBuffer for tilted vertices color.
+ID3D11Device::CreateInputLayout() Succeeded.
+ID3D11Device::CreateBuffer() Succeeded For Constant Buffer.
+CreateRasterizerState() Succeeded.
+Failed: DirectX::CreateWICTextureFromMemory

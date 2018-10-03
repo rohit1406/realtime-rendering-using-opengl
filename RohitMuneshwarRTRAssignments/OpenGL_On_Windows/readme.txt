@@ -14,14 +14,18 @@ link.exe ogl.obj /LIBPATH:C:\freeglut\lib freeglut.lib /SUBSYSTEM:CONSOLE
 
 GLEW-
 compile:
-cl.exe /c /EHsc /I C:\glew\include program.cpp
+cl.exe /c /EHsc /I C:\glew\include window.cpp
 
 link:
 link.exe program.obj /LIBPATH:C:\glew\lib\Release\Win32 glew32.lib
 
+link.exe window.obj /LIBPATH:C:\glew\lib\Release\Win32 glew32.lib d3d11.lib D3dcompiler.lib DirectXTK.lib /NODEFAULTLIB:msvcrt.lib
+
 
 Compile and Link at one go:
 cl.exe /EHsc abc.cpp /link user32.lib gdi32.lib ab.res
+
+cl.exe /EHsc window.cpp /LIBPATH:C:\glew\lib\Release\Win32 /link glew32.lib
 
 ReadMe
 1 compiling resource file
