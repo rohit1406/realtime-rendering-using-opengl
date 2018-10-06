@@ -35,6 +35,7 @@ ID3D11DeviceContext *gpID3D11DeviceContext = NULL;
 ID3D11RenderTargetView *gpID3D11RenderTargetView = NULL;
 
 ID3D11VertexShader *gpID3D11VertexShader = NULL;
+ID3D11GeometryShader *gpID3D11GeometryShader = NULL;
 ID3D11PixelShader *gpID3D11PixelShader = NULL;
 ID3D11Buffer *gpID3D11Buffer_VertexBuffer = NULL;
 ID3D11InputLayout *gpID3D11InputLayout = NULL;
@@ -406,10 +407,18 @@ HRESULT initialize(void)
 		"{"\
 		"float4x4 worldViewProjectionMatrix;"\
 		"}"\
-		"float4 main(float4 pos : POSITION) : SV_POSITION"\
+		"struct VertexOut {"\
+		"float4 position: POSITION;"\
+		"};"\
+
+		"struct VertexIN{"\
+		"float4 pos: POSITION;"\
+		"};"\
+		"VertexOut main(VertexIN vin) : SV_POSITION"\
 		"{"\
-		"float4 position = mul(worldViewProjectionMatrix, pos);"\
-		"return (position);"\
+		"VertexOut output;"\
+		"output.position = mul(worldViewProjectionMatrix, vin.pos);"\
+		"return (output);"\
 		"}";
 
 	ID3DBlob *pID3DBlob_VertexShaderCode = NULL;
@@ -467,6 +476,92 @@ HRESULT initialize(void)
 
 	gpID3D11DeviceContext->VSSetShader(gpID3D11VertexShader, 0, 0);
 
+
+	/* Geometry Shader start */
+	const char* geometryShaderSourceCode =
+		"cbuffer ConstantBuffer"\
+		"{"\
+		"float4x4 worldViewProjectionMatrix;"\
+		"}"\
+		"struct VertexOut {"\
+		"float4 position: POSITION;"\
+		"};"\
+		"struct geometry_output"\
+		"{"\
+		"float4 position : SV_POSITION;"\
+		"};"\
+		"[maxvertexcount(9)]"\
+		"void main(triangle VertexOut input[3], inout TriangleStream<geometry_output> triangleStream)"\
+		"{"\
+		"geometry_output output;"\
+		"for(int vertex=0; vertex<3; vertex++)"\
+		"{"\
+		"output.position = mul(worldViewProjectionMatrix, (input[vertex].position + float4(0.0, 1.0, 0.0, 0.0)));"\
+		"triangleStream.Append(output);"\
+		"output.position = mul(worldViewProjectionMatrix, (input[vertex].position + float4(1.0, -1.0, 0.0, 0.0)));"\
+		"triangleStream.Append(output);"\
+		"output.position = mul(worldViewProjectionMatrix, (input[vertex].position + float4(-1.0, -1.0, 0.0, 0.0)));"\
+		"triangleStream.Append(output);"\
+		"triangleStream.RestartStrip();"\
+		"}"\
+		//"return output;"
+		"}";
+
+	ID3DBlob *pID3DBlob_GeometryShaderCode = NULL;
+	pID3DBlob_Error = NULL;
+
+	hr = D3DCompile(geometryShaderSourceCode,
+		lstrlenA(geometryShaderSourceCode) + 1,
+		"GS",
+		NULL,
+		D3D_COMPILE_STANDARD_FILE_INCLUDE,
+		"main",
+		"gs_5_0",
+		0,
+		0,
+		&pID3DBlob_GeometryShaderCode,
+		&pID3DBlob_Error);
+
+	if (FAILED(hr))
+	{
+		if (pID3DBlob_Error != NULL)
+		{
+			fopen_s(&gpFile, gszLogFileName, "a+");
+			fprintf_s(gpFile, "D3DCompile() Failed For Geometry Shader : %s.\n", (char *)pID3DBlob_Error->GetBufferPointer());
+			fclose(gpFile);
+			pID3DBlob_Error->Release();
+			pID3DBlob_Error = NULL;
+			return (hr);
+		}
+	}
+	else
+	{
+		fopen_s(&gpFile, gszLogFileName, "a+");
+		fprintf_s(gpFile, "D3DCompile() Succeeded For Geometry Shader.\n");
+		fclose(gpFile);
+	}
+
+	hr = gpID3D11Device->CreateGeometryShader(pID3DBlob_GeometryShaderCode->GetBufferPointer(),
+		pID3DBlob_GeometryShaderCode->GetBufferSize(), NULL, &gpID3D11GeometryShader);
+
+	if (FAILED(hr))
+	{
+
+		fopen_s(&gpFile, gszLogFileName, "a+");
+		fprintf_s(gpFile, "ID3D11Device::CreateGeometryShader() Failed.\n");
+		fclose(gpFile);
+		return (hr);
+
+	}
+	else
+	{
+		fopen_s(&gpFile, gszLogFileName, "a+");
+		fprintf_s(gpFile, "ID3D11Device::CreateGeometryShader() Succeeded.\n");
+		fclose(gpFile);
+	}
+
+	gpID3D11DeviceContext->GSSetShader(gpID3D11GeometryShader, 0, 0);
+	/* Geometry Shader ends */
 
 	const char *pixelShaderSourceCode =
 		"float4 main(void) : SV_TARGET"\
@@ -629,7 +724,7 @@ HRESULT initialize(void)
 		fclose(gpFile);
 	}
 	gpID3D11DeviceContext->VSSetConstantBuffers(0,1,&gpID3D11Buffer_ConstanctBuffer);
-
+	gpID3D11DeviceContext->GSSetConstantBuffers(0, 1, &gpID3D11Buffer_ConstanctBuffer);
 	//d3d clear color (blue)
 	gClearColor[0] = 0.0f;
 	gClearColor[1] = 0.0f;
