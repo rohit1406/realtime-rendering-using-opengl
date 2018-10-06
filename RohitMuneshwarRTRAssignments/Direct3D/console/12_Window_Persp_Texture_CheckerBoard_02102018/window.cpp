@@ -568,26 +568,29 @@ HRESULT initialize(void)
 
 	
 	const float straightFacingQuadVertices[] = {
-		-2.0f,-1.0f,0.0f,
 		-2.0f,1.0f,0.0f,
-		0.0f,-1.0f,0.0f,
 		0.0f,1.0f,0.0f,
+		-2.0f,-1.0f,0.0f,
+		0.0f,-1.0f,0.0f,	
+		
 	};
 
 	const float tiltedFacingQuadVertices[] = {
-		1.0f,-1.0f,0.0f,
+		
 		1.0f,1.0f,0.0f,
-		2.41421f,-1.0f,1.41421f,
 		2.41421f,1.0f,1.41421f,
-
+		1.0f,-1.0f,0.0f,
+		2.41421f,-1.0f,1.41421f,
+		
 	};
 
 	const float checkerBoardTexcoords[] =
 	{
-		0.0f, 0.0f,
+		0.0f,0.0f,
 		0.0f,1.0f,
+		1.0f,0.0f,
 		1.0f,1.0f,
-		1.0f,0.0f
+		
 	};
 
 	//********************Rectangle***************
@@ -906,43 +909,84 @@ HRESULT initialize(void)
 }
 
 HRESULT LoadD3DTexture(ID3D11ShaderResourceView **ppID3D11ShaderResourceView) {
-
-	const unsigned int size = 64 * 64 * 4;
-	unsigned int *checkerboardData = new unsigned int[size];
 	
-	for (int i = 0; i < 64; i++) {
-		for (int j = 0; j < 64; j++) {
-			for (int k = 0; k < 4; k++) {
-				int c = ((i & 0x8) ^ (j & 0x8)) * 255;
-				if (k == 3) {
-					checkerboardData[(i * 64 + j) * 4 + k] = 0xff;
-				}
-				else
-				{
-					checkerboardData[(i * 64 + j) * 4 + k] = c;
-				}
-			}
-		}
-	}
+   FILE *f;
+    int w = 64;
+    int h = 64;
+    int x, y;
+    int r, g, b;
+    int red[64][64];
+    int green[64][64];
+    int blue[64][64];
 
 
+    unsigned char *img = NULL;
+    int filesize = 54 + 3 * w*h;  //w is your image width, h is image height, both int
+
+    img = (unsigned char *)malloc(3 * w*h);
+    memset(img, 0, 3 * w*h);
+
+    int c;
+
+    for (int i = 0; i<w; i++)
+    {
+        for (int j = 0; j<h; j++)
+        {
+            x = i; y = (h - 1) - j;
+
+            c = (((i & 0x8) == 0) ^ ((j & 0x8) == 0)) * 255;
+
+            //working
+            img[(x + y*w) * 3 + 2] = (unsigned char)(c);
+            img[(x + y*w) * 3 + 1] = (unsigned char)(c);
+            img[(x + y*w) * 3 + 0] = (unsigned char)(c);        
+        }
+    }
+
+    unsigned char bmpfileheader[14] = { 'B','M', 0,0,0,0, 0,0, 0,0, 54,0,0,0 };
+    unsigned char bmpinfoheader[40] = { 40,0,0,0, 0,0,0,0, 0,0,0,0, 1,0, 24,0 };
+    unsigned char bmppad[3] = { 0,0,0 };
+
+    bmpfileheader[2] = (unsigned char)(filesize);
+    bmpfileheader[3] = (unsigned char)(filesize >> 8);
+    bmpfileheader[4] = (unsigned char)(filesize >> 16);
+    bmpfileheader[5] = (unsigned char)(filesize >> 24);
+
+    bmpinfoheader[4] = (unsigned char)(w);
+    bmpinfoheader[5] = (unsigned char)(w >> 8);
+    bmpinfoheader[6] = (unsigned char)(w >> 16);
+    bmpinfoheader[7] = (unsigned char)(w >> 24);
+    bmpinfoheader[8] = (unsigned char)(h);
+    bmpinfoheader[9] = (unsigned char)(h >> 8);
+    bmpinfoheader[10] = (unsigned char)(h >> 16);
+    bmpinfoheader[11] = (unsigned char)(h >> 24);
+
+    f = fopen("img.bmp", "wb");
+    fwrite(bmpfileheader, 1, 14, f);
+    fwrite(bmpinfoheader, 1, 40, f);
+    for (int i = 0; i<h; i++)
+    {
+        fwrite(img + (w*(h - i - 1) * 3), 3, w, f);
+        fwrite(bmppad, 1, (4 - (w * 3) % 4) % 4, f);
+    }
+
+    free(img);
+    fclose(f);
+
+	//LoadD3DTexture("img.bmp",&ppID3D11ShaderResourceView);
 	HRESULT hr = NULL;
-
-	hr = DirectX::CreateWICTextureFromMemory(gpID3D11Device,//device
+	hr = DirectX::CreateWICTextureFromFile(
+		gpID3D11Device,//d3ddevice
 		gpID3D11DeviceContext,//device context
-		(uint8_t*)checkerboardData,//uint_8 *wicData
-		sizeof(checkerboardData) / sizeof(unsigned int*),//size_t wicDataSize
-		NULL,//resource texture
+		L"img.bmp",//texture filename
+		NULL,//d3d11resource texture
 		ppID3D11ShaderResourceView//shaderResourceView
 	);
 
-	if (FAILED(hr)) {
-
-		log("Failed: DirectX::CreateWICTextureFromMemory");
-		exit(0);
-	}
+	if (FAILED(hr))
+		log("Failed: DirectX::CreateWICTextureFromFile");
 	else
-		log("Success: DirectX::CreateWICTextureFromMemory");
+		log("Success: DirectX::CreateWICTextureFromFile");
 
 	return hr;
 }

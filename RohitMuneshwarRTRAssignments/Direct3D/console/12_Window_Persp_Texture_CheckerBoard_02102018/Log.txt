@@ -13,4 +13,19 @@ Success: gpID3D11Device->CreateBuffer for tilted vertices color.
 ID3D11Device::CreateInputLayout() Succeeded.
 ID3D11Device::CreateBuffer() Succeeded For Constant Buffer.
 CreateRasterizerState() Succeeded.
-Failed: DirectX::CreateWICTextureFromMemory
+Success: DirectX::CreateWICTextureFromFileSuccess: LoadD3DTexture checkerboardCreateSamplerState() Succeeded For Smiley Texture.
+ID3D11Device::CreateRenderTargetView() Succeeded.
+ID3D11Device::CreateTexture2D() Succeeded.
+ID3D11Device::CreateDepthStencilView() Succeeded.
+resize() Succeeded.
+initialize() Successed.
+ID3D11Device::CreateRenderTargetView() Succeeded.
+ID3D11Device::CreateTexture2D() Succeeded.
+ID3D11Device::CreateDepthStencilView() Succeeded.
+resize() Succeeded.
+ID3D11Device::CreateRenderTargetView() Succeeded.
+ID3D11Device::CreateTexture2D() Succeeded.
+ID3D11Device::CreateDepthStencilView() Succeeded.
+resize() Succeeded.
+uninitialize() Succeeded.
+Log File Is Successfully Closed.
