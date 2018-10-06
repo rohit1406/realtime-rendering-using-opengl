@@ -503,7 +503,19 @@ HRESULT initialize(void)
 		"for(int vertex=0; vertex<3; vertex++)"\
 		"{"\
 		
-		"output.color=input[vertex].color;"\
+		"if(vertex==0)"\
+		"{"\
+		"output.color=float4(1.0,0.0,0.0,0.0);"\
+		"}"\
+		"else if(vertex==1)"\
+		"{"\
+		"output.color=float4(0.0,1.0,0.0,0.0);"\
+		"}"\
+		"else if(vertex==2)"\
+		"{"\
+		"output.color=float4(0.0,0.0,1.0,0.0);"\
+		"}"\
+		//"output.color=input[vertex].color;"\
 		
 		"output.position = mul(worldViewProjectionMatrix, (input[vertex].position + float4(0.0, 1.0, 0.0, 0.0)));"\
 		"triangleStream.Append(output);"\
@@ -784,9 +796,9 @@ HRESULT initialize(void)
 	gpID3D11DeviceContext->VSSetConstantBuffers(0,1,&gpID3D11Buffer_ConstanctBuffer);
 	gpID3D11DeviceContext->GSSetConstantBuffers(0, 1, &gpID3D11Buffer_ConstanctBuffer);
 	//d3d clear color (blue)
-	gClearColor[0] = 0.0f;
-	gClearColor[1] = 0.0f;
-	gClearColor[2] = 1.0f;
+	gClearColor[0] = 0.1f;
+	gClearColor[1] = 0.2f;
+	gClearColor[2] = 0.3f;
 	gClearColor[3] = 1.0f;
 
 	//set projection matrix to identity matrix
