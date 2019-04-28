@@ -1,0 +1,99 @@
+How To Write First Generic Win32 Application In Visual Studio 2013/2015 :
+-------------------------------------------------------------------------
+01) Start Visual C++ IDE.
+
+02) Click On "File > New > Project” Menu Item. A "New Project” Dialog Box Will Appear.
+
+03) From Its Left Pane Select: Installed > Templates > Visual C++ > Win32 
+    And From Its Right Pane, Select ”Win32 Project”.
+
+04) In This Same Dialog Box, Below, In "Name" Edit Box, Type Project Name, Say “MyWindow”.
+
+05) Then Just Below, There Is "Location" Edit Box. 
+    Location Means "Where You Want To Put Your Project". 
+    So Either Type Path Of Desired Location Folder Or 
+    Browse To Location Folder By Clicking On Adjacent Browse Button.
+
+06) Keep Both "Create directory for solution” And “Add to Source Control” 
+    Check Boxes Unchecked.
+
+07) Click "Ok" To Proceed.
+
+08) Now "Win32 Application Wizard" Appears".
+    In Its Left Pane, Click On “Application Settings” And Then In Its Right Pane,
+    Check “Windows application” Radio Button And Also Check “Empty project" Check Box.
+    As Soon As We Do This, The “ATL” Check Box Gets Greyed.
+    See That “Precompiled header” Check Box Is Checked/Greyed And
+    Also Leave “Security Development Lifecycle (SDL) Checkbox Checked By Default.
+
+09) Press "Finish" To Proceed.
+
+10) Up till Now Title Bar Of VC++ IDE Was Showing "Microsoft Visual Studio” As Its Title. 
+    After Above Step, It Will Start Showing Name Of Your Project Too.
+
+11) The IDE Usually Opens With Its Workspace With Solution Explorer.
+
+12) In Solution Explorer, On Project Name Hive, Right Click To Get Context Menu.
+    In It Select Add > New Item Menu Option
+
+    Or
+
+    This Can Also Be Done From IDE’s Project > Add New Item Menu Option
+
+    A “Add New Item” Dialog Box Will Appear. 
+
+13) In Its Left Pane, Select Visual C++ > Code And In Its Right Pane,
+    Select “C++ File(.cpp)” Item.
+
+14) In This Same Dialog Box, Below, In "Name" Edit Box, Type File Name, Say “MyWindow.cpp”.
+
+15) In “Location” Edit Box Just Confirm Whether There Is Project’s Path Or Not.
+    Usually It Is.
+
+16) A Window With Your File Name Will Appear In The Workspace Editor.
+    Start Typing The Win32 Generic Application's Code And Save It.
+
+17) Now Go To "Build" Menu Of IDE And Follow One Of The Following Ways
+    a) First Click On "Compile" Option, 
+       Then On "Build <project name>” Or “Rebuild <project name>” Option.
+       Finally Go To IDE’s “Debug” Menu And Click On “Start Without Debugging” Option
+       Or Press Ctrl+F5 To Execute The Application.
+
+    b) First Click On "Rebuild <project name>" Menu, Then Go To IDE’s “Debug” Menu 
+       And Click On “Start Without Debugging” Option Or Press Ctrl+F5 To Execute The Application.
+
+18) After 7th Step, A Directory Of Our Project Name Is Created At Our
+    Chosen Location And After 17th Step, A Subdirectory Named "Debug"
+    Is Created Under Above Directory. This "Debug" Directory Contains
+    Our Exe File. Note That Exe File Has The Name Of Project And Not Of
+    Any File In The Project.
+
+    NOTE : This "Debug" Subdirectory Gets Created Automatically Because
+           Our Project's "Active Configuration" Is By Default "Debug".
+           Another Such Configuration Is "Release". If This Is Chosen
+           Then Instead Of "Debug" Subdirectory We Would Have "Release"
+           Subdirectory And Our Exe Would Be Inside It.
+
+           Actually Whether To Set Active Configuration To "Debug" Or
+           To "Release" Depends Upon Stage Of Program Development.
+           Means If Program Is Under Development, We Should Set It To
+           "Debug" i.e. Which Is By Default Set. But If We Think That
+           Our Program Is Ready For Deployment, We Should Set It To
+           "Release". To Do Above Setting, Go To The Menu "Build" And
+           Select "Set Active Configuration" Menu Item Where You Will
+           Found That "Debug" Is Set "By Default".
+
+19) You Can Execute\Run The Application By One Of The Following 4 Ways
+
+    a) Click On “Debug” Menu And Then Click On “Start Without Debugging”
+    b) Open "My Computer" Or "Explorer", Navigate To Your Project's
+       "Debug" ( Or "Release" ) Directory And Double Click On Your
+       Project's Exe.
+    c) Go To "Start\Run", Browse To Navigate Your Exe's Path And When
+       Found Press "Ok" Button Of "Run" Dialog Box.
+    d) As Usual Start "Command Prompt", Go To The Path Of Project's Exe
+       By One Or More "CD" Commands, Type Exe's Name And Press Enter
+       To Execute It.
+
+20) From “File” Menu Choose “Close Solution” And/Or Choose “Exit” 
+    To Close The Visual Studio 2015 IDE.
