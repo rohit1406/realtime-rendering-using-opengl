@@ -1,5 +1,5 @@
 
 Log file is opened successfully...
-Actual shadig language version is 4.40 - Build 21.20.16.4565
+Actual shadig language version is 4.40 - Build 22.20.16.4708
 
 Log file is closed successfully...
