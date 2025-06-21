@@ -100,6 +100,8 @@ dkms.conf
 
 ### Android
 # Gradle files
+**/.gradle/*/
+**/build/*/
 .gradle/
 build/
 
