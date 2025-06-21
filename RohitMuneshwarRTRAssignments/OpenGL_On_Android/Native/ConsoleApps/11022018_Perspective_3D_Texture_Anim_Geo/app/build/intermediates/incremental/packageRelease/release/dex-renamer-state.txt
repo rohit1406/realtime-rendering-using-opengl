@@ -1,4 +1,0 @@
-#Fri Mar 02 01:44:40 IST 2018
-base.0=K\:\\Programming\\realtimerendering\\RohitMuneshwarRTRAssignments\\OpenGL_On_Android\\Native\\ConsoleApps\\11022018_Perspective_3D_Texture_Anim_Geo\\app\\build\\intermediates\\transforms\\dex\\release\\0
-path.0=classes.dex
-renamed.0=classes.dex

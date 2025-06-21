@@ -1,4 +1,0 @@
-#Sat Feb 24 12:57:56 IST 2018
-base.0=K\:\\Programming\\realtimerendering\\RohitMuneshwarRTRAssignments\\OpenGL_On_Android\\Native\\ConsoleApps\\27012018_Perspective_Colored_Triangle\\app\\build\\intermediates\\transforms\\dexMerger\\debug\\0
-path.0=classes.dex
-renamed.0=classes.dex

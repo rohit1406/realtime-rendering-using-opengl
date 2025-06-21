@@ -1,7 +1,0 @@
-#Internal package file, do not edit.
-#Sun Dec 10 18:18:07 IST 2017
-0.baseType=DIRECTORY
-0.base=K\:\\Programming\\realtimerendering\\RohitMuneshwarRTRAssignments\\OpenGL_On_Android\\Native\\ConsoleApps\\02122017\\HelloWorld\\MyAndroid\\_Template\\app\\build\\intermediates\\transforms\\dexMerger\\debug\\0
-0.path=classes.dex
-0.set=DEX
-count=1

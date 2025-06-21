@@ -1,4 +1,0 @@
-#Sat Feb 24 02:24:32 IST 2018
-base.0=K\:\\Programming\\realtimerendering\\RohitMuneshwarRTRAssignments\\OpenGL_On_Android\\Native\\ConsoleApps\\27012018_Ortho_blueWindow\\app\\build\\intermediates\\transforms\\dex\\release\\0
-path.0=classes.dex
-renamed.0=classes.dex

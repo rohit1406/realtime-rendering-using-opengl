@@ -1,4 +1,0 @@
-#Sat Feb 24 13:58:25 IST 2018
-base.0=K\:\\Programming\\realtimerendering\\RohitMuneshwarRTRAssignments\\OpenGL_On_Android\\Native\\ConsoleApps\\27012018_Perspective_2Dz_Colored_Geometry\\app\\build\\intermediates\\transforms\\dexMerger\\debug\\0
-path.0=classes.dex
-renamed.0=classes.dex

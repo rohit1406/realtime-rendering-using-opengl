@@ -1,4 +1,0 @@
-#Fri Mar 02 22:58:08 IST 2018
-base.0=K\:\\Programming\\realtimerendering\\RohitMuneshwarRTRAssignments\\OpenGL_On_Android\\Native\\ConsoleApps\\11022018_Perspective_2D_Tex_Tweak_Smiley\\app\\build\\intermediates\\transforms\\dex\\release\\0
-path.0=classes.dex
-renamed.0=classes.dex

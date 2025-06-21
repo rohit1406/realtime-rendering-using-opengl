@@ -1,7 +1,0 @@
-#Internal package file, do not edit.
-#Sat Feb 24 14:29:49 IST 2018
-0.baseType=DIRECTORY
-0.base=K\:\\Programming\\realtimerendering\\RohitMuneshwarRTRAssignments\\OpenGL_On_Android\\Native\\ConsoleApps\\27012018_Perspective_2D_Anim_Col_Geo\\app\\build\\intermediates\\transforms\\dex\\release\\0
-0.path=classes.dex
-0.set=DEX
-count=1

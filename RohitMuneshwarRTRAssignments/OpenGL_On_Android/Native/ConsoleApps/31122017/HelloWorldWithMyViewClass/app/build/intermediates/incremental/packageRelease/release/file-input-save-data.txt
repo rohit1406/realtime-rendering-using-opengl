@@ -1,7 +1,0 @@
-#Internal package file, do not edit.
-#Sun Jan 07 14:14:27 IST 2018
-0.baseType=DIRECTORY
-0.base=K\:\\Programming\\realtimerendering\\RohitMuneshwarRTRAssignments\\OpenGL_On_Android\\Native\\ConsoleApps\\31122017\\HelloWorldWithMyViewClass\\app\\build\\intermediates\\transforms\\dex\\release\\0
-0.path=classes.dex
-0.set=DEX
-count=1

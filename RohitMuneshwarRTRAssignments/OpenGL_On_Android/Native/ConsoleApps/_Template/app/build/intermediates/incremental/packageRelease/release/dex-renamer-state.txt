@@ -1,4 +1,0 @@
-#Sun Dec 10 18:18:09 IST 2017
-base.0=K\:\\Programming\\realtimerendering\\RohitMuneshwarRTRAssignments\\OpenGL_On_Android\\Native\\ConsoleApps\\02122017\\HelloWorld\\MyAndroid\\_Template\\app\\build\\intermediates\\transforms\\dex\\release\\0
-path.0=classes.dex
-renamed.0=classes.dex
